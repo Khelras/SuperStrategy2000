@@ -4,6 +4,11 @@
 WindowManager* WindowManager::m_instance = nullptr;
 
 WindowManager::WindowManager() {
+    // Main Window
+    this->m_mainWindow.create(sf::VideoMode({ 800, 600 }), "SFML works!");
+
+    // Debug Window
+    this->m_debugWindow.close();
 }
 
 WindowManager::~WindowManager() {
@@ -21,18 +26,23 @@ WindowManager* WindowManager::getInstance() {
 }
 
 void WindowManager::process() {
-    sf::RenderWindow window(sf::VideoMode({ 200, 200 }), "SFML works!");
+    // Simple Grean Circle Shape
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
-    while (window.isOpen()) {
-        while (const std::optional event = window.pollEvent()) {
-            if (event->is<sf::Event::Closed>())
-                window.close();
+    // Main Window Loop
+    while (this->m_mainWindow.isOpen()) {
+        // Main Window Event Loop
+        while (const std::optional event = this->m_mainWindow.pollEvent()) {
+            // When the Main Window is Closed
+            if (event->is<sf::Event::Closed>()) {
+                this->m_mainWindow.close();
+            }
         }
 
-        window.clear();
-        window.draw(shape);
-        window.display();
+        // Clear, Draw, and Display to Main Window
+        this->m_mainWindow.clear(); // Clear
+        this->m_mainWindow.draw(shape); // Draw
+        this->m_mainWindow.display(); // Display
     }
 }
