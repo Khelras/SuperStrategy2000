@@ -5,7 +5,7 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\Manager">
+    <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{30d67280-c64e-47b0-9ae2-d05621556474}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -14,18 +14,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WindowManager.cpp">
-      <Filter>Source Files\Manager</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="EventManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
-      <Filter>Source Files\Manager</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="EventManager.h">
-      <Filter>Source Files\Manager</Filter>
+      <Filter>Source Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

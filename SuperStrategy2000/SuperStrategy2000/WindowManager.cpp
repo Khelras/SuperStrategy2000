@@ -12,7 +12,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "WindowManager.h"
 
-// Defining the Static WindowManager Instance
+// Define the Static WindowManager Instance
 WindowManager* WindowManager::m_instance = nullptr;
 
 WindowManager::WindowManager() {

@@ -30,7 +30,7 @@ public:
 	sf::RenderWindow m_mainWindow; // Main Window
 	sf::RenderWindow m_debugWindow; // Debug Window
 
-	// Singleton Instance
+	// Getting the Singleton Instance
 	static WindowManager* getInstance(); // Returns the Singleton Instance
 
 	// Window Manager Functions
