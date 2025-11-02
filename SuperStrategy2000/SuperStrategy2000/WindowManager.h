@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name   : WindowManager.h
+Description : Declares the WindowManager Class Functions and Properties. Uses a Singleton Design Pattern.
+Author      : Angelo Joseph Arawiran Bohol
+Mail        : angelo.bohol@mds.ac.nz
+**************************************************************************/
+
 #pragma once
 #include <SFML/Graphics.hpp>
 
@@ -15,13 +27,12 @@ private:
 
 public:
 	// Main and Debug Windows
-	sf::RenderWindow m_mainWindow;
-	sf::RenderWindow m_debugWindow;
+	sf::RenderWindow m_mainWindow; // Main Window
+	sf::RenderWindow m_debugWindow; // Debug Window
 
 	// Singleton Instance
 	static WindowManager* getInstance(); // Returns the Singleton Instance
 
 	// Window Manager Functions
 	void process(); // Window Manager Process Loop
-
 };

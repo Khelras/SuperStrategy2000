@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name   : WindowManager.h
+Description : Defines the WindowManager Class Functions and Properties
+Author      : Angelo Joseph Arawiran Bohol
+Mail        : angelo.bohol@mds.ac.nz
+**************************************************************************/
+
 #include "WindowManager.h"
 
 // Defining the Static WindowManager Instance
@@ -26,7 +38,7 @@ WindowManager* WindowManager::getInstance() {
 }
 
 void WindowManager::process() {
-    // Simple Grean Circle Shape
+    // Simple Green Circle Shape
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
