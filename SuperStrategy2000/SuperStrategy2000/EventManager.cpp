@@ -31,3 +31,21 @@ EventManager* EventManager::getInstance() {
     // Return the Singleton Instance
     return m_instance;
 }
+
+void EventManager::processMainEvents() {
+    // Main Window
+    sf::RenderWindow& mainWindow = WindowManager::getInstance()->m_mainWindow;
+
+    // Main Window Events
+    while (const std::optional event = mainWindow.pollEvent()) {
+        // When the Main Window is Closed
+        if (event->is<sf::Event::Closed>()) {
+            mainWindow.close();
+        }
+    }
+}
+
+void EventManager::processDebugEvents() {
+    // Debug Window
+    sf::RenderWindow& mainWindow = WindowManager::getInstance()->m_debugWindow;
+}

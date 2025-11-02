@@ -11,6 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "WindowManager.h"
+#include "EventManager.h"
 
 // Define the Static WindowManager Instance
 WindowManager* WindowManager::m_instance = nullptr;
@@ -45,12 +46,7 @@ void WindowManager::process() {
     // Main Window Loop
     while (this->m_mainWindow.isOpen()) {
         // Main Window Event Loop
-        while (const std::optional event = this->m_mainWindow.pollEvent()) {
-            // When the Main Window is Closed
-            if (event->is<sf::Event::Closed>()) {
-                this->m_mainWindow.close();
-            }
-        }
+        EventManager::getInstance()->processMainEvents();
 
         // Clear, Draw, and Display to Main Window
         this->m_mainWindow.clear(); // Clear

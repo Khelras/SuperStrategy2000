@@ -28,5 +28,9 @@ private:
 public:
 	// Getting the Singleton Instance
 	static EventManager* getInstance(); // Returns the Singleton Instance
+
+	// Event Manager Functions
+	void processMainEvents(); // Processes all Events in the Main Window
+	void processDebugEvents(); // Processes all Events in the Debug Window
 };
 
