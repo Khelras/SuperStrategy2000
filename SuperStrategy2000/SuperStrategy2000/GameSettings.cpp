@@ -227,4 +227,12 @@ bool GameSettingsIO::SaveGameSettings() {
 		std::cerr << "Unable to save to '" << GAME_SETTINGS_FILE_PATH <<"'!\n";
 		return false; // Saving Failed
 	}
+
+	// Saving
+	GameSettings* settings = GameSettings::getInstance();
+	file << "windowX=" << settings->m_windowX << std::endl; // Window Width Size
+	file << "windowY=" << settings->m_windowY << std::endl; // Window Height Size
+	file << "vsync=" << settings->m_vsync << std::endl; // Enable v-sync
+	file << "masterVolumn=" << settings->m_masterVolumn << std::endl; // Master Volumn
+	return true; // Saving Successful
 }
