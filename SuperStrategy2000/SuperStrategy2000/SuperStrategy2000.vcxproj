@@ -83,12 +83,14 @@ sfml-window-d.lib
   <ItemGroup>
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameSettings.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
