@@ -11,10 +11,6 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "WindowManager.h"
-#include "EventManager.h"
-
-// Define the Static WindowManager Instance
-WindowManager* WindowManager::m_instance = nullptr;
 
 WindowManager::WindowManager() {
     // Main Window
@@ -27,30 +23,55 @@ WindowManager::WindowManager() {
 WindowManager::~WindowManager() {
 }
 
-WindowManager* WindowManager::getInstance() {
-    // If there is no Instance
-    if (m_instance == nullptr) {
-        // Create an Instance
-        m_instance = new WindowManager();
+bool WindowManager::process() {
+    // Allow Processing ONLF IF the Main Window is open
+    if (this->m_mainWindow.isOpen() == true) {
+        // Return True
+        return true;
     }
 
-    // Return the Singleton Instance
-    return m_instance;
+    // Otherwise, Return False
+    return false;
 }
 
-void WindowManager::process() {
-    // Simple Green Circle Shape
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+void WindowManager::clear() {
+    // Main Window
+    if (this->m_mainWindow.isOpen() == true) {
+        // Clear the Main Window
+        this->m_mainWindow.clear();
+    }
 
-    // Main Window Loop
-    while (this->m_mainWindow.isOpen()) {
-        // Main Window Event Loop
-        EventManager::getInstance()->processMainEvents();
+    // Debug Window
+    if (this->m_debugWindow.isOpen() == true) {
+        // Clear the Debug Window
+        this->m_debugWindow.clear();
+    }
+}
 
-        // Clear, Draw, and Display to Main Window
-        this->m_mainWindow.clear(); // Clear
-        this->m_mainWindow.draw(shape); // Draw
-        this->m_mainWindow.display(); // Display
+void WindowManager::draw() {
+    // Main Window
+    if (this->m_mainWindow.isOpen() == true) {
+        // Draw to Main Window
+
+    }
+
+    // Debug Window
+    if (this->m_debugWindow.isOpen() == true) {
+        // Draw to Debug Window
+
+    }
+}
+
+void WindowManager::display() {
+    // Main Window
+    if (this->m_mainWindow.isOpen() == true) {
+        // Display to Main Window
+        this->m_mainWindow.display();
+    }
+
+    // Debug Window
+    if (this->m_debugWindow.isOpen() == true) {
+        // Display to Debug Window
+        this->m_debugWindow.display();
     }
 }

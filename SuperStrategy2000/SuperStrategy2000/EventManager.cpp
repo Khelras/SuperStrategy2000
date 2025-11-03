@@ -11,6 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "EventManager.h"
+#include "GameManager.h"
 
 // Define the Static EventManager Instance
 EventManager* EventManager::m_instance = nullptr;
@@ -34,7 +35,7 @@ EventManager* EventManager::getInstance() {
 
 void EventManager::processMainEvents() {
     // Main Window
-    sf::RenderWindow& mainWindow = WindowManager::getInstance()->m_mainWindow;
+    sf::RenderWindow& mainWindow = GameManager::getInstance()->m_windowManager.m_mainWindow;
 
     // Main Window Events
     while (const std::optional event = mainWindow.pollEvent()) {
@@ -47,5 +48,5 @@ void EventManager::processMainEvents() {
 
 void EventManager::processDebugEvents() {
     // Debug Window
-    sf::RenderWindow& mainWindow = WindowManager::getInstance()->m_debugWindow;
+    sf::RenderWindow& mainWindow = GameManager::getInstance()->m_windowManager.m_mainWindow;
 }

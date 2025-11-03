@@ -14,6 +14,9 @@ private:
 	GameManager& operator=(const GameManager&) = delete; // Assignment Operator
 
 public:
+	// Managers
+	WindowManager m_windowManager; // Window Manager
+
 	// Getting Singleton Instance
 	static GameManager* getInstance(); // Return the Singleton Instance
 

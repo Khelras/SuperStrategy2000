@@ -21,5 +21,14 @@ GameManager* GameManager::getInstance() {
 }
 
 void GameManager::process() {
-    WindowManager::getInstance()->process();
+    // Game Loop based on Window Manager Process
+    while (this->m_windowManager.process() == true) {
+        // Main Window Event Loop
+        EventManager::getInstance()->processMainEvents();
+
+        // Clear, Draw, and Display
+        this->m_windowManager.clear(); // Clear
+        this->m_windowManager.draw(); // Draw
+        this->m_windowManager.display(); // Display
+    }
 }
