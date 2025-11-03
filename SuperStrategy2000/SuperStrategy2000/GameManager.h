@@ -1,4 +1,5 @@
 #pragma once
+#include "GameSettings.h"
 #include "EventManager.h"
 
 class GameManager {
