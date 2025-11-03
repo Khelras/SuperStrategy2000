@@ -19,3 +19,7 @@ GameManager* GameManager::getInstance() {
     // Return the Singleton Instance
     return m_instance;
 }
+
+void GameManager::process() {
+    WindowManager::getInstance()->process();
+}

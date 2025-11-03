@@ -16,5 +16,8 @@ private:
 public:
 	// Getting Singleton Instance
 	static GameManager* getInstance(); // Return the Singleton Instance
+
+	// Game Manager Functions
+	void process(); // Game Manager Process Loop
 };
 
