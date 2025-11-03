@@ -16,6 +16,7 @@ private:
 public:
 	// Managers
 	WindowManager m_windowManager; // Window Manager
+	EventManager m_eventManager;
 
 	// Getting Singleton Instance
 	static GameManager* getInstance(); // Return the Singleton Instance
