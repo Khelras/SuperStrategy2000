@@ -11,6 +11,11 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cctype>
 
 struct GameSettings {
 private:
@@ -41,6 +46,12 @@ public:
 	int m_windowX = 0; // Width of Window
 	int m_windowY = 0; // Height of Window
 	bool m_vsync = false; // Enable v-sync?
-	float m_volumn = 50.0f; // Volumn of the Game
+	int m_masterVolumn = 50; // Volumn of the Game
 };
 
+// Game Settings Input (Loading) and Output (Saving)
+class GameSettingsIO {
+public:
+	static bool LoadGameSettings();
+	static bool SaveGameSettings();
+};
