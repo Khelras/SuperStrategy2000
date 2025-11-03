@@ -12,40 +12,53 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "EventManager.h"
 
-// Define the Static EventManager Instance
-EventManager* EventManager::m_instance = nullptr;
-
 EventManager::EventManager() {
 }
 
 EventManager::~EventManager() {
 }
 
-EventManager* EventManager::getInstance() {
-    // If there is no Instance
-    if (m_instance == nullptr) {
-        // Create an Instance
-        m_instance = new EventManager();
-    }
+void EventManager::process(WindowManager& _windowManager) {
+    // Windows
+    sf::RenderWindow& mainWindow = _windowManager.m_mainWindow; // Main Window
+    sf::RenderWindow& debugWindow = _windowManager.m_debugWindow; // Debug Window
 
-    // Return the Singleton Instance
-    return m_instance;
-}
+    // Only Process Events if the Main Window is Open
+    if (mainWindow.isOpen() == true) {
+        // If the Debug Window is Open
+        if (debugWindow.isOpen() == true) {
+            // Main Window Event Processing (Only allow the Close Event)
+            while (const std::optional event = mainWindow.pollEvent()) {
+                // Close Event
+                if (event->is<sf::Event::Closed>()) {
+                    // Close Debug Window
+                    mainWindow.close();
+                }
+            }
 
-void EventManager::processMainEvents() {
-    // Main Window
-    sf::RenderWindow& mainWindow = WindowManager::getInstance()->m_mainWindow;
-
-    // Main Window Events
-    while (const std::optional event = mainWindow.pollEvent()) {
-        // When the Main Window is Closed
-        if (event->is<sf::Event::Closed>()) {
-            mainWindow.close();
+            // Debug Window Events
+            while (const std::optional event = debugWindow.pollEvent()) {
+                // Close Event
+                if (event->is<sf::Event::Closed>()) {
+                    // Close Debug Window
+                    debugWindow.close();
+                }
+            }
+        }
+        // If the Debug Window is Closed
+        else if (debugWindow.isOpen() == false) {
+            // Main Window Events
+            while (const std::optional event = mainWindow.pollEvent()) {
+                // Close Event
+                if (event->is<sf::Event::Closed>()) {
+                    // Close Debug Window
+                    mainWindow.close();
+                }
+            }
         }
     }
-}
 
-void EventManager::processDebugEvents() {
-    // Debug Window
-    sf::RenderWindow& mainWindow = WindowManager::getInstance()->m_debugWindow;
+    
+
+    
 }

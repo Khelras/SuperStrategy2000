@@ -14,25 +14,18 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <SFML/Graphics.hpp>
 
 class WindowManager {
-private:
-	static WindowManager* m_instance; // Instance for Singleton
-
-	// Make the Constructor and Destructors Private
-	WindowManager(); // Constructor
-	~WindowManager(); // Destructor
-
-	// Delete the Copy Constructor and Assignment Operator
-	WindowManager(const WindowManager&) = delete; // Copy Constructor
-	WindowManager& operator=(const WindowManager&) = delete; // Assignment Operator
-
 public:
 	// Main and Debug Windows
 	sf::RenderWindow m_mainWindow; // Main Window
 	sf::RenderWindow m_debugWindow; // Debug Window
 
-	// Getting the Singleton Instance
-	static WindowManager* getInstance(); // Returns the Singleton Instance
+	// Constructor and Destructor
+	WindowManager(); // Constructor
+	~WindowManager(); // Destructor
 
 	// Window Manager Functions
-	void process(); // Window Manager Process Loop
+	bool process(); // Window Manager Process Loop
+	void clear(); // Clear the Screen
+	void draw(); // Draw to Screen
+	void display(); // Display to Screen
 };

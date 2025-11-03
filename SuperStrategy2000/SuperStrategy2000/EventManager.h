@@ -14,23 +14,12 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "WindowManager.h"
 
 class EventManager {
-private:
-	static EventManager* m_instance;
-
-	// Private Constructor and Destructor
+public:
+	// Constructor and Destructor
 	EventManager(); // Constructor
 	~EventManager(); // Destructor
 
-	// Deletes the Copy Consturctor and the Assignment Operator
-	EventManager(const EventManager&) = delete; // Copy Constructor
-	EventManager& operator=(const EventManager&) = delete; // Assignment Operator
-
-public:
-	// Getting the Singleton Instance
-	static EventManager* getInstance(); // Returns the Singleton Instance
-
 	// Event Manager Functions
-	void processMainEvents(); // Processes all Events in the Main Window
-	void processDebugEvents(); // Processes all Events in the Debug Window
+	void process(WindowManager& _windowManager); // Processes all the Events
 };
 

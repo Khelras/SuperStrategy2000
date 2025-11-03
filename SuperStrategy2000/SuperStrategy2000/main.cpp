@@ -10,11 +10,11 @@ Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
-#include "WindowManager.h"
+#include "GameManager.h"
 
 int main() {
-    // Start the Window Manager Process
-    WindowManager::getInstance()->process();
+    // Start the Game Manager Process
+    GameManager::getInstance()->process();
 
     return 0;
 }
