@@ -19,16 +19,16 @@ Grid::Grid() {
 	this->m_hoverTile = nullptr;
 
 	// Creating the Grid
-	for (int y = 0; y < this->GRID_SIZE_Y; y++) { // Down the y-axis
-		for (int x = 0; x < this->GRID_SIZE_X; x++) { // Down the x-axis
+	for (int y = 0; y < Grid::GRID_SIZE_Y; y++) { // Down the y-axis
+		for (int x = 0; x < Grid::GRID_SIZE_X; x++) { // Down the x-axis
 			// Creating the Tile
 			this->m_grid[y][x] = new Tile(sf::Vector2i(x, y));
 		}
 	}
 
 	// Connecting each Tile of the Grid
-	for (int y = 0; y < this->GRID_SIZE_Y; y++) { // Down the y-axis
-		for (int x = 0; x < this->GRID_SIZE_X; x++) { // Down the x-axis
+	for (int y = 0; y < Grid::GRID_SIZE_Y; y++) { // Down the y-axis
+		for (int x = 0; x < Grid::GRID_SIZE_X; x++) { // Down the x-axis
 			// Connecting Tile to its surrounding Tiles
 			for (int dx = -1; dx <= 1; dx++) { // Loops through the surroundings across the x-axis
 				for (int dy = -1; dy <= 1; dy++) { // Loops through the surroundings across the y-axis
@@ -38,7 +38,7 @@ Grid::Grid() {
 					sf::Vector2i neighborPos(x + dx, y + dy);
 
 					// Ensure the Position of this Neighboring Tile is within the Grid
-					if (neighborPos.x >= 0 &&  neighborPos.x < this->GRID_SIZE_X && neighborPos.y >= 0 && neighborPos.y < this->GRID_SIZE_Y) {
+					if (neighborPos.x >= 0 &&  neighborPos.x < Grid::GRID_SIZE_X && neighborPos.y >= 0 && neighborPos.y < Grid::GRID_SIZE_Y) {
 						// Connect the Tile to its Neighboring Tile
 						this->m_grid[y][x]->m_tileNeighbors.push_back(this->m_grid[neighborPos.y][neighborPos.x]);
 					}
@@ -48,8 +48,8 @@ Grid::Grid() {
 	}
 
 	// The Screen Space the Grid takes
-	float gridSpaceX = static_cast<float>(Tile::TILE_SIZE.x * this->GRID_SIZE_X); // Static Cast to Float
-	float gridSpaceY = static_cast<float>(Tile::TILE_SIZE.y * this->GRID_SIZE_Y); // Static Cast to Float
+	float gridSpaceX = static_cast<float>(Tile::TILE_SIZE.x * Grid::GRID_SIZE_X); // Static Cast to Float
+	float gridSpaceY = static_cast<float>(Tile::TILE_SIZE.y * Grid::GRID_SIZE_Y); // Static Cast to Float
 	this->m_gridBackground.setSize(sf::Vector2f(gridSpaceX, gridSpaceY));
 	this->m_gridBackground.setFillColor(sf::Color::White); // White
 }
@@ -104,15 +104,15 @@ void Grid::process() {
 		if (this->m_hoverTile == nullptr) { // There is NO pre-existing Hover
 			// Hover
 			this->m_hoverTile = this->m_grid[tileY][tileX];
-			this->m_hoverTile->m_tileShape.setOutlineColor(sf::Color::Green);
+			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_SELECTED);
 		}
 		else if (this->m_hoverTile != nullptr) { // There IS a pre-existing Hover
 			// Reset the pre-existing Hover
-			this->m_hoverTile->m_tileShape.setOutlineColor(sf::Color::Black);
+			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_DEFAULT);
 
 			// Then, set a new Hover
 			this->m_hoverTile = this->m_grid[tileY][tileX];
-			this->m_hoverTile->m_tileShape.setOutlineColor(sf::Color::Green);
+			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_SELECTED);
 		}
 	}
 	// Mouse is outside the bounds of the Grid Space
@@ -120,7 +120,7 @@ void Grid::process() {
 		// If there IS a pre-existing Hover
 		if (this->m_hoverTile != nullptr) {
 			// Reset and Remove Hovers
-			this->m_hoverTile->m_tileShape.setOutlineColor(sf::Color::Black); // Reset Hover
+			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_DEFAULT); // Reset Hover
 			this->m_hoverTile = nullptr; // Remove Hover
 		}
 	}

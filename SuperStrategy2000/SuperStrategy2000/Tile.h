@@ -16,8 +16,12 @@ Mail        : angelo.bohol@mds.ac.nz
 
 class Tile {
 public:
-	// Static Constant Tile Size
+	// Static Constant Tile Attributes for ALL Tiles
 	static const sf::Vector2i TILE_SIZE;
+	static const sf::Color TILE_FILLCOLOR_DEFAULT;
+	static const sf::Color TILE_FILLCOLOR_SELECTED;
+	static const sf::Color TILE_OUTLINECOLOR_DEFAULT;
+	static const sf::Color TILE_OUTLINECOLOR_SELECTED;
 
 	// Tile Attributes
 	sf::Vector2i m_tilePosition;

@@ -66,7 +66,7 @@ void EventManager::process(WindowManager& _windowManager) {
                         // If there is a pre-exisiting Selection
                         if (gameBoard.m_selectedTile != nullptr) {  
                             // Reset Selection
-                            gameBoard.m_selectedTile->m_tileShape.setFillColor(sf::Color::Transparent);
+                            gameBoard.m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_DEFAULT);
                         }
 
                         // There is NO Tile being Hovered
@@ -78,7 +78,7 @@ void EventManager::process(WindowManager& _windowManager) {
                         else if (gameBoard.m_hoverTile != nullptr) {
                             // New Selection
                             gameBoard.m_selectedTile = gameBoard.m_hoverTile;
-                            gameBoard.m_selectedTile->m_tileShape.setFillColor(sf::Color::Green);
+                            gameBoard.m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_SELECTED);
                         }
                     }
                 }
