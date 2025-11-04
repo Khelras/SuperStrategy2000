@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name   : GameSettings.cpp
+Description : Defines the GameSettingsIO Load() and Save() Functions
+Author      : Angelo Joseph Arawiran Bohol
+Mail        : angelo.bohol@mds.ac.nz
+**************************************************************************/
+
 #include "GameSettings.h"
 
 // Define the Static GameSettings Instance
