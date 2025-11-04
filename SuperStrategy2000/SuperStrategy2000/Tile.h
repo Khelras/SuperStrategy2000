@@ -12,15 +12,19 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 class Tile {
 private:
-	// Tile Attributes
-	sf::Vector2i m_tilePosition;
+	
 
 public:
 	// Static Constant Tile Size
 	static const sf::Vector2i TILE_SIZE;
+
+	// Tile Attributes
+	sf::Vector2i m_tilePosition;
+	std::vector<Tile*> m_tileNeighbors;
 
 	// Constructor and Destructor
 	Tile(sf::Vector2i _tilePosition); // Constructor

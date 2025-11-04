@@ -22,6 +22,7 @@ private:
 public:
 	// Grid Attributes
 	Tile* m_grid[GRID_SIZE_Y][GRID_SIZE_X];
+	Tile* m_selectedTile;
 
 	// Constructor and Destructor
 	Grid(); // Constructor
