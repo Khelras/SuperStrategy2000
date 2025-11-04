@@ -48,8 +48,8 @@ Grid::Grid() {
 	}
 
 	// The Screen Space the Grid takes
-	float gridSpaceX = static_cast<float>(this->m_selectedTile->TILE_SIZE.x * this->GRID_SIZE_X); // Static Cast to Float
-	float gridSpaceY = static_cast<float>(this->m_selectedTile->TILE_SIZE.y * this->GRID_SIZE_Y); // Static Cast to Float
+	float gridSpaceX = static_cast<float>(Tile::TILE_SIZE.x * this->GRID_SIZE_X); // Static Cast to Float
+	float gridSpaceY = static_cast<float>(Tile::TILE_SIZE.y * this->GRID_SIZE_Y); // Static Cast to Float
 	this->m_gridBackground.setSize(sf::Vector2f(gridSpaceX, gridSpaceY));
 	this->m_gridBackground.setFillColor(sf::Color::White); // White
 }
@@ -77,6 +77,13 @@ void Grid::process() {
 		// Now find the Tile the Mouse is hovering over
 		sf::Vector2i tileSize = Tile::TILE_SIZE; // The size of each Tile
 		
+		/*
+			Find the Tile X and Y by using similar logic of the modulus operator.
+			Minus the Mouse-Position by the Tile Size until we reach the bounds of the Grid-Space.
+			For Each time we minus Mouse-Position by Tile Size, we increment the Tile-Position by 1.
+			This will get us the Tile-Position in the Grid Array :O
+		*/
+
 		// Finding the X
 		float mouseX = mousePosition.x;
 		int tileX = 0;
@@ -113,8 +120,8 @@ void Grid::process() {
 		// If there IS a pre-existing Hover
 		if (this->m_hoverTile != nullptr) {
 			// Reset and Remove Hovers
-			this->m_hoverTile->m_tileShape.setOutlineColor(sf::Color::Black);
-			this->m_hoverTile = nullptr;
+			this->m_hoverTile->m_tileShape.setOutlineColor(sf::Color::Black); // Reset Hover
+			this->m_hoverTile = nullptr; // Remove Hover
 		}
 	}
 }
