@@ -44,6 +44,12 @@ Grid::Grid() {
 			}
 		}
 	}
+
+	// The Screen Space the Grid takes
+	float gridSpaceX = static_cast<float>(this->m_selectedTile->TILE_SIZE.x * this->GRID_SIZE_X); // Static Cast to Float
+	float gridSpaceY = static_cast<float>(this->m_selectedTile->TILE_SIZE.y * this->GRID_SIZE_Y); // Static Cast to Float
+	this->m_gridBackground.setSize(sf::Vector2f(gridSpaceX, gridSpaceY));
+	this->m_gridBackground.setFillColor(sf::Color::White); // White
 }
 
 Grid::~Grid() {

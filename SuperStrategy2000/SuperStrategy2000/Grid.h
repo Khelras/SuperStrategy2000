@@ -16,11 +16,12 @@ Mail        : angelo.bohol@mds.ac.nz
 class Grid {
 private:
 	// Grid Size
-	static const int GRID_SIZE_X = 8;
+	static const int GRID_SIZE_X = 10;
 	static const int GRID_SIZE_Y = 12;
 
 public:
 	// Grid Attributes
+	sf::RectangleShape m_gridBackground;
 	Tile* m_grid[GRID_SIZE_Y][GRID_SIZE_X];
 	Tile* m_selectedTile;
 

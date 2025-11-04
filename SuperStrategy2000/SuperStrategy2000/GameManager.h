@@ -1,6 +1,7 @@
 #pragma once
 #include "GameSettings.h"
 #include "EventManager.h"
+#include "Grid.h"
 
 class GameManager {
 private:
@@ -17,7 +18,10 @@ private:
 public:
 	// Managers
 	WindowManager m_windowManager; // Window Manager
-	EventManager m_eventManager;
+	EventManager m_eventManager; // Event Manager
+
+	// Game Board Grid
+	Grid m_gameBoard;
 
 	// Getting Singleton Instance
 	static GameManager* getInstance(); // Return the Singleton Instance
