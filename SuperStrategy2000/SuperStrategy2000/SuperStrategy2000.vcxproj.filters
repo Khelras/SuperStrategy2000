@@ -11,6 +11,9 @@
     <Filter Include="Source Files\GameSettings">
       <UniqueIdentifier>{e6ac5a67-275b-450d-b6da-181162276779}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TileSystem">
+      <UniqueIdentifier>{b7509a3d-941c-4c27-8862-17484e710ed0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -28,6 +31,12 @@
     <ClCompile Include="GameSettings.cpp">
       <Filter>Source Files\GameSettings</Filter>
     </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files\TileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Source Files\TileSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -41,6 +50,12 @@
     </ClInclude>
     <ClInclude Include="GameSettings.h">
       <Filter>Source Files\GameSettings</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Source Files\TileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Source Files\TileSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "EventManager.h"
+#include "GameManager.h"
 
 EventManager::EventManager() {
 }
@@ -53,6 +54,33 @@ void EventManager::process(WindowManager& _windowManager) {
                 if (event->is<sf::Event::Closed>()) {
                     // Close Debug Window
                     mainWindow.close();
+                }
+
+                // Mouse Pressed Events
+                if (const auto mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) {
+                    // Left-Button Mouse Pressed Event
+                    if (mousePressed->button == sf::Mouse::Button::Left) {
+                        // Refernece to Game Board
+                        Grid& gameBoard = GameManager::getInstance()->m_gameBoard;
+
+                        // If there is a pre-exisiting Selection
+                        if (gameBoard.m_selectedTile != nullptr) {  
+                            // Reset Selection
+                            gameBoard.m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_DEFAULT);
+                        }
+
+                        // There is NO Tile being Hovered
+                        if (gameBoard.m_hoverTile == nullptr) {
+                            // Remove Selection
+                            gameBoard.m_selectedTile = nullptr;
+                        }
+                        // There IS a Tile being Hovered
+                        else if (gameBoard.m_hoverTile != nullptr) {
+                            // New Selection
+                            gameBoard.m_selectedTile = gameBoard.m_hoverTile;
+                            gameBoard.m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_SELECTED);
+                        }
+                    }
                 }
             }
         }

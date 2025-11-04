@@ -26,6 +26,9 @@ void GameManager::process() {
         // Process Events
         this->m_eventManager.process(this->m_windowManager);
 
+        // Process Game Boar
+        this->m_gameBoard.process();
+
         // Clear, Draw, and Display
         this->m_windowManager.clear(); // Clear
         this->m_windowManager.draw(); // Draw
