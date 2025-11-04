@@ -4,26 +4,27 @@ Media Design School
 Auckland
 New Zealand
 (c) 2025 Media Design School
-File Name   : Tile.h
-Description : Declares the Tile Class Functions and Properties
+File Name   : Grid.h
+Description : Declares the Grid Class Functions and Properties
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "Tile.h"
 
-class Tile {
+class Grid {
 private:
-	// Tile Attributes
-	sf::Vector2i m_tilePosition;
+	// Grid Size
+	static const int GRID_SIZE_X = 8;
+	static const int GRID_SIZE_Y = 12;
 
 public:
-	// Static Constant Tile Size
-	static const sf::Vector2i TILE_SIZE;
+	// Grid Attributes
+	Tile* m_grid[GRID_SIZE_Y][GRID_SIZE_X];
 
 	// Constructor and Destructor
-	Tile(sf::Vector2i _tilePosition); // Constructor
-	~Tile(); // Destructor
+	Grid(); // Constructor
+	~Grid(); // Destructor
 };
 
