@@ -11,10 +11,12 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "Grid.h"
+#include "GameManager.h"
 
 Grid::Grid() {
-	// Selected Tile
+	// Selected and Hover Tile
 	this->m_selectedTile = nullptr;
+	this->m_hoverTile = nullptr;
 
 	// Creating the Grid
 	for (int y = 0; y < this->GRID_SIZE_Y; y++) { // Down the y-axis
@@ -53,4 +55,66 @@ Grid::Grid() {
 }
 
 Grid::~Grid() {
+}
+
+void Grid::process() {
+	// Mouse Position based on the Main Window
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(GameManager::getInstance()->m_windowManager.m_mainWindow);
+
+	// Check if the Mouse Position is within the bounds of the Grid Space
+	sf::FloatRect gridSpace = this->m_gridBackground.getGlobalBounds(); // The Grid Space
+	bool isWithinGridSpace = ( // Check if the Mouse is within the bounds of the Grid Space
+		// X-axis
+		mousePosition.x > gridSpace.position.x && // Mouse is to the Right of the Left-Side of Grid Space
+		mousePosition.x < (gridSpace.position.x + gridSpace.size.x) && // Mouse is to the Left of the Right-Side of Grid Space
+		// Y-axis
+		mousePosition.y > gridSpace.position.y && // Mouse is Below the Top-Side of Grid Space
+		mousePosition.y < (gridSpace.position.y + gridSpace.size.y) // Mouse is Above the Bottom-Side of Grid Space
+	);
+
+	// Mouse is within the bounds of the Grid Space
+	if (isWithinGridSpace == true) {
+		// Now find the Tile the Mouse is hovering over
+		sf::Vector2i tileSize = Tile::TILE_SIZE; // The size of each Tile
+		
+		// Finding the X
+		float mouseX = mousePosition.x;
+		int tileX = 0;
+		while ((mouseX - tileSize.x) > gridSpace.position.x) { // Loops unitl we get the Tile X
+			mouseX -= tileSize.x; // Decrease Mouse-X by the Tile Width
+			tileX++; // Increase tile X
+		}
+
+		// Finding the Y
+		float mouseY = mousePosition.y;
+		int tileY = 0;
+		while ((mouseY - tileSize.y) > gridSpace.position.y) { // Loops unitl we get the Tile Y
+			mouseY -= tileSize.y; // Decrease Mouse-X by the Tile Height
+			tileY++; // Increase tile Y
+		}
+		
+		// Performing Hover
+		if (this->m_hoverTile == nullptr) { // There is NO pre-existing Hover
+			// Hover
+			this->m_hoverTile = this->m_grid[tileY][tileX];
+			this->m_hoverTile->m_tileShape.setOutlineColor(sf::Color::Green);
+		}
+		else if (this->m_hoverTile != nullptr) { // There IS a pre-existing Hover
+			// Reset the pre-existing Hover
+			this->m_hoverTile->m_tileShape.setOutlineColor(sf::Color::Black);
+
+			// Then, set a new Hover
+			this->m_hoverTile = this->m_grid[tileY][tileX];
+			this->m_hoverTile->m_tileShape.setOutlineColor(sf::Color::Green);
+		}
+	}
+	// Mouse is outside the bounds of the Grid Space
+	else {
+		// If there IS a pre-existing Hover
+		if (this->m_hoverTile != nullptr) {
+			// Reset and Remove Hovers
+			this->m_hoverTile->m_tileShape.setOutlineColor(sf::Color::Black);
+			this->m_hoverTile = nullptr;
+		}
+	}
 }

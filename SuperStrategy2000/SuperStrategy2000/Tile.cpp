@@ -12,10 +12,17 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "Tile.h"
 
-// Defining the Tile Size
+// Defining the Static Constant Tile Size
 const sf::Vector2i Tile::TILE_SIZE = sf::Vector2i(32, 32);
 
 Tile::Tile(sf::Vector2i _tilePosition) {
+	// Tile Attributes
+	this->m_tileShape.setSize(sf::Vector2f(this->TILE_SIZE.x, this->TILE_SIZE.y));
+	this->m_tileShape.setFillColor(sf::Color::Transparent); // Fill Color
+	this->m_tileShape.setOutlineColor(sf::Color::Black); // Outline Color
+	this->m_tileShape.setOutlineThickness(1.0f);
+
+	// Tile Attributes
 	this->m_tilePosition = _tilePosition;
 }
 

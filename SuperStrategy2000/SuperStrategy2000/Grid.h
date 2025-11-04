@@ -11,22 +11,26 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
+#include <cmath>
 #include "Tile.h"
 
 class Grid {
-private:
+public:
 	// Grid Size
 	static const int GRID_SIZE_X = 10;
 	static const int GRID_SIZE_Y = 12;
 
-public:
 	// Grid Attributes
 	sf::RectangleShape m_gridBackground;
 	Tile* m_grid[GRID_SIZE_Y][GRID_SIZE_X];
 	Tile* m_selectedTile;
+	Tile* m_hoverTile;
 
 	// Constructor and Destructor
 	Grid(); // Constructor
 	~Grid(); // Destructor
+
+	// Grid Functions
+	void process(); 
 };
 

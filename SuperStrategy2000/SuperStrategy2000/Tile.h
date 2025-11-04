@@ -15,9 +15,6 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <vector>
 
 class Tile {
-private:
-	
-
 public:
 	// Static Constant Tile Size
 	static const sf::Vector2i TILE_SIZE;
@@ -25,6 +22,7 @@ public:
 	// Tile Attributes
 	sf::Vector2i m_tilePosition;
 	std::vector<Tile*> m_tileNeighbors;
+	sf::RectangleShape m_tileShape;
 
 	// Constructor and Destructor
 	Tile(sf::Vector2i _tilePosition); // Constructor
