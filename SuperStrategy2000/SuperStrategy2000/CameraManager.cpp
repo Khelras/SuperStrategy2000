@@ -26,7 +26,7 @@ void CameraManager::processCameraView() {
 	// Set the Camera View
 	this->m_cameraView.setSize(sf::Vector2f(mainWindow.getSize())); // Setting to the Size of the Main Window
 	this->m_cameraView.setCenter(mainWindow.getDefaultView().getCenter());
-	this->m_cameraView.zoom(1.0f); // Zoom
+	this->m_cameraView.zoom(0.5f); // Zoom
 	mainWindow.setView(this->m_cameraView); // Setting the View of Main Window
 }
 

@@ -58,18 +58,22 @@ Grid::~Grid() {
 }
 
 void Grid::process() {
-	// Mouse Position based on the Main Window
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(GameManager::getInstance()->m_windowManager.m_mainWindow);
+	// Constant References to Main Window and Camera View
+	const sf::RenderWindow& MAIN_WINDOW = GameManager::getInstance()->m_windowManager.m_mainWindow;
+	const sf::View& CAMERA_VIEW = GameManager::getInstance()->m_cameraManager.m_cameraView;
+
+	// Mouse World Position
+	sf::Vector2f mouseWorldPosition = MAIN_WINDOW.mapPixelToCoords(sf::Mouse::getPosition(MAIN_WINDOW), CAMERA_VIEW);
 
 	// Check if the Mouse Position is within the bounds of the Grid Space
 	sf::FloatRect gridSpace = this->m_gridBackground.getGlobalBounds(); // The Grid Space
 	bool isWithinGridSpace = ( // Check if the Mouse is within the bounds of the Grid Space
 		// X-axis
-		mousePosition.x > gridSpace.position.x && // Mouse is to the Right of the Left-Side of Grid Space
-		mousePosition.x < (gridSpace.position.x + gridSpace.size.x) && // Mouse is to the Left of the Right-Side of Grid Space
+		mouseWorldPosition.x > gridSpace.position.x && // Mouse is to the Right of the Left-Side of Grid Space
+		mouseWorldPosition.x < (gridSpace.position.x + gridSpace.size.x) && // Mouse is to the Left of the Right-Side of Grid Space
 		// Y-axis
-		mousePosition.y > gridSpace.position.y && // Mouse is Below the Top-Side of Grid Space
-		mousePosition.y < (gridSpace.position.y + gridSpace.size.y) // Mouse is Above the Bottom-Side of Grid Space
+		mouseWorldPosition.y > gridSpace.position.y && // Mouse is Below the Top-Side of Grid Space
+		mouseWorldPosition.y < (gridSpace.position.y + gridSpace.size.y) // Mouse is Above the Bottom-Side of Grid Space
 	);
 
 	// Mouse is within the bounds of the Grid Space
@@ -79,13 +83,13 @@ void Grid::process() {
 		
 		/*
 			Find the Tile X and Y by using similar logic of the modulus operator.
-			Minus the Mouse-Position by the Tile Size until we reach the bounds of the Grid-Space.
-			For Each time we minus Mouse-Position by Tile Size, we increment the Tile-Position by 1.
-			This will get us the Tile-Position in the Grid Array :O
+			- Minus the Mouse-Position by the Tile Size until we reach the bounds of the Grid-Space.
+			- For Each time we minus Mouse-Position by Tile Size, we increment the Tile-Position by 1.
+			- This will get us the Tile-Position in the Grid Array :O
 		*/
 
 		// Finding the X
-		float mouseX = mousePosition.x;
+		float mouseX = mouseWorldPosition.x;
 		int tileX = 0;
 		while ((mouseX - tileSize.x) > gridSpace.position.x) { // Loops unitl we get the Tile X
 			mouseX -= tileSize.x; // Decrease Mouse-X by the Tile Width
@@ -93,7 +97,7 @@ void Grid::process() {
 		}
 
 		// Finding the Y
-		float mouseY = mousePosition.y;
+		float mouseY = mouseWorldPosition.y;
 		int tileY = 0;
 		while ((mouseY - tileSize.y) > gridSpace.position.y) { // Loops unitl we get the Tile Y
 			mouseY -= tileSize.y; // Decrease Mouse-X by the Tile Height
