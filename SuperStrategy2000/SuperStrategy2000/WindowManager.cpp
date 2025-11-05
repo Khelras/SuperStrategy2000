@@ -15,7 +15,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 WindowManager::WindowManager() {
     // Main Window
-    this->m_mainWindow.create(sf::VideoMode({ 800, 600 }), "SFML works!");
+    this->m_mainWindow.create(sf::VideoMode({ 800 * 2, 600 * 2 }), "SFML works!");
 
     // Debug Window
     this->m_debugWindow.close();
@@ -51,7 +51,7 @@ void WindowManager::draw() {
     // Draw to Main Window
     if (this->m_mainWindow.isOpen() == true) {
         // Draw the Game Board to the Center of the Main Window
-        Grid& gameBoard = GameManager::getInstance()->m_gameBoard; // Refernece to Game Board
+        Grid& gameBoard = GameManager::getInstance()->m_gameBoard; // Referece to Game Board
         float centerOffsetX = (this->m_mainWindow.getSize().x / 2) - (gameBoard.m_gridBackground.getSize().x / 2); // Center Offset X
         float centerOffsetY = (this->m_mainWindow.getSize().y / 2) - (gameBoard.m_gridBackground.getSize().y / 2); // Center Offset Y
         gameBoard.m_gridBackground.setPosition(sf::Vector2f(centerOffsetX, centerOffsetY)); // Setting the Position of GameBoard to the Center

@@ -20,7 +20,11 @@ public:
 	sf::View m_uiView; // View for the User Interface
 
 	// Constructor and Destructor
-	CameraManager();
-	~CameraManager();
+	CameraManager(); // Constructor
+	~CameraManager(); // Destructor
+
+	// Camera Manager Functions
+	void processCameraView(); // Camera View Process Loop
+	void processUIView(); // UI View Process Loop
 };
 

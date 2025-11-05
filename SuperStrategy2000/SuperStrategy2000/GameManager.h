@@ -1,6 +1,7 @@
 #pragma once
 #include "GameSettings.h"
 #include "EventManager.h"
+#include "CameraManager.h"
 #include "Grid.h"
 
 class GameManager {
@@ -19,6 +20,7 @@ public:
 	// Managers
 	WindowManager m_windowManager; // Window Manager
 	EventManager m_eventManager; // Event Manager
+	CameraManager m_cameraManager; // Camera Manager
 
 	// Game Board Grid
 	Grid m_gameBoard;

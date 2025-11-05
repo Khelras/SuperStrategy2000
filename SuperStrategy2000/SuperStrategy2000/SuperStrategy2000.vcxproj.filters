@@ -37,6 +37,9 @@
     <ClCompile Include="Grid.cpp">
       <Filter>Source Files\TileSystem</Filter>
     </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -56,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Source Files\TileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>Source Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
