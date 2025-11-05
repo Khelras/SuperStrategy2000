@@ -67,42 +67,26 @@ void Grid::process() {
 
 	// Check if the Mouse Position is within the bounds of the Grid Space
 	sf::FloatRect gridSpace = this->m_gridBackground.getGlobalBounds(); // The Grid Space
-	bool isWithinGridSpace = ( // Check if the Mouse is within the bounds of the Grid Space
-		// X-axis
-		mouseWorldPosition.x > gridSpace.position.x && // Mouse is to the Right of the Left-Side of Grid Space
-		mouseWorldPosition.x < (gridSpace.position.x + gridSpace.size.x) && // Mouse is to the Left of the Right-Side of Grid Space
-		// Y-axis
-		mouseWorldPosition.y > gridSpace.position.y && // Mouse is Below the Top-Side of Grid Space
-		mouseWorldPosition.y < (gridSpace.position.y + gridSpace.size.y) // Mouse is Above the Bottom-Side of Grid Space
-	);
 
 	// Mouse is within the bounds of the Grid Space
-	if (isWithinGridSpace == true) {
+	if (gridSpace.contains(mouseWorldPosition) == true) {
 		// Now find the Tile the Mouse is hovering over
 		sf::Vector2i tileSize = Tile::TILE_SIZE; // The size of each Tile
 		
 		/*
-			Find the Tile X and Y by using similar logic of the modulus operator.
-			- Minus the Mouse-Position by the Tile Size until we reach the bounds of the Grid-Space.
-			- For Each time we minus Mouse-Position by Tile Size, we increment the Tile-Position by 1.
-			- This will get us the Tile-Position in the Grid Array :O
+			Find which Tile the Mouse is hovering over:
+			- Convert the Mouse World Position into Grid Coordinates.
+			- Subtract the Grid's Position Offset from World Origin.
+			- Divide by Tile Size to get the Tile Index (x, y) within the Grid Array.
 		*/
 
-		// Finding the X
-		float mouseX = mouseWorldPosition.x;
-		int tileX = 0;
-		while ((mouseX - tileSize.x) > gridSpace.position.x) { // Loops unitl we get the Tile X
-			mouseX -= tileSize.x; // Decrease Mouse-X by the Tile Width
-			tileX++; // Increase tile X
-		}
+		// Tile Index (x, y) within the Grid Array
+		int tileX = static_cast<int>((mouseWorldPosition.x - gridSpace.position.x) / tileSize.x);
+		int tileY = static_cast<int>((mouseWorldPosition.y - gridSpace.position.y) / tileSize.y);
 
-		// Finding the Y
-		float mouseY = mouseWorldPosition.y;
-		int tileY = 0;
-		while ((mouseY - tileSize.y) > gridSpace.position.y) { // Loops unitl we get the Tile Y
-			mouseY -= tileSize.y; // Decrease Mouse-X by the Tile Height
-			tileY++; // Increase tile Y
-		}
+		// Clamp indices to ensure they are within bounds
+		tileX = std::clamp(tileX, 0, Grid::GRID_SIZE_X - 1);
+		tileY = std::clamp(tileY, 0, Grid::GRID_SIZE_Y - 1);\
 		
 		// Performing Hover
 		if (this->m_hoverTile == nullptr) { // There is NO pre-existing Hover
