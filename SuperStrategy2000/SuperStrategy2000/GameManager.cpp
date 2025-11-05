@@ -26,8 +26,11 @@ void GameManager::process() {
         // Process Events
         this->m_eventManager.process(this->m_windowManager);
 
-        // Process Game Boar
+        // Process Game Board
         this->m_gameBoard.process();
+
+        // Camera View
+        this->m_cameraManager.processCameraView();
 
         // Clear, Draw, and Display
         this->m_windowManager.clear(); // Clear
