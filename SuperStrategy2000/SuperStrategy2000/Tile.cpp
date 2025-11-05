@@ -12,12 +12,14 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "Tile.h"
 
-// Defining the Static Constant Tile Attributes for ALL Tiles
-const sf::Vector2i Tile::TILE_SIZE = sf::Vector2i(32, 32);
+// Defining the Static Constant Tile Color Attributes for ALL Tiles
 const sf::Color Tile::TILE_FILLCOLOR_DEFAULT = sf::Color::Transparent;
 const sf::Color Tile::TILE_FILLCOLOR_SELECTED = sf::Color::Green;
 const sf::Color Tile::TILE_OUTLINECOLOR_DEFAULT = sf::Color::Black;
 const sf::Color Tile::TILE_OUTLINECOLOR_SELECTED = sf::Color::Green;
+
+// Defining the Statc Tile Size Attribute for ALL Tiles
+sf::Vector2i Tile::TILE_SIZE = sf::Vector2i(32, 32); // Default to 32x32
 
 Tile::Tile(sf::Vector2i _tilePosition) {
 	// Tile Attributes
