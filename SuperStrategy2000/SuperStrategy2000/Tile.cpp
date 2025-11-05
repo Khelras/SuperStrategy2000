@@ -24,7 +24,7 @@ Tile::Tile(sf::Vector2i _tilePosition) {
 	this->m_tileShape.setSize(sf::Vector2f(Tile::TILE_SIZE.x, Tile::TILE_SIZE.y));
 	this->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_DEFAULT); // Fill Color
 	this->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_DEFAULT); // Outline Color
-	this->m_tileShape.setOutlineThickness(1.0f);
+	this->m_tileShape.setOutlineThickness(-1.0f);
 
 	// Tile Attributes
 	this->m_tilePosition = _tilePosition;
