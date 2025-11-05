@@ -61,24 +61,24 @@ void EventManager::process(WindowManager& _windowManager) {
                     // Left-Button Mouse Pressed Event
                     if (mousePressed->button == sf::Mouse::Button::Left) {
                         // Refernece to Game Board
-                        Grid& gameBoard = GameManager::getInstance()->m_gameBoard;
+                        Grid* gameBoard = GameManager::getInstance()->m_gameBoard;
 
                         // If there is a pre-exisiting Selection
-                        if (gameBoard.m_selectedTile != nullptr) {  
+                        if (gameBoard->m_selectedTile != nullptr) {  
                             // Reset Selection
-                            gameBoard.m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_DEFAULT);
+                            gameBoard->m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_DEFAULT);
                         }
 
                         // There is NO Tile being Hovered
-                        if (gameBoard.m_hoverTile == nullptr) {
+                        if (gameBoard->m_hoverTile == nullptr) {
                             // Remove Selection
-                            gameBoard.m_selectedTile = nullptr;
+                            gameBoard->m_selectedTile = nullptr;
                         }
                         // There IS a Tile being Hovered
-                        else if (gameBoard.m_hoverTile != nullptr) {
+                        else if (gameBoard->m_hoverTile != nullptr) {
                             // New Selection
-                            gameBoard.m_selectedTile = gameBoard.m_hoverTile;
-                            gameBoard.m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_SELECTED);
+                            gameBoard->m_selectedTile = gameBoard->m_hoverTile;
+                            gameBoard->m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_SELECTED);
                         }
                     }
                 }

@@ -23,7 +23,8 @@ sf::Vector2i Tile::TILE_SIZE = sf::Vector2i(32, 32); // Default to 32x32
 
 Tile::Tile(sf::Vector2i _tilePosition) {
 	// Tile Attributes
-	this->m_tileShape.setSize(sf::Vector2f(Tile::TILE_SIZE.x, Tile::TILE_SIZE.y));
+	sf::Vector2f tileSize = sf::Vector2f(static_cast<float>(Tile::TILE_SIZE.x), static_cast<float>(Tile::TILE_SIZE.y));
+	this->m_tileShape.setSize(tileSize);
 	this->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_DEFAULT); // Fill Color
 	this->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_DEFAULT); // Outline Color
 	this->m_tileShape.setOutlineThickness(-1.0f);

@@ -16,18 +16,15 @@ Mail        : angelo.bohol@mds.ac.nz
 
 class Grid {
 public:
-	// Grid Size
-	static const int GRID_SIZE_X = 10;
-	static const int GRID_SIZE_Y = 12;
-
 	// Grid Attributes
-	sf::RectangleShape m_gridBackground;
-	Tile* m_grid[GRID_SIZE_Y][GRID_SIZE_X];
-	Tile* m_selectedTile;
-	Tile* m_hoverTile;
+	sf::RectangleShape m_gridBackground; // Grid Space
+	std::vector<std::vector<Tile*>> m_grid; // 2D Grid Array
+	sf::Vector2i m_gridSize; // Size of Grid Array
+	Tile* m_selectedTile; // The Selected Tile on the Grid
+	Tile* m_hoverTile; // The Hovered Tile on the Grid
 
 	// Constructor and Destructor
-	Grid(); // Constructor
+	Grid(sf::Vector2i _gridSize, sf::Vector2i _tileSize); // Constructor
 	~Grid(); // Destructor
 
 	// Grid Functions
