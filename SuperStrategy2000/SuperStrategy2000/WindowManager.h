@@ -5,7 +5,7 @@ Auckland
 New Zealand
 (c) 2025 Media Design School
 File Name   : WindowManager.h
-Description : Declares the WindowManager Class Functions and Properties. Uses a Singleton Design Pattern.
+Description : Declares the WindowManager Class Functions and Properties.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/

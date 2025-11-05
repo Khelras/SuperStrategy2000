@@ -4,22 +4,23 @@ Media Design School
 Auckland
 New Zealand
 (c) 2025 Media Design School
-File Name   : EventManager.h
-Description : Declares the EventManager Class Functions and Properties.
+File Name   : CameraManager.h
+Description : Declares the CameraManager Class Functions and Properties.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
-#include "WindowManager.h"
+#include <SFML/Graphics.hpp>
 
-class EventManager {
+class CameraManager {
 public:
-	// Constructor and Destructor
-	EventManager(); // Constructor
-	~EventManager(); // Destructor
+	// Views
+	sf::View m_cameraView; // View for the Moving Camera
+	sf::View m_uiView; // View for the User Interface
 
-	// Event Manager Functions
-	void process(WindowManager& _windowManager); // Processes all the Events
+	// Constructor and Destructor
+	CameraManager();
+	~CameraManager();
 };
 
