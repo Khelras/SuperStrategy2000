@@ -14,6 +14,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "GameManager.h"
 
 CameraManager::CameraManager() {
+
 }
 
 CameraManager::~CameraManager() {
@@ -25,7 +26,6 @@ void CameraManager::processCameraView() {
 
 	// Set the Camera View
 	this->m_cameraView.setSize(sf::Vector2f(mainWindow.getSize())); // Setting to the Size of the Main Window
-	this->m_cameraView.setCenter(mainWindow.getDefaultView().getCenter());
 	this->m_cameraView.zoom(1.0f); // Zoom
 	mainWindow.setView(this->m_cameraView); // Setting the View of Main Window
 }
@@ -38,4 +38,13 @@ void CameraManager::processUIView() {
 	this->m_uiView.setSize(sf::Vector2f(mainWindow.getSize())); // Setting to the Size of the Main Window
 	this->m_cameraView.setCenter(mainWindow.getDefaultView().getCenter());
 	mainWindow.setView(this->m_uiView); // Setting the View of Main Window
+}
+
+void CameraManager::centerCameraView() {
+	// Game Board
+	Grid* gameBoard = GameManager::getInstance()->m_gameBoard;
+
+	// Center of Game Board
+	sf::Vector2f center = gameBoard->m_gridBackground.getGlobalBounds().getCenter();
+	this->m_cameraView.setCenter(center);
 }

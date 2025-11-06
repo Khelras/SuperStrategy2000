@@ -52,7 +52,6 @@ void WindowManager::draw() {
     if (this->m_mainWindow.isOpen() == true) {
         // Draw the Game Board
         Grid* gameBoard = GameManager::getInstance()->m_gameBoard; // Pointer to the Game Board
-        gameBoard->m_gridBackground.setPosition(sf::Vector2f(Grid::MARGIN, Grid::MARGIN)); // Margin from Origin (0, 0)
         this->m_mainWindow.draw(gameBoard->m_gridBackground); // Draw the Background of the Board
 
         // Draw the Tiles of the Game Board

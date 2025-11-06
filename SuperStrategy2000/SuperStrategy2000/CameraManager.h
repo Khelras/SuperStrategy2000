@@ -26,5 +26,6 @@ public:
 	// Camera Manager Functions
 	void processCameraView(); // Camera View Process Loop
 	void processUIView(); // UI View Process Loop
+	void centerCameraView(); // Centers Camera View to the Game Board
 };
 

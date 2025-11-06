@@ -28,6 +28,9 @@ void GameManager::process() {
     square.setPosition({ 0, 0 });
     square.setFillColor(sf::Color::Red);
 
+    // Centers the Camera View relative to Game Board
+    this->m_cameraManager.centerCameraView();
+
     // Game Loop based on Window Manager Process
     while (this->m_windowManager.process() == true) {
         // Process Events

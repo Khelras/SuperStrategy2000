@@ -74,6 +74,7 @@ Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _tileSize) {
 	float gridSpaceY = static_cast<float>(Tile::TILE_SIZE.y * this->m_gridSize.y); // Static Cast to Float
 	this->m_gridBackground.setSize(sf::Vector2f(gridSpaceX, gridSpaceY));
 	this->m_gridBackground.setFillColor(sf::Color::White); // White
+	this->m_gridBackground.setPosition(sf::Vector2f(Grid::MARGIN, Grid::MARGIN)); // Account for the Margin
 }
 
 Grid::~Grid() {
