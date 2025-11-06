@@ -23,7 +23,7 @@ public:
 	CameraManager m_cameraManager; // Camera Manager
 
 	// Game Board Grid
-	Grid m_gameBoard;
+	Grid* m_gameBoard;
 
 	// Getting Singleton Instance
 	static GameManager* getInstance(); // Return the Singleton Instance

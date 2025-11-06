@@ -4,9 +4,11 @@
 GameManager* GameManager::m_instance = nullptr;
 
 GameManager::GameManager() {
+    this->m_gameBoard = new Grid(sf::Vector2i(20, 20), sf::Vector2i(32, 32));
 }
 
 GameManager::~GameManager() {
+    delete(this->m_gameBoard);
 }
 
 GameManager* GameManager::getInstance() {
@@ -21,13 +23,18 @@ GameManager* GameManager::getInstance() {
 }
 
 void GameManager::process() {
+    // Top-Left Square --- REMOVE LATER ---
+    sf::RectangleShape square({ 100, 100 });
+    square.setPosition({ 0, 0 });
+    square.setFillColor(sf::Color::Red);
+
     // Game Loop based on Window Manager Process
     while (this->m_windowManager.process() == true) {
         // Process Events
         this->m_eventManager.process(this->m_windowManager);
 
         // Process Game Board
-        this->m_gameBoard.process();
+        this->m_gameBoard->process();
 
         // Camera View
         this->m_cameraManager.processCameraView();
@@ -35,6 +42,7 @@ void GameManager::process() {
         // Clear, Draw, and Display
         this->m_windowManager.clear(); // Clear
         this->m_windowManager.draw(); // Draw
+        this->m_windowManager.m_mainWindow.draw(square); // --- REMOVE LATER ---
         this->m_windowManager.display(); // Display
     }
 }
