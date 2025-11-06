@@ -15,6 +15,10 @@ Mail        : angelo.bohol@mds.ac.nz
 
 class CameraManager {
 public:
+	// Static Constant Base Resolutions
+	static const sf::Vector2f BASE_4X3; // For 4:3 Aspect Ratios
+	static const sf::Vector2f BASE_16X9; // For 16:9 Aspect Rations
+
 	// Views
 	sf::View m_cameraView; // View for the Moving Camera
 	sf::View m_uiView; // View for the User Interface

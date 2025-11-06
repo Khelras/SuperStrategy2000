@@ -13,8 +13,11 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "CameraManager.h"
 #include "GameManager.h"
 
-CameraManager::CameraManager() {
+// Defining the Static Constant Base Resolutions
+const sf::Vector2f CameraManager::BASE_4X3 = sf::Vector2f(800, 600);
+const sf::Vector2f CameraManager::BASE_16X9 = sf::Vector2f(920, 540);
 
+CameraManager::CameraManager() {
 }
 
 CameraManager::~CameraManager() {
