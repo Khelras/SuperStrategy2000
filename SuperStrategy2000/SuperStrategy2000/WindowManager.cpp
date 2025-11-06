@@ -50,12 +50,10 @@ void WindowManager::clear() {
 void WindowManager::draw() {
     // Draw to Main Window
     if (this->m_mainWindow.isOpen() == true) {
-        // Draw the Game Board to the Center of the Main Window
-        Grid* gameBoard = GameManager::getInstance()->m_gameBoard; // Referece to Game Board
-        float centerOffsetX = (this->m_mainWindow.getSize().x / 2) - (gameBoard->m_gridBackground.getSize().x / 2); // Center Offset X
-        float centerOffsetY = (this->m_mainWindow.getSize().y / 2) - (gameBoard->m_gridBackground.getSize().y / 2); // Center Offset Y
-        gameBoard->m_gridBackground.setPosition(sf::Vector2f(centerOffsetX, centerOffsetY)); // Setting the Position of GameBoard to the Center
-        this->m_mainWindow.draw(gameBoard->m_gridBackground);
+        // Draw the Game Board
+        Grid* gameBoard = GameManager::getInstance()->m_gameBoard; // Pointer to the Game Board
+        gameBoard->m_gridBackground.setPosition(sf::Vector2f(Grid::MARGIN, Grid::MARGIN)); // Margin from Origin (0, 0)
+        this->m_mainWindow.draw(gameBoard->m_gridBackground); // Draw the Background of the Board
 
         // Draw the Tiles of the Game Board
         for (int y = 0; y < gameBoard->m_gridSize.y; y++) { // Loop down the y-axis

@@ -16,6 +16,9 @@ Mail        : angelo.bohol@mds.ac.nz
 
 class Grid {
 public:
+	// Static Constant Margin
+	static const int MARGIN = 100;
+
 	// Grid Attributes
 	sf::RectangleShape m_gridBackground; // Grid Space
 	std::vector<std::vector<Tile*>> m_grid; // 2D Grid Array
