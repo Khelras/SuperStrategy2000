@@ -28,6 +28,9 @@ void GameManager::process() {
     square.setPosition({ 0, 0 });
     square.setFillColor(sf::Color::Red);
 
+    // Centers the Camera View relative to Game Board
+    this->m_cameraManager.centerCameraView();
+
     // Game Loop based on Window Manager Process
     while (this->m_windowManager.process() == true) {
         // Process Events
@@ -36,13 +39,22 @@ void GameManager::process() {
         // Process Game Board
         this->m_gameBoard->process();
 
-        // Camera View
-        this->m_cameraManager.processCameraView();
-
-        // Clear, Draw, and Display
+        // ==================== Clear ====================
         this->m_windowManager.clear(); // Clear
+        // -------------------- Clear --------------------
+
+        // ==================== Draw ====================
+        // Draw World Actors
+        this->m_cameraManager.processCameraView(); // Camera View
         this->m_windowManager.draw(); // Draw
         this->m_windowManager.m_mainWindow.draw(square); // --- REMOVE LATER ---
+
+        // Draw UI
+        this->m_cameraManager.processUIView(); // UI View
+        // -------------------- Draw --------------------
+
+        // ==================== Display ====================
         this->m_windowManager.display(); // Display
+        // -------------------- Display --------------------
     }
 }

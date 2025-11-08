@@ -31,6 +31,6 @@ public:
 	~Grid(); // Destructor
 
 	// Grid Functions
-	void process(); 
+	void process();
 };
 
