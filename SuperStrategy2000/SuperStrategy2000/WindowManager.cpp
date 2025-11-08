@@ -28,9 +28,40 @@ WindowManager::WindowManager() {
 
     // Debug Window
     this->m_debugWindow.close();
+
+    // Debug Text
+    if (this->m_debugFont.openFromFile("fonts/arial.ttf")) {
+        // Font Loaded Successfully
+        this->m_debugText = new sf::Text(this->m_debugFont);
+        this->m_debugText->setCharacterSize(20); // Set Text Size to 20px
+        this->m_debugText->setFillColor(sf::Color::White); // Set Text Color to White
+        
+        // Debug Text String
+        std::string debugText =
+            "Game Settings:\n"
+            "[R] Increase Resolution\n"
+            "[V] Enable V-Sync\n"
+            "[S] Increase Sound"
+            "[SHIFT + ...] Inverts\n"
+            "\n"
+            "Press [ESC] to Save Changes and Exit!";
+
+        // Set the Debug Text to the Debug Text String
+        this->m_debugText->setString(debugText);
+    }
+    else {
+        // Loading Failed
+        this->m_debugText = nullptr;
+    }
 }
 
 WindowManager::~WindowManager() {
+    // Ensure Debug Text Exists
+    if (this->m_debugText != nullptr) {
+        // Delete Debug Text
+        delete(this->m_debugText);
+        this->m_debugText = nullptr;
+    }
 }
 
 bool WindowManager::process() {
@@ -67,6 +98,15 @@ void WindowManager::clear() {
 void WindowManager::draw() {
     // Draw to Debug Window
     if (this->m_debugWindow.isOpen() == true) {
+        // Ensure Debug Text Exists
+        if (this->m_debugText != nullptr) {
+            // Draw the Debug Text
+            float textCenterX = (this->m_debugWindow.getSize().x - this->m_debugText->getLocalBounds().size.x) / 2.0f;
+            float textCenterY = (this->m_debugWindow.getSize().y - this->m_debugText->getLocalBounds().size.y) / 2.0f;
+            this->m_debugText->setPosition(sf::Vector2f(textCenterX, textCenterX));
+            this->m_debugWindow.draw(*(this->m_debugText));
+        }
+
         return; // Only Process Debug Window
     }
 

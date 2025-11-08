@@ -33,6 +33,10 @@ public:
 	void closeDebugWindow(); // Close the Debug Window
 
 private:
+	// Debug Text
+	sf::Font m_debugFont;
+	sf::Text* m_debugText;
+
 	// List of Resolutions Supported
 	const std::list<sf::Vector2f> m_resolutions = {
 		{ 640, 480 }, { 800, 600 }, { 1024, 768 },
