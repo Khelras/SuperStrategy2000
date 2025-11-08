@@ -59,7 +59,7 @@ void CameraManager::processCameraView() {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(mainWindow); // Mouse Position relative to the Main Window
 	
 	// Mouse Camera based on the Mouse Position relative to the Window Resolution
-	float move = this->CAMERA_MOVE_SPEED;
+	float move = 7.5f * this->CAMERA_MOVE_SPEED * GameManager::getInstance()->m_deltaTime;
 	if (mousePosition.x <= 0) { // Mouse is at the Left of the Window
 		this->moveCamera(sf::Vector2f(-move, 0));
 	}
