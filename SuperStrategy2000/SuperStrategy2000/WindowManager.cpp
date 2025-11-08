@@ -14,8 +14,13 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "GameManager.h"
 
 WindowManager::WindowManager() {
-    // Main Window
-    this->m_mainWindow.create(sf::VideoMode({ 800 * 2, 600 * 2 }), "SFML works!");
+    // Game Settings
+    GameSettings* settings = GameSettings::getInstance();
+
+    // Apply Settings
+    sf::Vector2u resolution(settings->m_windowX, settings->m_windowY);
+    this->m_mainWindow.create(sf::VideoMode(resolution), "Super Strategy 2000!");
+    this->m_mainWindow.setVerticalSyncEnabled(settings->m_vsync);
 
     // Debug Window
     this->m_debugWindow.close();
@@ -27,6 +32,13 @@ WindowManager::~WindowManager() {
 bool WindowManager::process() {
     // Allow Processing ONLF IF the Main Window is open
     if (this->m_mainWindow.isOpen() == true) {
+        // Game Settings
+        GameSettings* settings = GameSettings::getInstance();
+
+        // Apply Settings
+        this->m_mainWindow.setSize(sf::Vector2u(settings->m_windowX, settings->m_windowY));
+        this->m_mainWindow.setVerticalSyncEnabled(settings->m_vsync);
+
         // Return True
         return true;
     }

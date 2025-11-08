@@ -24,8 +24,7 @@ private:
 
 	// Private Constructor
 	GameSettings() {
-		// Pre-Load Game Settings
-		GameSettingsIO::LoadGameSettings();
+		this->loadGameSettings();
 	}; 
 
 	// Delete Copy Constructor and Assignment
@@ -50,11 +49,8 @@ public:
 	int m_windowY = 0; // Height of Window
 	bool m_vsync = false; // Enable v-sync?
 	int m_masterVolumn = 50; // Volumn of the Game
-};
 
-// Game Settings Input (Loading) and Output (Saving)
-class GameSettingsIO {
-public:
-	static bool LoadGameSettings();
-	static bool SaveGameSettings();
+	// Game Settings Load and Save Functions
+	bool loadGameSettings(); 
+	bool saveGameSettings();
 };
