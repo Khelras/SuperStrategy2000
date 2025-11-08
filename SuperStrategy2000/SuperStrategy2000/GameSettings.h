@@ -23,7 +23,10 @@ private:
 	static GameSettings* m_instance;
 
 	// Private Constructor
-	GameSettings() {}; 
+	GameSettings() {
+		// Pre-Load Game Settings
+		GameSettingsIO::LoadGameSettings();
+	}; 
 
 	// Delete Copy Constructor and Assignment
 	GameSettings(GameSettings const&) = delete;

@@ -4,12 +4,16 @@
 GameManager* GameManager::m_instance = nullptr;
 
 GameManager::GameManager() {
+    // Instantiate the Game Settings Singleton Instance
+    GameSettings::getInstance();
+
     // --- REMOVE LATER ---
     Level* testLevel = new Level(0, sf::Vector2i(20, 20), sf::Vector2i(32, 32));
     this->m_levelManager.m_levels.push_back(testLevel);
     this->m_levelManager.m_currentLevel = testLevel;
     // --- REMOVE LATER ---
 
+    // Delta Time
     this->m_deltaTime = 0.0f;
 }
 
