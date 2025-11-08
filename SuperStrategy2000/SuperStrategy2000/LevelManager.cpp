@@ -65,7 +65,7 @@ Level* LevelManager::findLevel(int _levelNumber) {
 		if (level->m_levelNumber == _levelNumber) {
 			// Update Result
 			result = level;
-			return; // End Loop
+			break; // End Loop
 		}
 	}
 
