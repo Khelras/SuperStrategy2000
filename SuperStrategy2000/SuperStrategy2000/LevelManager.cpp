@@ -30,7 +30,11 @@ LevelManager::~LevelManager() {
 }
 
 void LevelManager::process() {
+	// Ensure there is a Selected Level
+	if (this->m_currentLevel == nullptr) return;
 
+	// Process the Game Board of the Current Selected Level
+	this->m_currentLevel->m_gameBoard->process();
 }
 
 void LevelManager::loadLevel(std::string _path) {

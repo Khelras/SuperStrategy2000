@@ -14,6 +14,9 @@
     <Filter Include="Source Files\TileSystem">
       <UniqueIdentifier>{b7509a3d-941c-4c27-8862-17484e710ed0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Level">
+      <UniqueIdentifier>{a2dbaa22-ca5a-45d0-8926-0e83c48a1996}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -43,6 +46,9 @@
     <ClCompile Include="LevelManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -68,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="LevelManager.h">
       <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Source Files\Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 #include "GameSettings.h"
 #include "EventManager.h"
 #include "CameraManager.h"
-#include "Grid.h"
+#include "LevelManager.h"
 
 class GameManager {
 private:
@@ -21,9 +21,7 @@ public:
 	WindowManager m_windowManager; // Window Manager
 	EventManager m_eventManager; // Event Manager
 	CameraManager m_cameraManager; // Camera Manager
-
-	// Game Board Grid
-	Grid* m_gameBoard;
+	LevelManager m_levelManager; // Level Manager
 
 	// Delta Time
 	float m_deltaTime;
