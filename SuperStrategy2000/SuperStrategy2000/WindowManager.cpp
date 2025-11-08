@@ -22,6 +22,10 @@ WindowManager::WindowManager() {
     this->m_mainWindow.create(sf::VideoMode(resolution), "Super Strategy 2000!");
     this->m_mainWindow.setVerticalSyncEnabled(settings->m_vsync);
 
+    // Mouse
+    sf::Mouse::setPosition(sf::Vector2i(settings->m_windowX / 2, settings->m_windowY / 2));
+    this->m_mainWindow.setMouseCursorGrabbed(true); // Prevent Mouse from Exiting the Main Window
+
     // Debug Window
     this->m_debugWindow.close();
 }
@@ -48,18 +52,24 @@ bool WindowManager::process() {
 }
 
 void WindowManager::clear() {
+    // Clear the Debug Window
+    if (this->m_debugWindow.isOpen() == true) {
+        this->m_debugWindow.clear();
+        return; // Only Process Debug Window
+    }
+
     // Clear the Main Window
     if (this->m_mainWindow.isOpen() == true) {
         this->m_mainWindow.clear();
     }
-
-    // Clear the Debug Window
-    if (this->m_debugWindow.isOpen() == true) {
-        this->m_debugWindow.clear();
-    }
 }
 
 void WindowManager::draw() {
+    // Draw to Debug Window
+    if (this->m_debugWindow.isOpen() == true) {
+        return; // Only Process Debug Window
+    }
+
     // Draw to Main Window
     if (this->m_mainWindow.isOpen() == true) {
         // Draw the Current Level
@@ -85,31 +95,43 @@ void WindowManager::draw() {
             }
         }
     }
-
-    // Draw to Debug Window
-    if (this->m_debugWindow.isOpen() == true) {
-
-    }
 }
 
 void WindowManager::display() {
-    // Display to Main Window
-    if (this->m_mainWindow.isOpen() == true) {
-        this->m_mainWindow.display();
-    }
-
     // Display to Debug Window
     if (this->m_debugWindow.isOpen() == true) {
         this->m_debugWindow.display();
+        return; // Only Process Debug Window
+    }
+
+    // Display to Main Window
+    if (this->m_mainWindow.isOpen() == true) {
+        this->m_mainWindow.display();
     }
 }
 
 void WindowManager::openDebugWindow() {
     // Create Debug Window
-    this->m_debugWindow.create(sf::VideoMode({ 400, 400 }), "Super Debug 2000!");
+    this->m_debugWindow.create(sf::VideoMode({ 400, 400 }), "Super Debug 2000!", sf::Style::Titlebar);
+
+    // Disable the Mouse Clamp to Main Window
+    this->m_mainWindow.setMouseCursorGrabbed(false);
 
     // Move Debug Window to the right of Main Window
     sf::Vector2i mainWindowPosition = this->m_mainWindow.getPosition();
     sf::Vector2u mainWindowSize = this->m_mainWindow.getSize();
     this->m_debugWindow.setPosition(sf::Vector2i(mainWindowPosition.x + mainWindowSize.x, mainWindowPosition.y));
+}
+
+void WindowManager::closeDebugWindow() {
+    // Close Debug Window
+    this->m_debugWindow.close();
+
+    // Re-Center and Clamp the Mouse to Main Window
+    GameSettings* settings = GameSettings::getInstance(); // Game Settings
+    sf::Mouse::setPosition(sf::Vector2i(settings->m_windowX / 2, settings->m_windowY / 2));
+    this->m_mainWindow.setMouseCursorGrabbed(true); // Prevent Mouse from Exiting the Main Window
+
+    // Request Focus to Main Window
+    this->m_mainWindow.requestFocus();
 }

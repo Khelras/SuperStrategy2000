@@ -53,11 +53,11 @@ void GameManager::process() {
         // Process Events
         this->m_eventManager.process(this->m_windowManager);
 
-        // Prevent further Game Processes if Debug Window is Open
-        if (this->m_windowManager.m_debugWindow.isOpen() == true) continue;
-
-        // Process Level Manager
-        this->m_levelManager.process();
+        // Allow Game Processes if Debug Window is Closed
+        if (this->m_windowManager.m_debugWindow.isOpen() == false) {
+            // Process Level Manager
+            this->m_levelManager.process();
+        }
 
         // -------------------- Clear --------------------
         this->m_windowManager.clear(); // Clear

@@ -30,6 +30,7 @@ public:
 	void draw(); // Draw to Screen
 	void display(); // Display to Screen
 	void openDebugWindow(); // Open the Debug Window
+	void closeDebugWindow(); // Close the Debug Window
 
 private:
 	// List of Resolutions Supported

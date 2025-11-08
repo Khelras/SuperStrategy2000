@@ -59,17 +59,18 @@ void CameraManager::processCameraView() {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(mainWindow); // Mouse Position relative to the Main Window
 	
 	// Mouse Camera based on the Mouse Position relative to the Window Resolution
+	float tolerance = 5.0f;
 	float move = 7.5f * this->CAMERA_MOVE_SPEED * GameManager::getInstance()->m_deltaTime;
-	if (mousePosition.x <= 0) { // Mouse is at the Left of the Window
+	if (mousePosition.x <= 0 + tolerance) { // Mouse is at the Left of the Window
 		this->moveCamera(sf::Vector2f(-move, 0));
 	}
-	if (mousePosition.x >= static_cast<float>(resolution.x)) { // Mouse is at the Right of the Window
+	if (mousePosition.x >= static_cast<float>(resolution.x) - tolerance) { // Mouse is at the Right of the Window
 		this->moveCamera(sf::Vector2f(move, 0));
 	}
-	if (mousePosition.y <= 0) { // Mouse is at the Top of the Window
+	if (mousePosition.y <= 0 + tolerance) { // Mouse is at the Top of the Window
 		this->moveCamera(sf::Vector2f(0, -move));
 	}
-	if (mousePosition.y >= static_cast<float>(resolution.y)) { // Mouse is at the Bottom of the Window
+	if (mousePosition.y >= static_cast<float>(resolution.y) - tolerance) { // Mouse is at the Bottom of the Window
 		this->moveCamera(sf::Vector2f(0, move));
 	}
 }

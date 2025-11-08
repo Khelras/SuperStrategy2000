@@ -89,22 +89,25 @@ void EventManager::process(WindowManager& _windowManager) {
                 mainWindow.close();
                 debugWindow.close();
             }
-        }
-
-        // Debug Window Events
-        while (const std::optional event = debugWindow.pollEvent()) {
-            // Close Event
-            if (event->is<sf::Event::Closed>()) {
-                // Close Debug Window
-                debugWindow.close();
-            }
 
             // Keyboard Pressed Events
             if (const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) {
                 // Escape Key Pressed Event
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
                     // Close Debug Window
-                    debugWindow.close();
+                    _windowManager.closeDebugWindow();
+                }
+            }
+        }
+
+        // Debug Window Events
+        while (const std::optional event = debugWindow.pollEvent()) {
+            // Keyboard Pressed Events
+            if (const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+                // Escape Key Pressed Event
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
+                    // Close Debug Window
+                    _windowManager.closeDebugWindow();
                 }
             }
         }
