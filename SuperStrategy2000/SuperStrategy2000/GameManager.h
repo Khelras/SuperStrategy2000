@@ -25,6 +25,9 @@ public:
 	// Game Board Grid
 	Grid* m_gameBoard;
 
+	// Delta Time
+	float m_deltaTime;
+
 	// Getting Singleton Instance
 	static GameManager* getInstance(); // Return the Singleton Instance
 

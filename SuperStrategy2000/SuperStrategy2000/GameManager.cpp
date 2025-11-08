@@ -5,6 +5,7 @@ GameManager* GameManager::m_instance = nullptr;
 
 GameManager::GameManager() {
     this->m_gameBoard = new Grid(sf::Vector2i(20, 20), sf::Vector2i(32, 32));
+    this->m_deltaTime = 0.0f;
 }
 
 GameManager::~GameManager() {
