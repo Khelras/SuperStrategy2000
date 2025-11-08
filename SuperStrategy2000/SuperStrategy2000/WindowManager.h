@@ -12,6 +12,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <list>
 
 class WindowManager {
 public:
@@ -29,4 +30,12 @@ public:
 	void draw(); // Draw to Screen
 	void display(); // Display to Screen
 	void openDebugWindow(); // Open the Debug Window
+
+private:
+	// List of Resolutions Supported
+	const std::list<sf::Vector2f> m_resolutions = {
+		{ 640, 480 }, { 800, 600 }, { 1024, 768 },
+		{ 1280, 720 }, { 1280, 960 }, { 1366, 768 },
+		{ 1400, 1050 }, { 1600, 1200 }, { 1920, 1080 }
+	};
 };
