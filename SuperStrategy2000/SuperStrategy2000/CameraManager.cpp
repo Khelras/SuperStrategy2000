@@ -51,3 +51,15 @@ void CameraManager::centerCameraView() {
 	sf::Vector2f center = gameBoard->m_gridBackground.getGlobalBounds().getCenter();
 	this->m_cameraView.setCenter(center);
 }
+
+sf::Vector2i CameraManager::getAspectRatio(sf::Vector2f _resolution) {
+	int x = static_cast<int>(_resolution.x);
+	int y = static_cast<int>(_resolution.y);
+
+	// Getting the Greatest Common Divisor
+	int gcd = std::gcd(x, y);
+
+	// Using the GCD to get the Aspect Ratio
+	sf::Vector2i aspectRatio(x / gcd, y / gcd);
+	return aspectRatio;
+}

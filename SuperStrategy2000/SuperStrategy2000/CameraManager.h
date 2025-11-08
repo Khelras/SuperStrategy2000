@@ -12,6 +12,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <numeric>
 
 class CameraManager {
 public:
@@ -31,5 +32,6 @@ public:
 	void processCameraView(); // Camera View Process Loop
 	void processUIView(); // UI View Process Loop
 	void centerCameraView(); // Centers Camera View to the Game Board
+	sf::Vector2i getAspectRatio(sf::Vector2f _resolution); // Returns the Aspect Ratio of a given Resolution
 };
 
