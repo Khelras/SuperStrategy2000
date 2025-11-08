@@ -122,9 +122,9 @@ void CameraManager::moveCamera(sf::Vector2f _offset) {
 		// Restrict to the Left Side of Game Board
 		this->m_cameraView.setCenter(sf::Vector2f(gameBoardBounds.position.x, cameraCenter.y));
 	}
-	if (cameraCenter.x >= gameBoardBounds.size.x) { // Beyond the Right Side of Game Board
+	if (cameraCenter.x >= gameBoardBounds.position.x + gameBoardBounds.size.x) { // Beyond the Right Side of Game Board
 		// Restrict to the Right Side of Game Board
-		this->m_cameraView.setCenter(sf::Vector2f(gameBoardBounds.size.x, cameraCenter.y));
+		this->m_cameraView.setCenter(sf::Vector2f(gameBoardBounds.position.x + gameBoardBounds.size.x, cameraCenter.y));
 	}
 	
 	// Camera Position
@@ -135,8 +135,8 @@ void CameraManager::moveCamera(sf::Vector2f _offset) {
 		// Restrict to the Top Side of Game Board
 		this->m_cameraView.setCenter(sf::Vector2f(cameraCenter.x, gameBoardBounds.position.y));
 	}
-	if (cameraCenter.y >= gameBoardBounds.size.y) { // Beyond the Bottom Side of Game Board
+	if (cameraCenter.y >= gameBoardBounds.position.y + gameBoardBounds.size.y) { // Beyond the Bottom Side of Game Board
 		// Restrict to the Bottom Side of Game Board
-		this->m_cameraView.setCenter(sf::Vector2f(cameraCenter.x, gameBoardBounds.size.y));
+		this->m_cameraView.setCenter(sf::Vector2f(cameraCenter.x, gameBoardBounds.position.y + gameBoardBounds.size.y));
 	}
 }
