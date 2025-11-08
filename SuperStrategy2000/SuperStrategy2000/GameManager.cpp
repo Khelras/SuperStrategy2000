@@ -39,13 +39,22 @@ void GameManager::process() {
         // Process Game Board
         this->m_gameBoard->process();
 
-        // Camera View
-        this->m_cameraManager.processCameraView();
-
-        // Clear, Draw, and Display
+        // ==================== Clear ====================
         this->m_windowManager.clear(); // Clear
+        // -------------------- Clear --------------------
+
+        // ==================== Draw ====================
+        // Draw World Actors
+        this->m_cameraManager.processCameraView(); // Camera View
         this->m_windowManager.draw(); // Draw
         this->m_windowManager.m_mainWindow.draw(square); // --- REMOVE LATER ---
+
+        // Draw UI
+        this->m_cameraManager.processUIView(); // UI View
+        // -------------------- Draw --------------------
+
+        // ==================== Display ====================
         this->m_windowManager.display(); // Display
+        // -------------------- Display --------------------
     }
 }
