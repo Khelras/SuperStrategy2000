@@ -21,7 +21,7 @@ public:
 	static const sf::Vector2f BASE_16X9; // For 16:9 Aspect Rations
 
 	// Constant Camera Move Speed
-	const float CAMERA_MOVE_SPEED = 10.0f;
+	const float CAMERA_MOVE_SPEED = 5.0f;
 
 	// Views
 	sf::View m_cameraView; // View for the Moving Camera
