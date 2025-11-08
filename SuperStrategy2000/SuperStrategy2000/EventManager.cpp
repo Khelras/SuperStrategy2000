@@ -33,8 +33,9 @@ void EventManager::process(WindowManager& _windowManager) {
         while (const std::optional event = mainWindow.pollEvent()) {
             // Close Event
             if (event->is<sf::Event::Closed>()) {
-                // Close Debug Window
+                // Close Windows
                 mainWindow.close();
+                debugWindow.close();
             }
 
             // Mouse Pressed Events
@@ -64,7 +65,7 @@ void EventManager::process(WindowManager& _windowManager) {
                 }
             }
 
-            // Keyboard Pressed Evens
+            // Keyboard Pressed Events
             if (const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) {
                 // Escape Key Pressed Event
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
@@ -84,8 +85,9 @@ void EventManager::process(WindowManager& _windowManager) {
         while (const std::optional event = mainWindow.pollEvent()) {
             // Close Event
             if (event->is<sf::Event::Closed>()) {
-                // Close Debug Window
+                // Close Windows
                 mainWindow.close();
+                debugWindow.close();
             }
         }
 
@@ -95,6 +97,15 @@ void EventManager::process(WindowManager& _windowManager) {
             if (event->is<sf::Event::Closed>()) {
                 // Close Debug Window
                 debugWindow.close();
+            }
+
+            // Keyboard Pressed Events
+            if (const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+                // Escape Key Pressed Event
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
+                    // Close Debug Window
+                    debugWindow.close();
+                }
             }
         }
     }
