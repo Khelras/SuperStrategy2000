@@ -50,8 +50,9 @@ void WindowManager::clear() {
 void WindowManager::draw() {
     // Draw to Main Window
     if (this->m_mainWindow.isOpen() == true) {
-        // Draw the Game Board
-        Grid* gameBoard = GameManager::getInstance()->m_gameBoard; // Pointer to the Game Board
+        // Draw the Current Level
+        Level* currentLevel = GameManager::getInstance()->m_levelManager.m_currentLevel; 
+        Grid* gameBoard = currentLevel->m_gameBoard;
         this->m_mainWindow.draw(gameBoard->m_gridBackground); // Draw the Background of the Board
 
         // Draw the Tiles of the Game Board

@@ -4,12 +4,17 @@
 GameManager* GameManager::m_instance = nullptr;
 
 GameManager::GameManager() {
-    this->m_gameBoard = new Grid(sf::Vector2i(20, 20), sf::Vector2i(32, 32));
+    // --- REMOVE LATER ---
+    Level* testLevel = new Level(0, sf::Vector2i(20, 20), sf::Vector2i(32, 32));
+    this->m_levelManager.m_levels.push_back(testLevel);
+    this->m_levelManager.m_currentLevel = testLevel;
+    // --- REMOVE LATER ---
+
     this->m_deltaTime = 0.0f;
 }
 
 GameManager::~GameManager() {
-    delete(this->m_gameBoard);
+
 }
 
 GameManager* GameManager::getInstance() {
@@ -28,6 +33,7 @@ void GameManager::process() {
     sf::RectangleShape square({ 100, 100 });
     square.setPosition({ 0, 0 });
     square.setFillColor(sf::Color::Red);
+    // Top-Left Square --- REMOVE LATER ---
 
     // Clock to Measure Delta Time
     sf::Clock deltaClock;
@@ -46,14 +52,13 @@ void GameManager::process() {
         // Prevent further Game Processes if Debug Window is Open
         if (this->m_windowManager.m_debugWindow.isOpen() == true) continue;
 
-        // Process Game Board
-        this->m_gameBoard->process();
+        // Process Level Manager
+        this->m_levelManager.process();
 
-        // ==================== Clear ====================
+        // -------------------- Clear --------------------
         this->m_windowManager.clear(); // Clear
         // -------------------- Clear --------------------
-
-        // ==================== Draw ====================
+        // -------------------- Draw --------------------
         // Draw World Actors
         this->m_cameraManager.processCameraView(); // Camera View
         this->m_windowManager.draw(); // Draw
@@ -62,8 +67,7 @@ void GameManager::process() {
         // Draw UI
         this->m_cameraManager.processUIView(); // UI View
         // -------------------- Draw --------------------
-
-        // ==================== Display ====================
+        // -------------------- Display --------------------
         this->m_windowManager.display(); // Display
         // -------------------- Display --------------------
     }

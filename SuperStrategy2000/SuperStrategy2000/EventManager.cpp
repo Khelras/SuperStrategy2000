@@ -42,8 +42,8 @@ void EventManager::process(WindowManager& _windowManager) {
             if (const auto mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) {
                 // Left-Button Mouse Pressed Event
                 if (mousePressed->button == sf::Mouse::Button::Left) {
-                    // Refernece to Game Board
-                    Grid* gameBoard = GameManager::getInstance()->m_gameBoard;
+                    // Pointer to the Game Board of the Current Selected Level
+                    Grid* gameBoard = GameManager::getInstance()->m_levelManager.m_currentLevel->m_gameBoard;
 
                     // If there is a pre-exisiting Selection
                     if (gameBoard->m_selectedTile != nullptr) {

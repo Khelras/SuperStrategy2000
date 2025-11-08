@@ -86,6 +86,8 @@ sfml-window-d.lib
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="WindowManager.cpp" />
@@ -96,6 +98,8 @@ sfml-window-d.lib
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
