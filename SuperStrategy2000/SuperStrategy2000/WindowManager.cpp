@@ -90,3 +90,13 @@ void WindowManager::display() {
         this->m_debugWindow.display();
     }
 }
+
+void WindowManager::openDebugWindow() {
+    // Create Debug Window
+    this->m_debugWindow.create(sf::VideoMode({ 400, 400 }), "Super Debug 2000!");
+
+    // Move Debug Window to the right of Main Window
+    sf::Vector2i mainWindowPosition = this->m_mainWindow.getPosition();
+    sf::Vector2u mainWindowSize = this->m_mainWindow.getSize();
+    this->m_debugWindow.setPosition(sf::Vector2i(mainWindowPosition.x + mainWindowSize.x, mainWindowPosition.y));
+}

@@ -28,4 +28,5 @@ public:
 	void clear(); // Clear the Screen
 	void draw(); // Draw to Screen
 	void display(); // Display to Screen
+	void openDebugWindow(); // Open the Debug Window
 };
