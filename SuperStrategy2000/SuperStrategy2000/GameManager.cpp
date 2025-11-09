@@ -15,6 +15,9 @@ GameManager::GameManager() {
 
     // Delta Time
     this->m_deltaTime = 0.0f;
+
+    // Background Music Sound
+    this->m_soundManager.playMusic("Sounds/BG/background.wav");
 }
 
 GameManager::~GameManager() {
@@ -57,6 +60,9 @@ void GameManager::process() {
         if (this->m_windowManager.m_debugWindow.isOpen() == false) {
             // Process Level Manager
             this->m_levelManager.process();
+
+            // Process Sound Manager
+            this->m_soundManager.process();
         }
 
         // -------------------- Clear --------------------

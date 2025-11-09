@@ -173,23 +173,67 @@ void EventManager::process(WindowManager& _windowManager) {
 
                 // S Key Pressed
                 if (keyPressed->scancode == sf::Keyboard::Scancode::S) {
-                    // Increase Master Volumn
+                    // Increase Master Volume
                     if (this->m_isShiftPressed == false) {
                         // Clamp to 100
-                        if (GameSettings::getInstance()->m_masterVolumn != 100) {
-                            GameSettings::getInstance()->m_masterVolumn++;
+                        if (GameSettings::getInstance()->m_masterVolume != 100) {
+                            GameSettings::getInstance()->m_masterVolume++;
                         }
                     }
-                    // Decrease Master Volumn
+                    // Decrease Master Volume
                     else if (this->m_isShiftPressed == true) {
                         // Clamp to 0
-                        if (GameSettings::getInstance()->m_masterVolumn != 0) {
-                            GameSettings::getInstance()->m_masterVolumn--;
+                        if (GameSettings::getInstance()->m_masterVolume != 0) {
+                            GameSettings::getInstance()->m_masterVolume--;
                         }
                     }
 
-                    // Print Master Volumn to Console
-                    std::cout << "Master Volumn: " << GameSettings::getInstance()->m_masterVolumn;
+                    // Print Master Volume to Console
+                    std::cout << "Master Volume: " << GameSettings::getInstance()->m_masterVolume;
+                    std::cout << std::endl;
+                }
+
+                // E Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::E) {
+                    // Increase Effects Volume
+                    if (this->m_isShiftPressed == false) {
+                        // Clamp to 100
+                        if (GameSettings::getInstance()->m_effectsVolume != 100) {
+                            GameSettings::getInstance()->m_effectsVolume++;
+                        }
+                    }
+                    // Decrease Effects Volume
+                    else if (this->m_isShiftPressed == true) {
+                        // Clamp to 0
+                        if (GameSettings::getInstance()->m_effectsVolume != 0) {
+                            GameSettings::getInstance()->m_effectsVolume--;
+                        }
+                    }
+
+                    // Print Effects Volume to Console
+                    std::cout << "Effects Volume: " << GameSettings::getInstance()->m_effectsVolume;
+                    std::cout << std::endl;
+                }
+
+                // M Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::M) {
+                    // Increase Music Volume
+                    if (this->m_isShiftPressed == false) {
+                        // Clamp to 100
+                        if (GameSettings::getInstance()->m_musicVolume != 100) {
+                            GameSettings::getInstance()->m_musicVolume++;
+                        }
+                    }
+                    // Decrease Music Volume
+                    else if (this->m_isShiftPressed == true) {
+                        // Clamp to 0
+                        if (GameSettings::getInstance()->m_musicVolume != 0) {
+                            GameSettings::getInstance()->m_musicVolume--;
+                        }
+                    }
+
+                    // Print Music Volume to Console
+                    std::cout << "Music Volume: " << GameSettings::getInstance()->m_musicVolume;
                     std::cout << std::endl;
                 }
             }
