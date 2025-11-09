@@ -181,10 +181,10 @@ bool GameSettings::loadGameSettings() {
 
 
 
-	// -------------------- Line: "masterVolumn=<value>" --------------------
-	std::getline(file, line); // "masterVolumn=<value>"
-	std::string masterVolumnName; // The Name
-	std::string masterVolumnValue; // The Value
+	// -------------------- Line: "masterVolume=<value>" --------------------
+	std::getline(file, line); // "masterVolume=<value>"
+	std::string masterVolumeName; // The Name
+	std::string masterVolumeValue; // The Value
 
 	// Loop until '='
 	for (int i = 0; i < line.length(); i++) {
@@ -201,36 +201,36 @@ bool GameSettings::loadGameSettings() {
 		// Position of '=' has NOT been found
 		if (equalsPos == -1) {
 			// Push Back this Character to the Name
-			masterVolumnName.push_back(line[i]);
+			masterVolumeName.push_back(line[i]);
 		}
 		// Position of '=' HAS been found
 		else {
 			// If i is greater than the Position of '='
 			if (i > equalsPos) {
 				// Push Back this Character to the Value
-				masterVolumnValue.push_back(line[i]);
+				masterVolumeValue.push_back(line[i]);
 			}
 		}
 	}
 
 	// If the Name is wrong
-	if (masterVolumnName != "masterVolumn") {
+	if (masterVolumeName != "masterVolume") {
 		// Error Message
 		std::cerr << "Invalid settings file!\n";
 		return false; // Loading Failed
 	}
 
 	// Afterwards
-	this->m_masterVolumn = std::stoi(masterVolumnValue);
+	this->m_masterVolume = std::stoi(masterVolumeValue);
 	equalsPos = -1; // Reset the Position of '='
-	// -------------------- Line: "masterVolumn=<value>" --------------------
+	// -------------------- Line: "masterVolume=<value>" --------------------
 
 
 
-	// -------------------- Line: "effectsVolumn=<value>" --------------------
-	std::getline(file, line); // "effectsVolumn=<value>"
-	std::string effectsVolumnName; // The Name
-	std::string effectsVolumnValue; // The Value
+	// -------------------- Line: "effectsVolume=<value>" --------------------
+	std::getline(file, line); // "effectsVolume=<value>"
+	std::string effectsVolumeName; // The Name
+	std::string effectsVolumeValue; // The Value
 
 	// Loop until '='
 	for (int i = 0; i < line.length(); i++) {
@@ -247,36 +247,36 @@ bool GameSettings::loadGameSettings() {
 		// Position of '=' has NOT been found
 		if (equalsPos == -1) {
 			// Push Back this Character to the Name
-			effectsVolumnName.push_back(line[i]);
+			effectsVolumeName.push_back(line[i]);
 		}
 		// Position of '=' HAS been found
 		else {
 			// If i is greater than the Position of '='
 			if (i > equalsPos) {
 				// Push Back this Character to the Value
-				effectsVolumnValue.push_back(line[i]);
+				effectsVolumeValue.push_back(line[i]);
 			}
 		}
 	}
 
 	// If the Name is wrong
-	if (effectsVolumnName != "effectsVolumn") {
+	if (effectsVolumeName != "effectsVolume") {
 		// Error Message
 		std::cerr << "Invalid settings file!\n";
 		return false; // Loading Failed
 	}
 
 	// Afterwards
-	this->m_effectsVolumn = std::stoi(effectsVolumnValue);
+	this->m_effectsVolume = std::stoi(effectsVolumeValue);
 	equalsPos = -1; // Reset the Position of '='
-	// -------------------- Line: "effectsVolumn=<value>" --------------------
+	// -------------------- Line: "effectsVolume=<value>" --------------------
 
 
 
-	// -------------------- Line: "musicVolumn=<value>" --------------------
-	std::getline(file, line); // "musicVolumn=<value>"
-	std::string musicVolumnName; // The Name
-	std::string musicVolumnValue; // The Value
+	// -------------------- Line: "musicVolume=<value>" --------------------
+	std::getline(file, line); // "musicVolume=<value>"
+	std::string musicVolumeName; // The Name
+	std::string musicVolumeValue; // The Value
 
 	// Loop until '='
 	for (int i = 0; i < line.length(); i++) {
@@ -293,29 +293,29 @@ bool GameSettings::loadGameSettings() {
 		// Position of '=' has NOT been found
 		if (equalsPos == -1) {
 			// Push Back this Character to the Name
-			musicVolumnName.push_back(line[i]);
+			musicVolumeName.push_back(line[i]);
 		}
 		// Position of '=' HAS been found
 		else {
 			// If i is greater than the Position of '='
 			if (i > equalsPos) {
 				// Push Back this Character to the Value
-				musicVolumnValue.push_back(line[i]);
+				musicVolumeValue.push_back(line[i]);
 			}
 		}
 	}
 
 	// If the Name is wrong
-	if (musicVolumnName != "musicVolumn") {
+	if (musicVolumeName != "musicVolume") {
 		// Error Message
 		std::cerr << "Invalid settings file!\n";
 		return false; // Loading Failed
 	}
 
 	// Afterwards
-	this->m_musicVolumn = std::stoi(musicVolumnValue);
+	this->m_musicVolume = std::stoi(musicVolumeValue);
 	equalsPos = -1; // Reset the Position of '='
-	// -------------------- Line: "musicVolumn=<value>" --------------------
+	// -------------------- Line: "musicVolume=<value>" --------------------
 
 
 	
@@ -336,8 +336,8 @@ bool GameSettings::saveGameSettings() {
 	file << "windowX=" << this->m_windowX << std::endl; // Window Width Size
 	file << "windowY=" << this->m_windowY << std::endl; // Window Height Size
 	file << "vsync=" << this->m_vsync << std::endl; // Enable v-sync
-	file << "masterVolumn=" << this->m_masterVolumn << std::endl; // Master Volumn
-	file << "effectsVolumn=" << this->m_effectsVolumn << std::endl; // Sound Effects Volumn
-	file << "musicVolumn=" << this->m_musicVolumn << std::endl; // Background Music Volumn
+	file << "masterVolume=" << this->m_masterVolume << std::endl; // Master Volume
+	file << "effectsVolume=" << this->m_effectsVolume << std::endl; // Sound Effects Volume
+	file << "musicVolume=" << this->m_musicVolume << std::endl; // Background Music Volume
 	return true; // Saving Successful
 }

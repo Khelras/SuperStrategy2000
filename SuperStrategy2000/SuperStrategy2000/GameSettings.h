@@ -51,9 +51,9 @@ public:
 	int m_windowX = 0; // Width of Window
 	int m_windowY = 0; // Height of Window
 	bool m_vsync = false; // Enable v-sync?
-	int m_masterVolumn = 50; // Volumn of the Game
-	int m_effectsVolumn = 100; // Volumn of Sound Effects
-	int m_musicVolumn = 100; // Volumn of Background Music
+	int m_masterVolume = 50; // Volume of the Game
+	int m_effectsVolume = 100; // Volume of Sound Effects
+	int m_musicVolume = 100; // Volume of Background Music
 
 	// Game Settings Load and Save Functions
 	bool loadGameSettings(); 

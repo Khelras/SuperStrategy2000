@@ -1,4 +1,0 @@
-windowX=1920
-windowY=1080
-vsync=0
-masterVolumn=50

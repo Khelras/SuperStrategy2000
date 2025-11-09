@@ -66,10 +66,12 @@ WindowManager::WindowManager() {
             "Game Settings:\n"
             "[R] Increase Resolution\n"
             "[V] Enable V-Sync\n"
-            "[S] Increase Sound"
+            "[S] Increase Master Volume\n"
+            "[E] Increase Effects Volume\n"
+            "[M] Increase Music Volume\n"
             "[SHIFT + ...] Inverts\n"
             "\n"
-            "Press [ENTER] to Save Changes!"
+            "Press [ENTER] to Save Changes!\n"
             "Press [ESC] to Exit!";
 
         // Set the Debug Text to the Debug Text String
