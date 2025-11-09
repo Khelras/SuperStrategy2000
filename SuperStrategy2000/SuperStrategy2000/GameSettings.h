@@ -24,7 +24,10 @@ private:
 
 	// Private Constructor
 	GameSettings() {
-		this->loadGameSettings();
+		if (this->loadGameSettings() == false) {
+			// Save the Default Settings
+			this->saveGameSettings();
+		}
 	}; 
 
 	// Delete Copy Constructor and Assignment
@@ -49,6 +52,8 @@ public:
 	int m_windowY = 0; // Height of Window
 	bool m_vsync = false; // Enable v-sync?
 	int m_masterVolumn = 50; // Volumn of the Game
+	int m_effectsVolumn = 100; // Volumn of Sound Effects
+	int m_musicVolumn = 100; // Volumn of Background Music
 
 	// Game Settings Load and Save Functions
 	bool loadGameSettings(); 

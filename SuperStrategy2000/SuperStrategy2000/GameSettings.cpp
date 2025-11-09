@@ -181,8 +181,54 @@ bool GameSettings::loadGameSettings() {
 
 
 
-	// -------------------- Line: "masterVolume=<value>" --------------------
-	std::getline(file, line); // "masterVolume=<value>"
+	// -------------------- Line: "masterVolumn=<value>" --------------------
+	std::getline(file, line); // "masterVolumn=<value>"
+	std::string masterVolumnName; // The Name
+	std::string masterVolumnValue; // The Value
+
+	// Loop until '='
+	for (int i = 0; i < line.length(); i++) {
+		// Skip any Whitespace Characters
+		if (std::isspace(static_cast<unsigned int>(line[i]))) continue;
+
+		// If this Character is '='
+		if (line[i] == '=') {
+			// Save the Equals Position
+			equalsPos = i;
+			continue;
+		}
+
+		// Position of '=' has NOT been found
+		if (equalsPos == -1) {
+			// Push Back this Character to the Name
+			masterVolumnName.push_back(line[i]);
+		}
+		// Position of '=' HAS been found
+		else {
+			// If i is greater than the Position of '='
+			if (i > equalsPos) {
+				// Push Back this Character to the Value
+				masterVolumnValue.push_back(line[i]);
+			}
+		}
+	}
+
+	// If the Name is wrong
+	if (masterVolumnName != "masterVolumn") {
+		// Error Message
+		std::cerr << "Invalid settings file!\n";
+		return false; // Loading Failed
+	}
+
+	// Afterwards
+	this->m_masterVolumn = std::stoi(masterVolumnValue);
+	equalsPos = -1; // Reset the Position of '='
+	// -------------------- Line: "masterVolumn=<value>" --------------------
+
+
+
+	// -------------------- Line: "effectsVolumn=<value>" --------------------
+	std::getline(file, line); // "effectsVolumn=<value>"
 	std::string masterVolumnName; // The Name
 	std::string masterVolumnValue; // The Value
 
@@ -245,5 +291,7 @@ bool GameSettings::saveGameSettings() {
 	file << "windowY=" << this->m_windowY << std::endl; // Window Height Size
 	file << "vsync=" << this->m_vsync << std::endl; // Enable v-sync
 	file << "masterVolumn=" << this->m_masterVolumn << std::endl; // Master Volumn
+	file << "effectsVolumn=" << this->m_effectsVolumn << std::endl; // Sound Effects Volumn
+	file << "musicVolumn=" << this->m_musicVolumn << std::endl; // Background Music Volumn
 	return true; // Saving Successful
 }
