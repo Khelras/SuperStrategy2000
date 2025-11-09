@@ -123,7 +123,10 @@ void EventManager::process(WindowManager& _windowManager) {
                 // Enter Key Pressed Event
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
                     // Save Game Settings
-                    GameSettings::getInstance()->saveGameSettings();
+                    if (GameSettings::getInstance()->saveGameSettings() == true) {
+                        // Output to Console
+                        std::cout << "Successfully Saved Settings!" << std::endl;
+                    }
                 }
 
                 // Left-Shift Key Pressed
