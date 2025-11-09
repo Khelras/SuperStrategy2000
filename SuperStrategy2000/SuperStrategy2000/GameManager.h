@@ -3,6 +3,7 @@
 #include "EventManager.h"
 #include "CameraManager.h"
 #include "LevelManager.h"
+#include "SoundManager.h"
 
 class GameManager {
 private:
@@ -22,6 +23,7 @@ public:
 	EventManager m_eventManager; // Event Manager
 	CameraManager m_cameraManager; // Camera Manager
 	LevelManager m_levelManager; // Level Manager
+	SoundManager m_soundManager; // Sound Manager
 
 	// Delta Time
 	float m_deltaTime;
