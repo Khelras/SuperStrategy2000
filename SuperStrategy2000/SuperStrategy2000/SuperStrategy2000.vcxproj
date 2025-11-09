@@ -89,6 +89,7 @@ sfml-window-d.lib
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
@@ -100,6 +101,7 @@ sfml-window-d.lib
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
