@@ -17,12 +17,37 @@ WindowManager::WindowManager() {
     // Game Settings
     GameSettings* settings = GameSettings::getInstance();
 
-    // Apply Settings
+    // Apply Settings to Main Window
     sf::Vector2u resolution(settings->m_windowX, settings->m_windowY);
     this->m_mainWindow.create(sf::VideoMode(resolution), "Super Strategy 2000!");
     this->m_mainWindow.setVerticalSyncEnabled(settings->m_vsync);
 
-    // Mouse
+    // Get the Current Resolution to match the Resolution of the Main Window
+    for (this->m_currentResolution = this->RESOLUTIONS.begin();
+        this->m_currentResolution != this->RESOLUTIONS.end();
+        this->m_currentResolution++) {
+        // Found matching Resolution
+        if (this->m_currentResolution->x == settings->m_windowX &&
+            this->m_currentResolution->y == settings->m_windowY) {
+            // Break out of loop
+            break;
+        }
+    }
+
+    // If the Current Resolution Iterator reached the End
+    if (this->m_currentResolution == this->RESOLUTIONS.end()) {
+        // Go back to the Start
+        this->m_currentResolution = this->RESOLUTIONS.begin();
+
+        // Set the Resolution of the Main Window to this Current Resolution
+        settings->m_windowX = this->m_currentResolution->x;
+        settings->m_windowY = this->m_currentResolution->y;
+
+        // Save Game Settings
+        settings->saveGameSettings();
+    }
+
+    // Center Mouse and Clamp Cursor to Main Window
     sf::Mouse::setPosition(sf::Vector2i(settings->m_windowX / 2, settings->m_windowY / 2));
     this->m_mainWindow.setMouseCursorGrabbed(true); // Prevent Mouse from Exiting the Main Window
 
@@ -44,7 +69,8 @@ WindowManager::WindowManager() {
             "[S] Increase Sound"
             "[SHIFT + ...] Inverts\n"
             "\n"
-            "Press [ESC] to Save Changes and Exit!";
+            "Press [ENTER] to Save Changes!"
+            "Press [ESC] to Exit!";
 
         // Set the Debug Text to the Debug Text String
         this->m_debugText->setString(debugText);
@@ -67,12 +93,15 @@ WindowManager::~WindowManager() {
 bool WindowManager::process() {
     // Allow Processing ONLF IF the Main Window is open
     if (this->m_mainWindow.isOpen() == true) {
-        // Game Settings
-        GameSettings* settings = GameSettings::getInstance();
+        // Only Process if Debug Window is Closed
+        if (this->m_debugWindow.isOpen() == false) {
+            // Game Settings
+            GameSettings* settings = GameSettings::getInstance();
 
-        // Apply Settings
-        this->m_mainWindow.setSize(sf::Vector2u(settings->m_windowX, settings->m_windowY));
-        this->m_mainWindow.setVerticalSyncEnabled(settings->m_vsync);
+            // Apply Settings
+            this->m_mainWindow.setSize(sf::Vector2u(settings->m_windowX, settings->m_windowY));
+            this->m_mainWindow.setVerticalSyncEnabled(settings->m_vsync);
+        }
 
         // Return True
         return true;
@@ -167,11 +196,11 @@ void WindowManager::closeDebugWindow() {
     // Close Debug Window
     this->m_debugWindow.close();
 
+    // Request Focus to Main Window
+    this->m_mainWindow.requestFocus();
+
     // Re-Center and Clamp the Mouse to Main Window
     GameSettings* settings = GameSettings::getInstance(); // Game Settings
     sf::Mouse::setPosition(sf::Vector2i(settings->m_windowX / 2, settings->m_windowY / 2));
     this->m_mainWindow.setMouseCursorGrabbed(true); // Prevent Mouse from Exiting the Main Window
-
-    // Request Focus to Main Window
-    this->m_mainWindow.requestFocus();
 }

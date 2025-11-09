@@ -14,6 +14,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "GameManager.h"
 
 EventManager::EventManager() {
+    this->m_isShiftPressed = false;
 }
 
 EventManager::~EventManager() {
@@ -102,12 +103,102 @@ void EventManager::process(WindowManager& _windowManager) {
 
         // Debug Window Events
         while (const std::optional event = debugWindow.pollEvent()) {
+            // Debug Window lost Focus
+            if (event->getIf<sf::Event::FocusLost>()) {
+                // Request Focus
+                debugWindow.requestFocus();
+
+                // Reset Shift Press
+                this->m_isShiftPressed = false;
+            }
+
             // Keyboard Pressed Events
             if (const auto keyPressed = event->getIf<sf::Event::KeyPressed>()) {
                 // Escape Key Pressed Event
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
                     // Close Debug Window
                     _windowManager.closeDebugWindow();
+                }
+
+                // Enter Key Pressed Event
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Enter) {
+                    // Save Game Settings
+                    GameSettings::getInstance()->saveGameSettings();
+                }
+
+                // Left-Shift Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::LShift) {
+                    this->m_isShiftPressed = true;
+                }
+
+                // R Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::R) {
+                    // Increase Resolution
+                    if (this->m_isShiftPressed == false) {
+                        // Ensure Increasing Resolution is Possible
+                        if (_windowManager.m_currentResolution != std::prev(_windowManager.RESOLUTIONS.end())) {
+                            // Increase Resolution
+                            _windowManager.m_currentResolution++;
+                        }
+                    }
+                    // Decrease Resolution
+                    else if (this->m_isShiftPressed == true) {
+                        // Ensure Decrease Resolution is Possible
+                        if (_windowManager.m_currentResolution != _windowManager.RESOLUTIONS.begin()) {
+                            // Decrease Resolution
+                            _windowManager.m_currentResolution--;
+                        }
+                    }
+
+                    // Change the Game Settings
+                    GameSettings::getInstance()->m_windowX = _windowManager.m_currentResolution->x;
+                    GameSettings::getInstance()->m_windowY = _windowManager.m_currentResolution->y;
+
+                    // Print Resolution to the Console
+                    std::cout << "Resolution: ";
+                    std::cout << _windowManager.m_currentResolution->x << "x, ";
+                    std::cout << _windowManager.m_currentResolution->y << "y" << std::endl;
+                }
+
+                // V Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::V) {
+                    // Ternary
+                    GameSettings::getInstance()->m_vsync = (this->m_isShiftPressed == false) ? true : false;
+
+                    // Print V-Sync to the Console
+                    std::cout << "V-Sync: ";
+                    std::cout << (GameSettings::getInstance()->m_vsync == true) ? "True" : "False";
+                    std::cout << std::endl;
+                }
+
+                // S Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::S) {
+                    // Increase Master Volumn
+                    if (this->m_isShiftPressed == false) {
+                        // Clamp to 100
+                        if (GameSettings::getInstance()->m_masterVolumn != 100) {
+                            GameSettings::getInstance()->m_masterVolumn++;
+                        }
+                    }
+                    // Decrease Master Volumn
+                    else if (this->m_isShiftPressed == true) {
+                        // Clamp to 0
+                        if (GameSettings::getInstance()->m_masterVolumn != 0) {
+                            GameSettings::getInstance()->m_masterVolumn--;
+                        }
+                    }
+
+                    // Print Master Volumn to Console
+                    std::cout << "Master Volumn: " << GameSettings::getInstance()->m_masterVolumn;
+                    std::cout << std::endl;
+                }
+            }
+
+            // Key Released Event
+            if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>()) {
+                // Left-Shift Key Released
+                if (keyReleased->scancode == sf::Keyboard::Scancode::LShift) {
+                    this->m_isShiftPressed = false;
                 }
             }
         }
