@@ -37,12 +37,48 @@ void LevelManager::process() {
 	this->m_currentLevel->m_gameBoard->process();
 }
 
-void LevelManager::loadLevel(std::string _path) {
-	// TODO: MAKE LEVEL LOADING
+bool LevelManager::loadLevel(int _levelNumber, std::string _path) {
+	// Open File
+	std::ifstream levelFile(_path);
+
+	// If the Level File failed to Open
+	if (levelFile.is_open() == false) {
+		// Error Message
+		std::cout << "Unable to load level file from '" << _path << "'!\n";
+		return false;
+	}
+
+	/*
+		Level Files are expected to have a width and height and a 2D Grid of double-digit numbers.
+		Each number are spaced out so that we can use the '<<' operator to read those numbers.
+		Each number will represent an actor or space in the world.
+	*/
+
+	// Attributes from File
+	std::string line; // Line
+	int width, height; // Width and Height
+	levelFile >> width >> height; // Read the Width and the Height
+
+	// TODO: READ EACH NUMBER TO LOAD THEIR RESPECTIVE ACTOR
+
+	// Create the Level
+	Level* level = new Level(_levelNumber, sf::Vector2i(width, height));
+
+	// Add Level to the Levels Array
+	this->m_levels.push_back(level); 
+
+	// Select this Level if there is no Selected Level
+	if (this->m_currentLevel == nullptr) {
+		this->m_currentLevel = level;
+	}
+
+	// Level Loaded Successfully
+	return true;
 }
 
-void LevelManager::saveLevel(std::string _path) {
+bool LevelManager::saveLevel(int _levelNumber, std::string _path) {
 	// TODO: MAKE LEVEL SAVING
+	return true;
 }
 
 void LevelManager::selectLevel(int _levelNumber) {
