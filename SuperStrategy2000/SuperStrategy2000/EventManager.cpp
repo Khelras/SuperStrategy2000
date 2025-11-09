@@ -192,6 +192,50 @@ void EventManager::process(WindowManager& _windowManager) {
                     std::cout << "Master Volumn: " << GameSettings::getInstance()->m_masterVolumn;
                     std::cout << std::endl;
                 }
+
+                // E Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::E) {
+                    // Increase Effects Volumn
+                    if (this->m_isShiftPressed == false) {
+                        // Clamp to 100
+                        if (GameSettings::getInstance()->m_effectsVolumn != 100) {
+                            GameSettings::getInstance()->m_effectsVolumn++;
+                        }
+                    }
+                    // Decrease Effects Volumn
+                    else if (this->m_isShiftPressed == true) {
+                        // Clamp to 0
+                        if (GameSettings::getInstance()->m_effectsVolumn != 0) {
+                            GameSettings::getInstance()->m_effectsVolumn--;
+                        }
+                    }
+
+                    // Print Effects Volumn to Console
+                    std::cout << "Effects Volumn: " << GameSettings::getInstance()->m_effectsVolumn;
+                    std::cout << std::endl;
+                }
+
+                // M Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::M) {
+                    // Increase Music Volumn
+                    if (this->m_isShiftPressed == false) {
+                        // Clamp to 100
+                        if (GameSettings::getInstance()->m_musicVolumn != 100) {
+                            GameSettings::getInstance()->m_musicVolumn++;
+                        }
+                    }
+                    // Decrease Music Volumn
+                    else if (this->m_isShiftPressed == true) {
+                        // Clamp to 0
+                        if (GameSettings::getInstance()->m_musicVolumn != 0) {
+                            GameSettings::getInstance()->m_musicVolumn--;
+                        }
+                    }
+
+                    // Print Music Volumn to Console
+                    std::cout << "Music Volumn: " << GameSettings::getInstance()->m_musicVolumn;
+                    std::cout << std::endl;
+                }
             }
 
             // Key Released Event

@@ -2,3 +2,5 @@ windowX=1920
 windowY=1080
 vsync=0
 masterVolumn=50
+effectsVolumn=100
+musicVolumn=100

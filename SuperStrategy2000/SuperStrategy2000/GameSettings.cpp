@@ -229,8 +229,8 @@ bool GameSettings::loadGameSettings() {
 
 	// -------------------- Line: "effectsVolumn=<value>" --------------------
 	std::getline(file, line); // "effectsVolumn=<value>"
-	std::string masterVolumnName; // The Name
-	std::string masterVolumnValue; // The Value
+	std::string effectsVolumnName; // The Name
+	std::string effectsVolumnValue; // The Value
 
 	// Loop until '='
 	for (int i = 0; i < line.length(); i++) {
@@ -247,29 +247,75 @@ bool GameSettings::loadGameSettings() {
 		// Position of '=' has NOT been found
 		if (equalsPos == -1) {
 			// Push Back this Character to the Name
-			masterVolumnName.push_back(line[i]);
+			effectsVolumnName.push_back(line[i]);
 		}
 		// Position of '=' HAS been found
 		else {
 			// If i is greater than the Position of '='
 			if (i > equalsPos) {
 				// Push Back this Character to the Value
-				masterVolumnValue.push_back(line[i]);
+				effectsVolumnValue.push_back(line[i]);
 			}
 		}
 	}
 
 	// If the Name is wrong
-	if (masterVolumnName != "masterVolumn") {
+	if (effectsVolumnName != "effectsVolumn") {
 		// Error Message
 		std::cerr << "Invalid settings file!\n";
 		return false; // Loading Failed
 	}
 
 	// Afterwards
-	this->m_masterVolumn = std::stoi(masterVolumnValue);
+	this->m_effectsVolumn = std::stoi(effectsVolumnValue);
 	equalsPos = -1; // Reset the Position of '='
-	// -------------------- Line: "masterVolumn=<value>" --------------------
+	// -------------------- Line: "effectsVolumn=<value>" --------------------
+
+
+
+	// -------------------- Line: "musicVolumn=<value>" --------------------
+	std::getline(file, line); // "musicVolumn=<value>"
+	std::string musicVolumnName; // The Name
+	std::string musicVolumnValue; // The Value
+
+	// Loop until '='
+	for (int i = 0; i < line.length(); i++) {
+		// Skip any Whitespace Characters
+		if (std::isspace(static_cast<unsigned int>(line[i]))) continue;
+
+		// If this Character is '='
+		if (line[i] == '=') {
+			// Save the Equals Position
+			equalsPos = i;
+			continue;
+		}
+
+		// Position of '=' has NOT been found
+		if (equalsPos == -1) {
+			// Push Back this Character to the Name
+			musicVolumnName.push_back(line[i]);
+		}
+		// Position of '=' HAS been found
+		else {
+			// If i is greater than the Position of '='
+			if (i > equalsPos) {
+				// Push Back this Character to the Value
+				musicVolumnValue.push_back(line[i]);
+			}
+		}
+	}
+
+	// If the Name is wrong
+	if (musicVolumnName != "musicVolumn") {
+		// Error Message
+		std::cerr << "Invalid settings file!\n";
+		return false; // Loading Failed
+	}
+
+	// Afterwards
+	this->m_musicVolumn = std::stoi(musicVolumnValue);
+	equalsPos = -1; // Reset the Position of '='
+	// -------------------- Line: "musicVolumn=<value>" --------------------
 
 
 	
