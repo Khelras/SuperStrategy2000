@@ -4,12 +4,16 @@
 GameManager* GameManager::m_instance = nullptr;
 
 GameManager::GameManager() {
+    // Instantiate the Game Settings Singleton Instance
+    GameSettings::getInstance();
+
     // --- REMOVE LATER ---
     Level* testLevel = new Level(0, sf::Vector2i(20, 20), sf::Vector2i(32, 32));
     this->m_levelManager.m_levels.push_back(testLevel);
     this->m_levelManager.m_currentLevel = testLevel;
     // --- REMOVE LATER ---
 
+    // Delta Time
     this->m_deltaTime = 0.0f;
 }
 
@@ -49,11 +53,11 @@ void GameManager::process() {
         // Process Events
         this->m_eventManager.process(this->m_windowManager);
 
-        // Prevent further Game Processes if Debug Window is Open
-        if (this->m_windowManager.m_debugWindow.isOpen() == true) continue;
-
-        // Process Level Manager
-        this->m_levelManager.process();
+        // Allow Game Processes if Debug Window is Closed
+        if (this->m_windowManager.m_debugWindow.isOpen() == false) {
+            // Process Level Manager
+            this->m_levelManager.process();
+        }
 
         // -------------------- Clear --------------------
         this->m_windowManager.clear(); // Clear

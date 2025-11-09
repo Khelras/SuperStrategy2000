@@ -12,9 +12,21 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <list>
+#include <iterator>
 
 class WindowManager {
 public:
+	// List of Supported Resolutions
+	const std::list<sf::Vector2f> RESOLUTIONS = {
+		{ 640, 480 }, { 800, 600 }, { 1024, 768 },
+		{ 1280, 720 }, { 1280, 960 }, { 1400, 1050 },
+		{ 1600, 1200 }, { 1920, 1080 }
+	};
+
+	// Iterator for Current Resolution
+	std::list<sf::Vector2f>::const_iterator m_currentResolution;
+
 	// Main and Debug Windows
 	sf::RenderWindow m_mainWindow; // Main Window
 	sf::RenderWindow m_debugWindow; // Debug Window
@@ -29,4 +41,10 @@ public:
 	void draw(); // Draw to Screen
 	void display(); // Display to Screen
 	void openDebugWindow(); // Open the Debug Window
+	void closeDebugWindow(); // Close the Debug Window
+
+private:
+	// Debug Text
+	sf::Font m_debugFont;
+	sf::Text* m_debugText;
 };

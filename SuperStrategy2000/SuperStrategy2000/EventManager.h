@@ -21,5 +21,8 @@ public:
 
 	// Event Manager Functions
 	void process(WindowManager& _windowManager); // Processes all the Events
+
+private:
+	bool m_isShiftPressed;
 };
 

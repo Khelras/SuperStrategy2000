@@ -18,7 +18,7 @@ GameSettings* GameSettings::m_instance = nullptr;
 // Game Settings File Path
 const std::string GAME_SETTINGS_FILE_PATH = "settings.txt";
 
-bool GameSettingsIO::LoadGameSettings() {
+bool GameSettings::loadGameSettings() {
 	// Getting the File
 	std::ifstream file(GAME_SETTINGS_FILE_PATH);
 	if (!file) {
@@ -71,7 +71,7 @@ bool GameSettingsIO::LoadGameSettings() {
 	}
 
 	// Afterwards
-	GameSettings::getInstance()->m_windowX = std::stoi(windowXValue);
+	this->m_windowX = std::stoi(windowXValue);
 	equalsPos = -1; // Reset the Position of '='
 	// -------------------- Line: "windowX=<value>" --------------------
 
@@ -117,7 +117,7 @@ bool GameSettingsIO::LoadGameSettings() {
 	}
 
 	// Afterwards
-	GameSettings::getInstance()->m_windowY = std::stoi(windowYValue);
+	this->m_windowY = std::stoi(windowYValue);
 	equalsPos = -1; // Reset the Position of '='
 	// -------------------- Line: "windowY=<value>" --------------------
 
@@ -164,10 +164,10 @@ bool GameSettingsIO::LoadGameSettings() {
 
 	// Evaluate the v-sync Value
 	if (vsyncValue == "0") { // False Value
-		GameSettings::getInstance()->m_vsync = false;
+		this->m_vsync = false;
 	}
 	else if (vsyncValue == "1") { // True Value
-		GameSettings::getInstance()->m_vsync = true;
+		this->m_vsync = true;
 	}
 	else { // Invalid Value
 		// Error Message
@@ -221,7 +221,7 @@ bool GameSettingsIO::LoadGameSettings() {
 	}
 
 	// Afterwards
-	GameSettings::getInstance()->m_masterVolumn = std::stoi(masterVolumnValue);
+	this->m_masterVolumn = std::stoi(masterVolumnValue);
 	equalsPos = -1; // Reset the Position of '='
 	// -------------------- Line: "masterVolumn=<value>" --------------------
 
@@ -231,7 +231,7 @@ bool GameSettingsIO::LoadGameSettings() {
 	return true;
 }
 
-bool GameSettingsIO::SaveGameSettings() {
+bool GameSettings::saveGameSettings() {
 	// Getting the File
 	std::ofstream file(GAME_SETTINGS_FILE_PATH);
 	if (!file) {
@@ -241,10 +241,9 @@ bool GameSettingsIO::SaveGameSettings() {
 	}
 
 	// Saving
-	GameSettings* settings = GameSettings::getInstance();
-	file << "windowX=" << settings->m_windowX << std::endl; // Window Width Size
-	file << "windowY=" << settings->m_windowY << std::endl; // Window Height Size
-	file << "vsync=" << settings->m_vsync << std::endl; // Enable v-sync
-	file << "masterVolumn=" << settings->m_masterVolumn << std::endl; // Master Volumn
+	file << "windowX=" << this->m_windowX << std::endl; // Window Width Size
+	file << "windowY=" << this->m_windowY << std::endl; // Window Height Size
+	file << "vsync=" << this->m_vsync << std::endl; // Enable v-sync
+	file << "masterVolumn=" << this->m_masterVolumn << std::endl; // Master Volumn
 	return true; // Saving Successful
 }
