@@ -25,7 +25,8 @@ private:
 	// Private Constructor
 	GameSettings() {
 		if (this->loadGameSettings() == false) {
-			// Save the Default Settings
+			// Generate a Settings File
+			std::cout << "Generated a 'settings.txt' file..." << std::endl;
 			this->saveGameSettings();
 		}
 	}; 

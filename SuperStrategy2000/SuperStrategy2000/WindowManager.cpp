@@ -203,6 +203,7 @@ void WindowManager::closeDebugWindow() {
 
     // Re-Center and Clamp the Mouse to Main Window
     GameSettings* settings = GameSettings::getInstance(); // Game Settings
+    settings->loadGameSettings(); // Load Settings from File
     sf::Mouse::setPosition(sf::Vector2i(settings->m_windowX / 2, settings->m_windowY / 2));
     this->m_mainWindow.setMouseCursorGrabbed(true); // Prevent Mouse from Exiting the Main Window
 }
