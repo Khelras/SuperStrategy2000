@@ -40,8 +40,8 @@ WindowManager::WindowManager() {
         this->m_currentResolution = this->RESOLUTIONS.begin();
 
         // Set the Resolution of the Main Window to this Current Resolution
-        settings->m_windowX = this->m_currentResolution->x;
-        settings->m_windowY = this->m_currentResolution->y;
+        settings->m_windowX = static_cast<int>(this->m_currentResolution->x);
+        settings->m_windowY = static_cast<int>(this->m_currentResolution->y);
 
         // Save Game Settings
         settings->saveGameSettings();
