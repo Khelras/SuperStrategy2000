@@ -8,9 +8,7 @@ GameManager::GameManager() {
     GameSettings::getInstance();
 
     // --- REMOVE LATER ---
-    Level* testLevel = new Level(0, sf::Vector2i(20, 20), sf::Vector2i(32, 32));
-    this->m_levelManager.m_levels.push_back(testLevel);
-    this->m_levelManager.m_currentLevel = testLevel;
+    this->m_levelManager.loadLevel(0, "Levels/level1.txt");
     // --- REMOVE LATER ---
 
     // Delta Time

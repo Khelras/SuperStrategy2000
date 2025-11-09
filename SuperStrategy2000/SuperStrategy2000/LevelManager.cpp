@@ -49,32 +49,20 @@ bool LevelManager::loadLevel(int _levelNumber, std::string _path) {
 	}
 
 	/*
-		Level Files are expected to have a 2D Grid of characters.
-		Each character will represent an actor or space in the world.
-		We will also have to save the Grid Dimensions in order to constructor the Grid.
+		Level Files are expected to have a width and height and a 2D Grid of double-digit numbers.
+		Each number are spaced out so that we can use the '<<' operator to read those numbers.
+		Each number will represent an actor or space in the world.
 	*/
 
 	// Attributes from File
 	std::string line; // Line
-	int width = 0, height = 0; // Width and Height
+	int width, height; // Width and Height
+	levelFile >> width >> height; // Read the Width and the Height
 
-	// Loop per Line
-	while (std::getline(levelFile, line)) {
-		// Increase the Height
-		height++;
-
-		// Loop through each Character in the Line
-		for (const char& character : line) {
-			// If this is the Top Line
-			if (height == 1) {
-				// Increase Width
-				width++;
-			}
-		}
-	}
+	// TODO: READ EACH NUMBER TO LOAD THEIR RESPECTIVE ACTOR
 
 	// Create the Level
-	Level* level = new Level(_levelNumber, sf::Vector2i(width, height), sf::Vector2i(32, 32));
+	Level* level = new Level(_levelNumber, sf::Vector2i(width, height));
 
 	// Add Level to the Levels Array
 	this->m_levels.push_back(level); 
