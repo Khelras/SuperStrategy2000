@@ -1,6 +1,0 @@
-windowX=1920
-windowY=1080
-vsync=0
-masterVolume=100
-effectsVolume=100
-musicVolume=100

@@ -37,7 +37,7 @@ bool GameSettings::loadGameSettings() {
 	std::string windowXValue; // The Value
 
 	// Loop until '='
-	for (int i = 0; i < line.length(); i++) { 
+	for (int i = 0; i < static_cast<int>(line.length()); i++) {
 		// Skip any Whitespace Characters
 		if (std::isspace(static_cast<unsigned int>(line[i]))) continue;
 
@@ -83,7 +83,7 @@ bool GameSettings::loadGameSettings() {
 	std::string windowYValue; // The Value
 
 	// Loop until '='
-	for (int i = 0; i < line.length(); i++) {
+	for (int i = 0; i < static_cast<int>(line.length()); i++) {
 		// Skip any Whitespace Characters
 		if (std::isspace(static_cast<unsigned int>(line[i]))) continue;
 
@@ -129,7 +129,7 @@ bool GameSettings::loadGameSettings() {
 	std::string vsyncValue; // The Value
 
 	// Loop until '='
-	for (int i = 0; i < line.length(); i++) {
+	for (int i = 0; i < static_cast<int>(line.length()); i++) {
 		// Skip any Whitespace Characters
 		if (std::isspace(static_cast<unsigned int>(line[i]))) continue;
 
@@ -187,7 +187,7 @@ bool GameSettings::loadGameSettings() {
 	std::string masterVolumeValue; // The Value
 
 	// Loop until '='
-	for (int i = 0; i < line.length(); i++) {
+	for (int i = 0; i < static_cast<int>(line.length()); i++) {
 		// Skip any Whitespace Characters
 		if (std::isspace(static_cast<unsigned int>(line[i]))) continue;
 
@@ -233,7 +233,7 @@ bool GameSettings::loadGameSettings() {
 	std::string effectsVolumeValue; // The Value
 
 	// Loop until '='
-	for (int i = 0; i < line.length(); i++) {
+	for (int i = 0; i < static_cast<int>(line.length()); i++) {
 		// Skip any Whitespace Characters
 		if (std::isspace(static_cast<unsigned int>(line[i]))) continue;
 
@@ -279,7 +279,7 @@ bool GameSettings::loadGameSettings() {
 	std::string musicVolumeValue; // The Value
 
 	// Loop until '='
-	for (int i = 0; i < line.length(); i++) {
+	for (int i = 0; i < static_cast<int>(line.length()); i++) {
 		// Skip any Whitespace Characters
 		if (std::isspace(static_cast<unsigned int>(line[i]))) continue;
 

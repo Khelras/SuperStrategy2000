@@ -154,8 +154,8 @@ void EventManager::process(WindowManager& _windowManager) {
                     }
 
                     // Change the Game Settings
-                    GameSettings::getInstance()->m_windowX = _windowManager.m_currentResolution->x;
-                    GameSettings::getInstance()->m_windowY = _windowManager.m_currentResolution->y;
+                    GameSettings::getInstance()->m_windowX = static_cast<int>(_windowManager.m_currentResolution->x);
+                    GameSettings::getInstance()->m_windowY = static_cast<int>(_windowManager.m_currentResolution->y);
 
                     // Print Resolution to the Console
                     std::cout << "Resolution: ";
