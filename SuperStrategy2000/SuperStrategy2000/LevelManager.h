@@ -1,6 +1,8 @@
 
 
 #pragma once
+#include <fstream>
+#include <iostream>
 #include <string>
 #include "Level.h"
 
@@ -17,8 +19,8 @@ public:
 
 	// Level Manager Functions and Properties
 	void process(); // Level Manager Process Loop
-	void loadLevel(std::string _path); // Load Level
-	void saveLevel(std::string _path); // Save Level
+	bool loadLevel(int _levelNumber, std::string _path); // Load Level
+	bool saveLevel(int _levelNumber, std::string _path); // Save Level
 	void selectLevel(int _levelNumber); // Select Level
 
 private:
