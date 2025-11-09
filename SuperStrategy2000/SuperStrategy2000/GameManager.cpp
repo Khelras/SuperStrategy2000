@@ -60,6 +60,9 @@ void GameManager::process() {
         if (this->m_windowManager.m_debugWindow.isOpen() == false) {
             // Process Level Manager
             this->m_levelManager.process();
+
+            // Process Sound Manager
+            this->m_soundManager.process();
         }
 
         // -------------------- Clear --------------------

@@ -28,7 +28,29 @@ SoundManager::~SoundManager() {
 }
 
 void SoundManager::process() {
+	// Iterate through all the Sounds in the Active List
+	for (auto iterator = this->m_activeSounds.begin(); iterator != this->m_activeSounds.end(); iterator++) {
+		// Check if this Iteration of Sound has finished Playing
+		if (iterator->getStatus() == sf::Sound::Status::Stopped) {
+			// Remove from the Active Sounds List
+			iterator = this->m_activeSounds.erase(iterator); // Returns the next element after deletion
+		}
 
+		// Update the Volume of this Sound
+		GameSettings* settings = GameSettings::getInstance(); // Game Setings
+		float masterVolumePercentage = static_cast<float>(settings->m_masterVolume) / 100.0f; // Master Volume Percentage Float
+		float effectsVolume = static_cast<float>(settings->m_effectsVolume); // Effects Volume Float
+		iterator->setVolume(effectsVolume * masterVolumePercentage); // Setting the Volume
+	}
+
+	// If Background Music exists
+	if (this->m_backgroundMusic != nullptr) {
+		// Update the Volume of the Background Music
+		GameSettings* settings = GameSettings::getInstance(); // Game Setings
+		float masterVolumePercentage = static_cast<float>(settings->m_masterVolume) / 100.0f; // Master Volume Percentage Float
+		float musicVolume = static_cast<float>(settings->m_musicVolume); // Music Volume Float
+		this->m_backgroundMusic->setVolume(musicVolume * masterVolumePercentage); // Setting the Volume
+	}
 }
 
 bool SoundManager::loadSound(std::string _soundName, std::string _soundFilePath) {
@@ -67,7 +89,7 @@ bool SoundManager::playSound(std::string _soundName, float _pitch) {
 	GameSettings* settings = GameSettings::getInstance(); // Game Setings
 	float masterVolumePercentage = static_cast<float>(settings->m_masterVolume) / 100.0f; // Master Volume Percentage Float
 	float effectsVolume = static_cast<float>(settings->m_effectsVolume); // Effects Volume Float
-	sound.setVolume(effectsVolume / masterVolumePercentage); // Setting the Volume
+	sound.setVolume(effectsVolume * masterVolumePercentage); // Setting the Volume
 	sound.setPitch(_pitch); // Setting the Pitch
 	sound.play(); // Playing the Sound
 
@@ -96,7 +118,7 @@ void SoundManager::playMusic(std::string _musicFilePath, bool _loop) {
 	GameSettings* settings = GameSettings::getInstance(); // Game Setings
 	float masterVolumePercentage = static_cast<float>(settings->m_masterVolume) / 100.0f; // Master Volume Percentage Float
 	float musicVolume = static_cast<float>(settings->m_musicVolume); // Music Volume Float
-	this->m_backgroundMusic->setVolume(musicVolume / masterVolumePercentage); // Setting the Volume
+	this->m_backgroundMusic->setVolume(musicVolume * masterVolumePercentage); // Setting the Volume
 	this->m_backgroundMusic->setLooping(_loop); // Setting the Loop
 	this->m_backgroundMusic->play(); // Play the Background Music
 }
