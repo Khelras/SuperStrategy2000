@@ -81,6 +81,7 @@ sfml-window-d.lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -94,6 +95,7 @@ sfml-window-d.lib
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actor.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameManager.h" />

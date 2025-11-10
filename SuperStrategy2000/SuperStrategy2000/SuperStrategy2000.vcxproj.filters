@@ -17,6 +17,9 @@
     <Filter Include="Source Files\Level">
       <UniqueIdentifier>{a2dbaa22-ca5a-45d0-8926-0e83c48a1996}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Actors">
+      <UniqueIdentifier>{9fa22aab-9044-4e05-a2ba-e37c6d1eb424}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -52,6 +55,9 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Source Files\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -83,6 +89,9 @@
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Source Files\Actors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
