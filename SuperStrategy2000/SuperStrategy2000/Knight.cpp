@@ -11,6 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "Knight.h"
+#include "KnightsMight.hpp"
 
 Knight::Knight(bool _isEnemy) {
 	// Set the Actor Sprite and the Actor Type
@@ -24,6 +25,9 @@ Knight::Knight(bool _isEnemy) {
 		this->setActorSprite(5);
 		this->setActorType(Actor::Type::UNIT_ENEMY_KNIGHT);
 	}
+
+	// Add Personal Ability
+	this->m_unitAbilities.push_back(new KnightsMight());
 }
 
 Knight::~Knight() {

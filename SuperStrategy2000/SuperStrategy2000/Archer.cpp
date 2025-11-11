@@ -11,6 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "Archer.h"
+#include "ArchersMark.hpp"
 
 Archer::Archer(bool _isEnemy) {
 	// Set the Actor Sprite and the Actor Type
@@ -24,6 +25,9 @@ Archer::Archer(bool _isEnemy) {
 		this->setActorSprite(6);
 		this->setActorType(Actor::Type::UNIT_ENEMY_ARCHER);
 	}
+
+	// Add Personal Ability
+	this->m_unitAbilities.push_back(new ArchersMark());
 }
 
 Archer::~Archer() {
