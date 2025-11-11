@@ -18,8 +18,8 @@ protected:
 	// Ability Attributes
 	std::string m_abilityName;
 	std::string m_abilityDescription;
-	unsigned int m_abilityCooldown = 0;
-	unsigned int m_abilityCurrentCooldown = 0;
+	unsigned int m_abilityCooldown = 0; // Default to 0
+	unsigned int m_abilityCurrentCooldown = 0; // Default to 0
 
 public:
 	// Constructor and Destructor
@@ -27,7 +27,7 @@ public:
 	virtual ~Ability() {}; // Virtual Destructor
 
 	// Ability Execute Function
-	virtual void execute(Unit* _user, Unit* _target) const = 0;
+	virtual bool execute(Unit* _user, Unit* _target) const = 0;
 
 	// Getters
 	const std::string& getAbilityName() const { return this->m_abilityName; };
