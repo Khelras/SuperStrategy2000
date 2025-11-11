@@ -10,7 +10,7 @@ Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
-#include <SFML/Graphics.hpp>
+#include "TileMap.h"
 
 #pragma once
 class Actor {
@@ -20,6 +20,9 @@ protected:
 	sf::Sprite* m_actorSprite;
 
 public:
+	// Static Constant Tile Map
+	static const TileMap ACTOR_TILE_MAP;
+
 	// The Different Types of Actors
 	enum class Type {
 		NONE = 0,
@@ -37,7 +40,7 @@ public:
 	virtual const sf::Vector2f& getActorPosition() const; // Returns the Actor Position
 
 	// Virtual Actor Sprite Functions
-	virtual void setActorSprite(sf::Vector2u _index); // Sets the Actor Sprite
+	virtual void setActorSprite(unsigned int _index); // Sets the Actor Sprite
 	virtual const sf::Sprite* getActorSprite() const; // Returns the Actor Sprite
 };
 
