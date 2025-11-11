@@ -49,5 +49,9 @@ const sf::Vector2f& Actor::getActorPosition() const {
 	return this->m_actorPosition;
 }
 
-void Actor::setActorSprite(sf::Vector2u _tile) {
+void Actor::setActorSprite(sf::Vector2u _square) {
+}
+
+const sf::Sprite* Actor::getActorSprite() const {
+	return this->m_actorSprite;
 }
