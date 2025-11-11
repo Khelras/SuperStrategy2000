@@ -11,14 +11,14 @@
     <Filter Include="Source Files\GameSettings">
       <UniqueIdentifier>{e6ac5a67-275b-450d-b6da-181162276779}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\TileSystem">
-      <UniqueIdentifier>{b7509a3d-941c-4c27-8862-17484e710ed0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Level">
       <UniqueIdentifier>{a2dbaa22-ca5a-45d0-8926-0e83c48a1996}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Actors">
       <UniqueIdentifier>{9fa22aab-9044-4e05-a2ba-e37c6d1eb424}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GridSystem">
+      <UniqueIdentifier>{b7509a3d-941c-4c27-8862-17484e710ed0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -38,10 +38,10 @@
       <Filter>Source Files\GameSettings</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
-      <Filter>Source Files\TileSystem</Filter>
+      <Filter>Source Files\GridSystem</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
-      <Filter>Source Files\TileSystem</Filter>
+      <Filter>Source Files\GridSystem</Filter>
     </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>Source Files\Managers</Filter>
@@ -73,10 +73,10 @@
       <Filter>Source Files\GameSettings</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Source Files\TileSystem</Filter>
+      <Filter>Source Files\GridSystem</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
-      <Filter>Source Files\TileSystem</Filter>
+      <Filter>Source Files\GridSystem</Filter>
     </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>Source Files\Managers</Filter>
