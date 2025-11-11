@@ -21,11 +21,13 @@ Actor::Actor() {
 	// Default Attributes
 	this->m_actorPosition = sf::Vector2f(0.0f, 0.0f);
 	this->m_actorSprite = nullptr;
+	this->m_actorType = Actor::Type::NONE;
 }
 
-Actor::Actor(sf::Vector2f _position) {
+Actor::Actor(sf::Vector2f _position, Actor::Type _type) {
 	this->m_actorPosition = _position;
 	this->m_actorSprite = nullptr;
+	this->m_actorType = _type;
 }
 
 Actor::~Actor() {
@@ -72,4 +74,12 @@ void Actor::setActorSprite(unsigned int _index) {
 
 const sf::Sprite* Actor::getActorSprite() const {
 	return this->m_actorSprite;
+}
+
+void Actor::setActorType(Actor::Type _type) {
+	this->m_actorType = _type;
+}
+
+const Actor::Type& Actor::getActorType() const {
+	return this->m_actorType;
 }
