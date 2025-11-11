@@ -15,10 +15,10 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <vector>
 #include "Actor.h"
 
-// Forward Declare
+// Forward Declaration
 class Ability;
 
-class Unit {
+class Unit : public Actor {
 protected:
 	// Unit Attributes
 	std::string m_unitName; // Name of the Unit
@@ -32,7 +32,6 @@ protected:
 	float m_unitHealth; // Health of the unit
 
 	// Dynamic Unit Stats
-	float m_unitRemainingSpeed; // Remaining Movement Speed of a Unit
 	float m_unitCurrentHealth; // Current Health of the Unit
 
 	// Abilities

@@ -26,7 +26,6 @@ Unit::Unit() {
 	this->m_unitHealth = -1.0f; // Health of the unit
 
 	// Dynamic Unit Stats
-	this->m_unitRemainingSpeed = this->m_unitSpeed; // Remaining Movement Speed of a Unit
 	this->m_unitCurrentHealth = this->m_unitHealth; // Current Health of the Unit
 
 	// Add the Basic Attack Ability
