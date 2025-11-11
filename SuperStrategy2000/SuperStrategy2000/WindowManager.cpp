@@ -55,7 +55,7 @@ WindowManager::WindowManager() {
     this->m_debugWindow.close();
 
     // Debug Text
-    if (this->m_debugFont.openFromFile("fonts/arial.ttf")) {
+    if (this->m_debugFont.openFromFile("assets/fonts/arial.ttf")) {
         // Font Loaded Successfully
         this->m_debugText = new sf::Text(this->m_debugFont);
         this->m_debugText->setCharacterSize(20); // Set Text Size to 20px

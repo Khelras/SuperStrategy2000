@@ -15,15 +15,12 @@ Mail        : angelo.bohol@mds.ac.nz
 // Define the Static GameSettings Instance
 GameSettings* GameSettings::m_instance = nullptr;
 
-// Game Settings File Path
-const std::string GAME_SETTINGS_FILE_PATH = "settings.txt";
-
 bool GameSettings::loadGameSettings() {
 	// Getting the File
-	std::ifstream file(GAME_SETTINGS_FILE_PATH);
+	std::ifstream file(this->GAME_SETTINGS_FILE_PATH);
 	if (!file) {
 		// Error Message
-		std::cerr << "Unable to load file '" << GAME_SETTINGS_FILE_PATH << "'!\n";
+		std::cerr << "Unable to load file '" << this->GAME_SETTINGS_FILE_PATH << "'!\n";
 		return false; // Loading Failed
 	}
 
@@ -325,10 +322,10 @@ bool GameSettings::loadGameSettings() {
 
 bool GameSettings::saveGameSettings() {
 	// Getting the File
-	std::ofstream file(GAME_SETTINGS_FILE_PATH);
+	std::ofstream file(this->GAME_SETTINGS_FILE_PATH);
 	if (!file) {
 		// Error Message
-		std::cerr << "Unable to save to '" << GAME_SETTINGS_FILE_PATH <<"'!\n";
+		std::cerr << "Unable to save to '" << this->GAME_SETTINGS_FILE_PATH <<"'!\n";
 		return false; // Saving Failed
 	}
 
