@@ -19,7 +19,7 @@ public:
 	Grid* m_gameBoard;
 
 	// Constructor and Destructor
-	Level(int _levelNumber, sf::Vector2i _gridSize, sf::Vector2i _tileSize = sf::Vector2i(32, 32));
+	Level(int _levelNumber, sf::Vector2i _gridSize, sf::Vector2i _squareSize = sf::Vector2i(32, 32));
 	~Level();
 };
 

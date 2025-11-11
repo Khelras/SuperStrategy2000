@@ -13,13 +13,13 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "Grid.h"
 #include "GameManager.h"
 
-Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _tileSize) {
-	// Resize the Tile
-	Tile::TILE_SIZE = _tileSize;
+Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _squareSize) {
+	// Resize the Square
+	Square::SQUARE_SIZE = _squareSize;
 
-	// Selected and Hover Tile
-	this->m_selectedTile = nullptr;
-	this->m_hoverTile = nullptr;
+	// Selected and Hover Square
+	this->m_selectedSquare = nullptr;
+	this->m_hoverSquare = nullptr;
 
 	// Grid Size
 	this->m_gridSize = _gridSize;
@@ -35,23 +35,23 @@ Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _tileSize) {
 	// Creating the Grid
 	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
-			// Creating the Tile
-			this->m_grid[y][x] = new Tile(sf::Vector2i(x, y));
+			// Creating the Square
+			this->m_grid[y][x] = new Square(sf::Vector2i(x, y));
 		}
 	}
 
-	// Connecting each Tile of the Grid
+	// Connecting each Square of the Grid
 	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
-			// Connecting Tile to its surrounding Tiles
+			// Connecting Square to its surrounding Squares
 			for (int dx = -1; dx <= 1; dx++) { // Loops through the surroundings across the x-axis
 				for (int dy = -1; dy <= 1; dy++) { // Loops through the surroundings across the y-axis
 					if (dx == 0 && dy == 0) continue; // Skip itself
 
-					// Calculate the Position of this Neighboring Tile
+					// Calculate the Position of this Neighboring Square
 					sf::Vector2i neighborPos(x + dx, y + dy);
 
-					// Boolean to check the Position of this Neighboring Tile is within the Grid
+					// Boolean to check the Position of this Neighboring Square is within the Grid
 					bool validNeighborPos = (
 						neighborPos.x >= 0 &&
 						neighborPos.x < this->m_gridSize.x &&
@@ -59,10 +59,10 @@ Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _tileSize) {
 						neighborPos.y < this->m_gridSize.y
 					);
 					
-					// Ensure the Position of this Neighboring Tile is within the Grid
+					// Ensure the Position of this Neighboring Square is within the Grid
 					if (validNeighborPos) {
-						// Connect the Tile to its Neighboring Tile
-						this->m_grid[y][x]->m_tileNeighbors.push_back(this->m_grid[neighborPos.y][neighborPos.x]);
+						// Connect the Square to its Neighboring Square
+						this->m_grid[y][x]->m_squareNeighbors.push_back(this->m_grid[neighborPos.y][neighborPos.x]);
 					}
 				}
 			}
@@ -70,20 +70,20 @@ Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _tileSize) {
 	}
 
 	// The Screen Space the Grid takes
-	float gridSpaceX = static_cast<float>(Tile::TILE_SIZE.x * this->m_gridSize.x); // Static Cast to Float
-	float gridSpaceY = static_cast<float>(Tile::TILE_SIZE.y * this->m_gridSize.y); // Static Cast to Float
+	float gridSpaceX = static_cast<float>(Square::SQUARE_SIZE.x * this->m_gridSize.x); // Static Cast to Float
+	float gridSpaceY = static_cast<float>(Square::SQUARE_SIZE.y * this->m_gridSize.y); // Static Cast to Float
 	this->m_gridBackground.setSize(sf::Vector2f(gridSpaceX, gridSpaceY));
 	this->m_gridBackground.setFillColor(sf::Color::White); // White
 	this->m_gridBackground.setPosition(sf::Vector2f(Grid::MARGIN, Grid::MARGIN)); // Account for the Margin
 }
 
 Grid::~Grid() {
-	// Delete all Tiles in the 2D Grid Array
+	// Delete all Squares in the 2D Grid Array
 	for (auto& row : this->m_grid) {
-		for (auto& tile : row) {
-			// Delete Tile
-			delete (tile); 
-			tile = nullptr;
+		for (auto& square : row) {
+			// Delete Square
+			delete (square); 
+			square = nullptr;
 		}
 	}
 
@@ -104,46 +104,46 @@ void Grid::process() {
 
 	// Mouse is within the bounds of the Grid Space
 	if (gridSpace.contains(mouseWorldPosition) == true) {
-		// Now find the Tile the Mouse is hovering over
-		sf::Vector2i tileSize = Tile::TILE_SIZE; // The size of each Tile
+		// Now find the Square the Mouse is hovering over
+		sf::Vector2i squareSize = Square::SQUARE_SIZE; // The size of each Square
 		
 		/*
-			Find which Tile the Mouse is hovering over:
+			Find which Square the Mouse is hovering over:
 			- Convert the Mouse World Position into Grid Coordinates.
 			- Subtract the Grid's Position Offset from World Origin.
-			- Divide by Tile Size to get the Tile Index (x, y) within the Grid Array.
+			- Divide by Square Size to get the Square Index (x, y) within the Grid Array.
 		*/
 
-		// Tile Index (x, y) within the Grid Array
-		int tileX = static_cast<int>((mouseWorldPosition.x - gridSpace.position.x) / tileSize.x);
-		int tileY = static_cast<int>((mouseWorldPosition.y - gridSpace.position.y) / tileSize.y);
+		// Square Index (x, y) within the Grid Array
+		int squareX = static_cast<int>((mouseWorldPosition.x - gridSpace.position.x) / squareSize.x);
+		int squareY = static_cast<int>((mouseWorldPosition.y - gridSpace.position.y) / squareSize.y);
 
 		// Clamp indices to ensure they are within bounds
-		tileX = std::clamp(tileX, 0, this->m_gridSize.x - 1);
-		tileY = std::clamp(tileY, 0, this->m_gridSize.y - 1);\
+		squareX = std::clamp(squareX, 0, this->m_gridSize.x - 1);
+		squareY = std::clamp(squareY, 0, this->m_gridSize.y - 1);\
 		
 		// Performing Hover
-		if (this->m_hoverTile == nullptr) { // There is NO pre-existing Hover
+		if (this->m_hoverSquare == nullptr) { // There is NO pre-existing Hover
 			// Hover
-			this->m_hoverTile = this->m_grid[tileY][tileX];
-			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_SELECTED);
+			this->m_hoverSquare = this->m_grid[squareY][squareX];
+			this->m_hoverSquare->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_SELECTED);
 		}
-		else if (this->m_hoverTile != nullptr) { // There IS a pre-existing Hover
+		else if (this->m_hoverSquare != nullptr) { // There IS a pre-existing Hover
 			// Reset the pre-existing Hover
-			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_DEFAULT);
+			this->m_hoverSquare->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_DEFAULT);
 
 			// Then, set a new Hover
-			this->m_hoverTile = this->m_grid[tileY][tileX];
-			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_SELECTED);
+			this->m_hoverSquare = this->m_grid[squareY][squareX];
+			this->m_hoverSquare->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_SELECTED);
 		}
 	}
 	// Mouse is outside the bounds of the Grid Space
 	else {
 		// If there IS a pre-existing Hover
-		if (this->m_hoverTile != nullptr) {
+		if (this->m_hoverSquare != nullptr) {
 			// Reset and Remove Hovers
-			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_DEFAULT); // Reset Hover
-			this->m_hoverTile = nullptr; // Remove Hover
+			this->m_hoverSquare->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_DEFAULT); // Reset Hover
+			this->m_hoverSquare = nullptr; // Remove Hover
 		}
 	}
 }

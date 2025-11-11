@@ -47,21 +47,21 @@ void EventManager::process(WindowManager& _windowManager) {
                     Grid* gameBoard = GameManager::getInstance()->m_levelManager.m_currentLevel->m_gameBoard;
 
                     // If there is a pre-exisiting Selection
-                    if (gameBoard->m_selectedTile != nullptr) {
+                    if (gameBoard->m_selectedSquare != nullptr) {
                         // Reset Selection
-                        gameBoard->m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_DEFAULT);
+                        gameBoard->m_selectedSquare->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_DEFAULT);
                     }
 
-                    // There is NO Tile being Hovered
-                    if (gameBoard->m_hoverTile == nullptr) {
+                    // There is NO Square being Hovered
+                    if (gameBoard->m_hoverSquare == nullptr) {
                         // Remove Selection
-                        gameBoard->m_selectedTile = nullptr;
+                        gameBoard->m_selectedSquare = nullptr;
                     }
-                    // There IS a Tile being Hovered
-                    else if (gameBoard->m_hoverTile != nullptr) {
+                    // There IS a Square being Hovered
+                    else if (gameBoard->m_hoverSquare != nullptr) {
                         // New Selection
-                        gameBoard->m_selectedTile = gameBoard->m_hoverTile;
-                        gameBoard->m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_SELECTED);
+                        gameBoard->m_selectedSquare = gameBoard->m_hoverSquare;
+                        gameBoard->m_selectedSquare->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_SELECTED);
                     }
                 }
             }

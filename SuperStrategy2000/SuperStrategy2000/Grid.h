@@ -12,7 +12,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 #include <cmath>
-#include "Tile.h"
+#include "Square.h"
 
 class Grid {
 public:
@@ -21,13 +21,13 @@ public:
 
 	// Grid Attributes
 	sf::RectangleShape m_gridBackground; // Grid Space
-	std::vector<std::vector<Tile*>> m_grid; // 2D Grid Array
+	std::vector<std::vector<Square*>> m_grid; // 2D Grid Array
 	sf::Vector2i m_gridSize; // Size of Grid Array
-	Tile* m_selectedTile; // The Selected Tile on the Grid
-	Tile* m_hoverTile; // The Hovered Tile on the Grid
+	Square* m_selectedSquare; // The Selected Square on the Grid
+	Square* m_hoverSquare; // The Hovered Square on the Grid
 
 	// Constructor and Destructor
-	Grid(sf::Vector2i _gridSize, sf::Vector2i _tileSize); // Constructor
+	Grid(sf::Vector2i _gridSize, sf::Vector2i _squareSize); // Constructor
 	~Grid(); // Destructor
 
 	// Grid Functions

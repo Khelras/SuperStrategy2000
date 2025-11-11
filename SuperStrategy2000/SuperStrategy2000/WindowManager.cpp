@@ -55,7 +55,7 @@ WindowManager::WindowManager() {
     this->m_debugWindow.close();
 
     // Debug Text
-    if (this->m_debugFont.openFromFile("fonts/arial.ttf")) {
+    if (this->m_debugFont.openFromFile("assets/fonts/arial.ttf")) {
         // Font Loaded Successfully
         this->m_debugText = new sf::Text(this->m_debugFont);
         this->m_debugText->setCharacterSize(20); // Set Text Size to 20px
@@ -148,21 +148,21 @@ void WindowManager::draw() {
         Grid* gameBoard = currentLevel->m_gameBoard;
         this->m_mainWindow.draw(gameBoard->m_gridBackground); // Draw the Background of the Board
 
-        // Draw the Tiles of the Game Board
+        // Draw the Squares of the Game Board
         for (int y = 0; y < gameBoard->m_gridSize.y; y++) { // Loop down the y-axis
             for (int x = 0; x < gameBoard->m_gridSize.x; x++) { // Loop down the x-axis
-                // The Tile
-                Tile* tile = gameBoard->m_grid[y][x];
+                // The Square
+                Square* square = gameBoard->m_grid[y][x];
 
-                // Calculating the World Position of the Tile base on the Position of the Game Board
-                float relativeTilePositionX = static_cast<float>(tile->m_tilePosition.x) * tile->TILE_SIZE.x; // Relative X
-                float relativeTilePositionY = static_cast<float>(tile->m_tilePosition.y) * tile->TILE_SIZE.y; // Relative Y
-                float worldTilePositionX = gameBoard->m_gridBackground.getPosition().x + relativeTilePositionX; // World X
-                float worldTilePositionY = gameBoard->m_gridBackground.getPosition().y + relativeTilePositionY; // World Y
+                // Calculating the World Position of the Square base on the Position of the Game Board
+                float relativeSquarePositionX = static_cast<float>(square->m_squarePosition.x) * square->SQUARE_SIZE.x; // Relative X
+                float relativeSquarePositionY = static_cast<float>(square->m_squarePosition.y) * square->SQUARE_SIZE.y; // Relative Y
+                float worldSquarePositionX = gameBoard->m_gridBackground.getPosition().x + relativeSquarePositionX; // World X
+                float worldSquarePositionY = gameBoard->m_gridBackground.getPosition().y + relativeSquarePositionY; // World Y
 
-                // Setting and Drawing the Tile Shape Position
-                tile->m_tileShape.setPosition(sf::Vector2f(worldTilePositionX, worldTilePositionY));
-                this->m_mainWindow.draw(tile->m_tileShape); // Draw the Tile Shape
+                // Setting and Drawing the Square Shape Position
+                square->m_squareShape.setPosition(sf::Vector2f(worldSquarePositionX, worldSquarePositionY));
+                this->m_mainWindow.draw(square->m_squareShape); // Draw the Square Shape
             }
         }
     }

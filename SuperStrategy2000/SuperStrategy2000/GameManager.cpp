@@ -8,14 +8,14 @@ GameManager::GameManager() {
     GameSettings::getInstance();
 
     // --- REMOVE LATER ---
-    this->m_levelManager.loadLevel(0, "Levels/level1.txt");
+    this->m_levelManager.loadLevel(0, "assets/levels/level1.txt");
     // --- REMOVE LATER ---
 
     // Delta Time
     this->m_deltaTime = 0.0f;
 
     // Background Music Sound
-    this->m_soundManager.playMusic("Sounds/BG/background.wav");
+    this->m_soundManager.playMusic("assets/sounds/bg/background.wav");
 }
 
 GameManager::~GameManager() {
