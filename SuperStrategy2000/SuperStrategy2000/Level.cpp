@@ -12,9 +12,9 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "Level.h"
 
-Level::Level(int _levelNumber, sf::Vector2i _gridSize, sf::Vector2i _tileSize) {
+Level::Level(int _levelNumber, sf::Vector2i _gridSize, sf::Vector2i _squareSize) {
 	this->m_levelNumber = _levelNumber;
-	this->m_gameBoard = new Grid(_gridSize, _tileSize);
+	this->m_gameBoard = new Grid(_gridSize, _squareSize);
 }
 
 Level::~Level() {
