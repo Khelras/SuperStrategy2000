@@ -11,8 +11,6 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "Actor.h"
-#include "GameManager.h"
-#include "GameSettings.h"
 
 // Defining the Static Constant Tile Map
 const TileMap Actor::ACTOR_TILE_MAP = TileMap();

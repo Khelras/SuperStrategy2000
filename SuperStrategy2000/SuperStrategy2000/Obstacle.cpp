@@ -11,8 +11,6 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "Obstacle.h"
-#include "GameManager.h"
-#include "GameSettings.h"
 
 Obstacle::Obstacle() {
 	// Set the Actor Type and the Actor Sprite

@@ -12,7 +12,11 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 #include <string>
+#include <vector>
 #include "Actor.h"
+
+// Forward Declare
+class Ability;
 
 class Unit {
 protected:
@@ -30,6 +34,9 @@ protected:
 	// Dynamic Unit Stats
 	float m_unitRemainingSpeed; // Remaining Movement Speed of a Unit
 	float m_unitCurrentHealth; // Current Health of the Unit
+
+	// Abilities
+	std::vector<Ability*> m_unitAbilities;
 
 public:
 	// Constructor and Destructor

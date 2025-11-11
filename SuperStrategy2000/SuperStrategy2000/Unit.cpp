@@ -11,6 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "Unit.h"
+#include "BasicAttack.hpp" // Forward Declaration
 
 Unit::Unit() {
 	// Unit Attributes
@@ -27,7 +28,19 @@ Unit::Unit() {
 	// Dynamic Unit Stats
 	this->m_unitRemainingSpeed = this->m_unitSpeed; // Remaining Movement Speed of a Unit
 	this->m_unitCurrentHealth = this->m_unitHealth; // Current Health of the Unit
+
+	// Add the Basic Attack Ability
+	this->m_unitAbilities.push_back(new BasicAttack());
 }
 
 Unit::~Unit() {
+	// Loop through the Abilites
+	for (auto& ability : this->m_unitAbilities) {
+		// Ensure Ability exists
+		if (ability != nullptr) {
+			// Delete Ability
+			delete (ability);
+			ability = nullptr;
+		}
+	}
 }
