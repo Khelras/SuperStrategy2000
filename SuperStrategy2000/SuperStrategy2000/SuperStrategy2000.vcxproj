@@ -94,21 +94,28 @@ sfml-window-d.lib
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ability.hpp" />
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="ArchersMark.hpp" />
+    <ClInclude Include="BasicAttack.hpp" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="KnightsMight.hpp" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="MagesHeal.hpp" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Unit.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
