@@ -20,7 +20,7 @@ private:
 	sf::Texture m_errorTexture; // Red Square Tile Texture (For Errors)
 	sf::Vector2u m_tileSize; // The Size of a Single Tile
 	sf::Vector2u m_tileMapSize; // The Size of the Tile Map
-	sf::Vector2u m_tileMapSizeinTiles; // The Size of the Tile Map in terms of Tiles
+	sf::Vector2u m_tileMapSizeInTiles; // The Size of the Tile Map in terms of Tiles
 	unsigned int m_totalTiles; // Total Number of Tiles within the Tile map
 	bool m_hasLoadedTexture; // If a Tile Map Texture has been Loaded
 

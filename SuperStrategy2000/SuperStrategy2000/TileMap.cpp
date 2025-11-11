@@ -19,7 +19,7 @@ TileMap::TileMap() {
 	this->loadTileMap("assets/tilesets/test.png", 32);
 
 	// Error Tile Texture
-	sf::Image redImage({ 16, 16 }, sf::Color::Red); // Creates a Red 16x16 Image
+	sf::Image redImage({ 32, 32 }, sf::Color::Red); // Creates a Red 32x32 Image
 	if (this->m_errorTexture.loadFromImage(redImage)); // Loads the Texture from the Red 16x16 Image
 }
 
@@ -28,7 +28,7 @@ TileMap::TileMap(std::string _path, int _tileSides) {
 	this->loadTileMap(_path, _tileSides, _tileSides);
 
 	// Error Tile Texture
-	sf::Image RedImage({ 16, 16 }, sf::Color::Red); // Creates a Red 16x16 Image
+	sf::Image RedImage({ 32, 32 }, sf::Color::Red); // Creates a Red 32x32 Image
 	if (this->m_errorTexture.loadFromImage(RedImage)); // Loads the Texture from the Red 16x16 Image
 }
 
@@ -37,7 +37,7 @@ TileMap::TileMap(std::string _path, int _tileWidth, int _tileHeight) {
 	this->loadTileMap(_path, _tileWidth, _tileHeight);
 
 	// Error Tile Texture
-	sf::Image RedImage({ 16, 16 }, sf::Color::Red); // Creates a Red 16x16 Image
+	sf::Image RedImage({ 32, 32 }, sf::Color::Red); // Creates a Red 32x32 Image
 	if (this->m_errorTexture.loadFromImage(RedImage)); // Loads the Texture from the Red 16x16 Image
 }
 
@@ -62,9 +62,9 @@ bool TileMap::loadTileMap(std::string _path, unsigned int _tileWidth, unsigned i
 		this->m_tileSize.y = _tileHeight;
 		this->m_tileMapSize.x = this->m_tileMapTexture.getSize().x;
 		this->m_tileMapSize.y = this->m_tileMapTexture.getSize().y;
-		this->m_tileMapSizeinTiles.x = this->m_tileMapTexture.getSize().x / _tileWidth;
-		this->m_tileMapSizeinTiles.y = this->m_tileMapTexture.getSize().y / _tileHeight;
-		this->m_totalTiles = this->m_tileMapSizeinTiles.x * this->m_tileMapSizeinTiles.y;
+		this->m_tileMapSizeInTiles.x = this->m_tileMapTexture.getSize().x / _tileWidth;
+		this->m_tileMapSizeInTiles.y = this->m_tileMapTexture.getSize().y / _tileHeight;
+		this->m_totalTiles = this->m_tileMapSizeInTiles.x * this->m_tileMapSizeInTiles.y;
 
 		// Loading Successful
 		this->m_hasLoadedTexture = true;
@@ -85,8 +85,8 @@ sf::IntRect TileMap::getTile(unsigned int _x, unsigned int _y) const {
 				_y * static_cast<int>(this->m_tileSize.y)
 			),
 			sf::Vector2i( // Size
-				static_cast<int>(this->m_tileMapSize.x),
-				static_cast<int>(this->m_tileMapSize.y)
+				static_cast<int>(this->m_tileSize.x),
+				static_cast<int>(this->m_tileSize.y)
 			)
 		);
 	}
@@ -98,8 +98,8 @@ sf::IntRect TileMap::getTile(unsigned int _x, unsigned int _y) const {
 				0, 0
 			),
 			sf::Vector2i( // Size
-				static_cast<int>(this->m_tileMapSize.x),
-				static_cast<int>(this->m_tileMapSize.y)
+				static_cast<int>(this->m_tileSize.x),
+				static_cast<int>(this->m_tileSize.y)
 			)
 		);
 	}
@@ -133,7 +133,7 @@ sf::Vector2u TileMap::getTileMapSize() const {
 }
 
 sf::Vector2u TileMap::getTileMapSizeInTiles() const {
-	return this->m_tileMapSizeinTiles;
+	return this->m_tileMapSizeInTiles;
 }
 
 unsigned int TileMap::getTotalTiles() const {
@@ -142,7 +142,7 @@ unsigned int TileMap::getTotalTiles() const {
 
 bool TileMap::assertXY(unsigned int _x, unsigned int _y) const {
 	// Check if the given X and Y are within the Tile Map X and Y (in Terms of Tiles)
-	if (_x < this->m_tileMapSizeinTiles.x && _y < this->m_tileMapSizeinTiles.y) {
+	if (_x < this->m_tileMapSizeInTiles.x && _y < this->m_tileMapSizeInTiles.y) {
 		// Return true (Assertion successful)
 		return true;
 	}

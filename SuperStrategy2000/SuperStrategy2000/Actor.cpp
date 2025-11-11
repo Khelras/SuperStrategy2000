@@ -14,6 +14,9 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "GameManager.h"
 #include "GameSettings.h"
 
+// Defining the Static Constant Tile Map
+const TileMap Actor::ACTOR_TILE_MAP = TileMap();
+
 Actor::Actor() {
 	// Default Attributes
 	this->m_actorPosition = sf::Vector2f(0.0f, 0.0f);
@@ -49,7 +52,22 @@ const sf::Vector2f& Actor::getActorPosition() const {
 	return this->m_actorPosition;
 }
 
-void Actor::setActorSprite(sf::Vector2u _square) {
+void Actor::setActorSprite(unsigned int _index) {
+	// If Actor Sprite DOES Exist
+	if (this->m_actorSprite != nullptr) {
+		// ONLY Set the TextureRect
+		this->m_actorSprite->setTextureRect(
+			Actor::ACTOR_TILE_MAP.getTile(_index) // Set the TextureRect given the Tile Index
+		);
+	}
+	// If Actor Sprite does NOT Exist
+	else if (this->m_actorSprite == nullptr) {
+		// Create a new Actor Sprite
+		this->m_actorSprite = new sf::Sprite(
+			Actor::ACTOR_TILE_MAP.getTileMapTexture(), // Set the Texture
+			Actor::ACTOR_TILE_MAP.getTile(_index) // Set the TextureRect given the Tile Index
+		);
+	}
 }
 
 const sf::Sprite* Actor::getActorSprite() const {
