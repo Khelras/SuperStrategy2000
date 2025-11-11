@@ -90,6 +90,7 @@ sfml-window-d.lib
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="TileMap.cpp" />
@@ -104,6 +105,7 @@ sfml-window-d.lib
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="TileMap.h" />

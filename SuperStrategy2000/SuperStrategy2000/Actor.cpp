@@ -69,6 +69,9 @@ void Actor::setActorSprite(unsigned int _index) {
 			Actor::ACTOR_TILE_MAP.getTileMapTexture(), // Set the Texture
 			Actor::ACTOR_TILE_MAP.getTile(_index) // Set the TextureRect given the Tile Index
 		);
+
+		// Set the Position of the Actor Sprite to the Actor Position
+		this->m_actorSprite->setPosition(this->m_actorPosition);
 	}
 }
 
