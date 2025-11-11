@@ -38,6 +38,6 @@ public:
 
 	// Virtual Actor Sprite Functions
 	virtual void setActorSprite(sf::Vector2u _index); // Sets the Actor Sprite
-	virtual const sf::Sprite* getActorSprite() const // Returns the Actor Sprite
+	virtual const sf::Sprite* getActorSprite() const; // Returns the Actor Sprite
 };
 
