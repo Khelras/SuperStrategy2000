@@ -35,15 +35,6 @@ GameManager* GameManager::getInstance() {
 }
 
 void GameManager::process() {
-    // Top-Left Square --- REMOVE LATER ---
-    sf::RectangleShape square({ 100, 100 });
-    square.setPosition({ 0, 0 });
-    square.setFillColor(sf::Color::Red);
-
-    Actor testActor;
-    testActor.setActorSprite(10);
-    // Top-Left Square --- REMOVE LATER ---
-
     // Clock to Measure Delta Time
     sf::Clock deltaClock;
 
@@ -74,8 +65,6 @@ void GameManager::process() {
         // Draw World Actors
         this->m_cameraManager.processCameraView(); // Camera View
         this->m_windowManager.draw(); // Draw
-        this->m_windowManager.m_mainWindow.draw(square); // --- REMOVE LATER ---
-        this->m_windowManager.m_mainWindow.draw(*testActor.getActorSprite()); // --- REMOVE LATER ---
 
         // Draw UI
         this->m_cameraManager.processUIView(); // UI View
