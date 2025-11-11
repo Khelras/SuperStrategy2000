@@ -74,7 +74,7 @@ Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _squareSize) {
 	float gridSpaceY = static_cast<float>(Square::SQUARE_SIZE.y * this->m_gridSize.y); // Static Cast to Float
 	this->m_gridBackground.setSize(sf::Vector2f(gridSpaceX, gridSpaceY));
 	this->m_gridBackground.setFillColor(sf::Color::White); // White
-	this->m_gridBackground.setPosition(sf::Vector2f(Grid::MARGIN, Grid::MARGIN)); // Account for the Margin
+	this->m_gridBackground.setPosition(sf::Vector2f(0.0f, 0.0f)); // Set at Origin
 }
 
 Grid::~Grid() {

@@ -20,6 +20,9 @@
     <Filter Include="Source Files\GridSystem">
       <UniqueIdentifier>{b7509a3d-941c-4c27-8862-17484e710ed0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\TileMap">
+      <UniqueIdentifier>{ac8a8d15-f82f-49b3-b13c-2435b7def304}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,9 +39,6 @@
     </ClCompile>
     <ClCompile Include="GameSettings.cpp">
       <Filter>Source Files\GameSettings</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files\GridSystem</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Source Files\GridSystem</Filter>
@@ -58,6 +58,12 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Source Files\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="Square.cpp">
+      <Filter>Source Files\GridSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Source Files\TileMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -71,9 +77,6 @@
     </ClInclude>
     <ClInclude Include="GameSettings.h">
       <Filter>Source Files\GameSettings</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Source Files\GridSystem</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Source Files\GridSystem</Filter>
@@ -92,6 +95,12 @@
     </ClInclude>
     <ClInclude Include="Actor.h">
       <Filter>Source Files\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Square.h">
+      <Filter>Source Files\GridSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Source Files\TileMap</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
