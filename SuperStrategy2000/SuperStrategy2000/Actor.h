@@ -14,25 +14,35 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 class Actor {
-protected:
-	// Actor Attributes
-	sf::Vector2f m_actorPosition;
-	sf::Sprite* m_actorSprite;
-
 public:
 	// Static Constant Tile Map
 	static const TileMap ACTOR_TILE_MAP;
 
 	// The Different Types of Actors
 	enum class Type {
+		// Static Actors
 		NONE = 0,
 		OBSTACLE = 1,
-		UNIT = 2,
+		// Player Units
+		UNIT_PLAYER_KNIGHT = 2,
+		UNIT_PLAYER_ARCHER = 3,
+		UNIT_PLAYER_MAGE = 4,
+		// Enemy Units
+		UNIT_ENEMY_KNIGHT = 5,
+		UNIT_ENEMY_ARCHER = 6,
+		UNIT_ENEMY_MAGE = 7
 	};
-	
+
+protected:
+	// Actor Attributes
+	sf::Vector2f m_actorPosition; // The Position of the Actor
+	sf::Sprite* m_actorSprite; // The Sprite of the Actor
+	Actor::Type m_actorType; // The Type of the Actor
+
+public:
 	// Constructor and Destructor
 	Actor(); // Default Constructor
-	Actor(sf::Vector2f _position); // Constructor
+	Actor(sf::Vector2f _position, Actor::Type _type); // Constructor
 	virtual ~Actor(); // Virtual Destructor
 
 	// Virtual Actor Position Functions
@@ -42,5 +52,9 @@ public:
 	// Virtual Actor Sprite Functions
 	virtual void setActorSprite(unsigned int _index); // Sets the Actor Sprite
 	virtual const sf::Sprite* getActorSprite() const; // Returns the Actor Sprite
+
+	// Virtual Actor Type Functions
+	virtual void setActorType(Actor::Type _type); // Sets the Actor Type
+	virtual const Actor::Type& getActorType() const; // Returns the Actor Type
 };
 
