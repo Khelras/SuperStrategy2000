@@ -137,6 +137,11 @@ Level::~Level() {
 }
 
 void Level::process() {
+	// Level completed
+	if (this->m_levelHasWon == true) {
+		return;
+	}
+
 	// Game Board Grid Process Loop
 	this->m_levelGameBoard->process();
 
@@ -212,6 +217,16 @@ void Level::process() {
 		// Death Count Message
 		std::cout << this->m_totalEnemies - this->m_deadEnemies << " enemies remain!" << std::endl;
 		std::cout << this->m_totalPlayers - this->m_deadPlayers << " players remain!" << std::endl;
+
+		// Result?
+		if (this->m_totalEnemies - this->m_deadEnemies <= 0) {
+			// Level Won
+			this->m_levelHasWon = true;
+		} 
+		else if (this->m_totalPlayers - this->m_deadPlayers <= 0) {
+			// Level Lost
+			// TODO: RESTART LEVEL
+		}
 
 		this->m_levelCurrentUnit = this->m_levelTurnOrder.front(); // New Current Unit
 		TurnController::getInstance()->reset(); // Reset the Turn Controller

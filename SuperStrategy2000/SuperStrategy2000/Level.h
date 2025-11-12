@@ -20,6 +20,7 @@ public:
 	Grid* m_levelGameBoard; // The Game Board Grid
 	std::queue<Unit*> m_levelTurnOrder; // The Turn Order of the Level
 	Unit* m_levelCurrentUnit; // The Current Unit
+	bool m_levelHasWon = false;
 
 	// Unit Counts
 	int m_totalEnemies = 0;
