@@ -11,13 +11,24 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
+#include <iostream>
 #include "Unit.h"
 
 class Ability {
+public:
+	enum class Type {
+		NONE,
+		BASIC,
+		KNIGHT,
+		ARCHER,
+		MAGE
+	};
+
 protected:
 	// Ability Attributes
 	std::string m_abilityName;
 	std::string m_abilityDescription;
+	Type m_abilityType = Type::NONE;
 	unsigned int m_abilityCooldown = 0; // Default to 0
 	unsigned int m_abilityCurrentCooldown = 0; // Default to 0
 
@@ -27,7 +38,7 @@ public:
 	virtual ~Ability() {}; // Virtual Destructor
 
 	// Ability Execute Function
-	virtual bool execute(Unit* _user, Unit* _target) const = 0;
+	virtual bool execute(Unit* _user, Unit* _target) = 0;
 
 	// Getters
 	const std::string& getAbilityName() const { return this->m_abilityName; };

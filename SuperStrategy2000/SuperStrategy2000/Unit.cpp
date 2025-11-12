@@ -31,9 +31,8 @@ Unit::Unit() {
 	// Add the Basic Attack Ability
 	this->m_unitAbilities.push_back(new BasicAttack());
 
-	// Turn Attributes
-	this->m_hasMoved = false;
-	this->m_hasAttacked = false;
+	// Marked for Double Damage
+	bool m_isMarkedForDouble;
 }
 
 Unit::~Unit() {
@@ -45,5 +44,31 @@ Unit::~Unit() {
 			delete (ability);
 			ability = nullptr;
 		}
+	}
+}
+
+void Unit::updateAbilityCooldowns() {
+	for (auto& ability : this->m_unitAbilities) {
+		ability->updateCooldown();
+	}
+}
+
+void Unit::damageUnit(float _damage) {
+	// Check if this Unit will die from this
+	if (this->m_unitCurrentHealth - _damage <= 0) {
+		this->m_unitCurrentHealth = 0;
+	}
+	else if (this->m_unitCurrentHealth - _damage > 0) {
+		this->m_unitCurrentHealth -= _damage;
+	}
+}
+
+void Unit::healUnit(float _heal) {
+	// Check if the Heal amount is greater than the Max Health
+	if (this->m_unitCurrentHealth + _heal > this->m_unitHealth) {
+		this->m_unitCurrentHealth = this->m_unitHealth;
+	}
+	else if (this->m_unitCurrentHealth + _heal <= this->m_unitHealth) {
+		this->m_unitCurrentHealth += _heal;
 	}
 }

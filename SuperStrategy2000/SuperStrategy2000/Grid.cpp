@@ -236,6 +236,12 @@ void Grid::selectSquare(Actor* _actor) {
 	}
 }
 
+void Grid::selectSquare(Square* _actor) {
+	// Override the Select Square
+	this->clear();
+	this->m_selectedSquare = _actor;
+}
+
 void Grid::breadthFirstSearch(Square* _start, int _depth, bool _checkActors) {
 	std::vector<Square*> visited; // List of Visited Squares
 	std::queue<Square*> toVisit; // Queue of Squares to Visit

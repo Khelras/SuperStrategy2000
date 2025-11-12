@@ -19,6 +19,7 @@ UIManager::UIManager() {
 	this->m_buttons.push_back(new BasicButton()); // Basic Attack Button
 	this->m_buttons.push_back(new SpecialButton()); // Special Attack Button
 	this->m_buttons.push_back(new MoveButton()); // Move Unit Button
+	this->m_buttons.push_back(new DoneButton());
 }
 
 UIManager::~UIManager() {

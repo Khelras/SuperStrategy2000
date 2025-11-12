@@ -22,13 +22,39 @@ public:
 		this->m_abilityDescription = "Simply attack an enemy.";
 	};
 
+	// Ability Type
+	Type m_abilityType = Type::BASIC;
+
 	// Virtual Destructor
 	virtual ~BasicAttack() {};
 
 	// Execute
-	bool execute(Unit* _user, Unit* _target) const override {
-		// TODO: MAKE BASIC ATTACK
+	bool execute(Unit* _user, Unit* _target) override {
+		// Ensure Target is not User
+		if (_target != _user) {
+			// Ensure Target is an Enemy
+			if (_target->getActorType() == Actor::Type::UNIT_ENEMY_KNIGHT ||
+				_target->getActorType() == Actor::Type::UNIT_ENEMY_ARCHER ||
+				_target->getActorType() == Actor::Type::UNIT_ENEMY_MAGE) {
+				// Calculate Damage (Strength of User minus Defense of Target)
+				float damage = _user->getUnitStrength() - _target->getUnitDefense();
+				if (damage < 0) damage = 0; // Clamp to 0
 
+				// Check if Target is Marked
+				if (_target->m_isMarkedForDouble) {
+					damage += damage; // Double Damage
+					_target->m_isMarkedForDouble = false;
+				}
+
+				// Deal Damage to Target
+				_target->damageUnit(damage);
+
+				// Ability was Successful
+				return true;
+			}
+		}
+
+		// Ability Failed
 		return false;
 	};
 };

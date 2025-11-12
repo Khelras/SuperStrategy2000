@@ -157,14 +157,33 @@ void Level::process() {
 				true
 			);
 		}
+		// Basic Attack Turn State
+		else if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::BASIC) {
+			// Select the Square
+			this->m_levelGameBoard->selectSquare(this->m_levelCurrentUnit);
+
+			// Show this Units Attack Range
+			this->m_levelGameBoard->breadthFirstSearch(
+				this->m_levelGameBoard->m_selectedSquare,
+				static_cast<int>(this->m_levelCurrentUnit->getUnitRange()),
+				false
+			);
+		}
 	}
 	// Turn is Done
 	else {
+		// Output to Console
+		std::cout << this->m_levelCurrentUnit->getUnitName() << " turn ended!" << std::endl;
+
 		// Put the Front Unit to the Back of the Queue
 		this->m_levelTurnOrder.push(this->m_levelTurnOrder.front()); // Push Front Unit to the Back
 		this->m_levelTurnOrder.pop(); // Remove the Front Unit
 		this->m_levelCurrentUnit = this->m_levelTurnOrder.front(); // New Current Unit
 		TurnController::getInstance()->reset(); // Reset the Turn Controller
+
+		// Output to Console
+		std::cout << std::endl;
+		std::cout << this->m_levelCurrentUnit->getUnitName() << " turn!" << std::endl;
 	}
 }
 

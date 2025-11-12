@@ -127,6 +127,9 @@
     <ClCompile Include="TurnController.cpp">
       <Filter>Source Files\Controllers</Filter>
     </ClCompile>
+    <ClCompile Include="DoneButton.cpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -209,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="TurnController.h">
       <Filter>Source Files\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="DoneButton.h">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

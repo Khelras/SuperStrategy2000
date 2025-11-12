@@ -43,18 +43,21 @@ public:
 	enum class TurnStates {
 		DECIDING,
 		MOVING,
-		ATTACKING,
+		BASIC, // Basic Attack
+		SPECIAL, // Special Ability
 		DONE
 	};
 
 	// Turn Order Attributes
 	TurnStates m_turnState = TurnStates::DECIDING;
 	bool m_hasMoved = false;
+	Ability* m_ability = nullptr;
 
 	// Turn Order Functions Functions
 	void reset() {
 		// Reset to Default
 		this->m_turnState = TurnStates::DECIDING;
 		this->m_hasMoved = false;
+		this->m_ability = nullptr;
 	}
 };

@@ -76,14 +76,54 @@ void EventManager::process(WindowManager& _windowManager) {
 
                                     // Move the Actor Sprite
                                     end->m_actorOnSquare->setActorSpritePosition(end->m_squareShape.getGlobalBounds().getCenter());
-
+                                    TurnController::getInstance()->m_turnState = TurnController::TurnStates::DECIDING;
                                     TurnController::getInstance()->m_hasMoved = true;
-                                    level->m_levelGameBoard->clear(); // Clear the Grid
                                 }
+                                level->m_levelGameBoard->selectSquare(end);
                             }
                         } 
-                        // Attacking Turn State
-                        else if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::ATTACKING) {
+                        // Basic Attack Turn State
+                        else if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::BASIC) {
+                            // There IS a Square being Hovered
+                            if (level->m_levelGameBoard->m_hoverSquare != nullptr) {
+                                Square* selected = level->m_levelGameBoard->m_selectedSquare; // Selected Square
+                                Square* hover = level->m_levelGameBoard->m_hoverSquare; // Hover Square
+
+                                // Check if the Hover Square has an Actor
+                                if (hover->m_actorOnSquare != nullptr) {
+                                    // Check if this Actor is an Enemy
+                                    if (hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_ENEMY_KNIGHT ||
+                                        hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_ENEMY_ARCHER ||
+                                        hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_ENEMY_MAGE) {
+                                        // User Unit
+                                        Unit* unit = dynamic_cast<Unit*>(selected->m_actorOnSquare);
+
+                                        // Target Unit
+                                        Unit* target = dynamic_cast<Unit*>(hover->m_actorOnSquare);
+
+                                        // Use the Basic Attack
+                                        if (unit->m_unitAbilities[0]->execute(unit, target) == true) {
+                                            // Target Enemy Health Message
+                                            std::cout << "Enemy " << target->getUnitName() << " Health: ";
+                                            std::cout << target->getUnitCurrentHealth() << "/" << target->getUnitMaxHeatlh();
+                                            std::cout << std::endl;
+
+                                            // Completed Turn
+                                            TurnController::getInstance()->m_turnState = TurnController::TurnStates::DONE;
+                                        }
+                                        else {
+                                            std::cout << "Attack Failed :(\n";
+
+                                            // Completed Turn
+                                            TurnController::getInstance()->m_turnState = TurnController::TurnStates::DONE;
+                                        }
+                                    }
+                                }
+                                level->m_levelGameBoard->selectSquare(selected);
+                            }
+                        }
+                        // Special Attack Turn State
+                        else if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::SPECIAL) {
 
                         }
                     }

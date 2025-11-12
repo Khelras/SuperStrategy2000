@@ -30,4 +30,8 @@ void MoveButton::execute() {
 		// Set the Level Turn State to moving
 		TurnController::getInstance()->m_turnState = TurnController::TurnStates::MOVING;
 	}
+	else {
+		// Output to Console
+		std::cout << "No more moves left :(" << std::endl;
+	}
 }

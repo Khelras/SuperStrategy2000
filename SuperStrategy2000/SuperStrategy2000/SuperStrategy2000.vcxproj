@@ -87,6 +87,7 @@ sfml-window-d.lib
     <ClCompile Include="BasicButton.h" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="DoneButton.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameSettings.cpp" />
@@ -115,6 +116,7 @@ sfml-window-d.lib
     <ClInclude Include="BasicAttack.hpp" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="DoneButton.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameSettings.h" />

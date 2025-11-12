@@ -15,6 +15,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "BasicButton.h"
 #include "SpecialButton.h"
 #include "MoveButton.h"
+#include "DoneButton.h"
 
 class UIManager {
 public:
