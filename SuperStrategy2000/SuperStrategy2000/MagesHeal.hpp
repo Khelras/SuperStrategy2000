@@ -45,24 +45,24 @@ public:
 			return false;
 		}
 
-		// Target is NOT itself
-		if (_target != _user) {
-			// Target is an Ally
-			if (_target->getActorType() == Actor::Type::UNIT_PLAYER_KNIGHT || 
-				_target->getActorType() == Actor::Type::UNIT_PLAYER_ARCHER || 
-				_target->getActorType() == Actor::Type::UNIT_PLAYER_MAGE ) {
-				// Downcast User to Mage
-				Mage* mage = dynamic_cast<Mage*>(_user);
+		// Target is an Ally
+		if (_target->getActorType() == Actor::Type::UNIT_PLAYER_KNIGHT || 
+			_target->getActorType() == Actor::Type::UNIT_PLAYER_ARCHER || 
+			_target->getActorType() == Actor::Type::UNIT_PLAYER_MAGE ) {
+			// Downcast User to Mage
+			Mage* mage = dynamic_cast<Mage*>(_user);
 
-				// Heal the target based on the Mages Strength and Defense Stats
-				_target->healUnit(mage->getUnitStrength() * mage->getUnitDefense());
+			// Heal the target based on the Mages Strength and Defense Stats
+			_target->healUnit(mage->getUnitStrength() * mage->getUnitDefense());
 
-				// Ability Cooldown
-				this->m_abilityCurrentCooldown = 0;
+			std::cout << mage->getUnitStrength() * mage->getUnitDefense() << " healed!";
+			std::cout << std::endl;
 
-				// Ability was Successful
-				return true;
-			}
+			// Ability Cooldown
+			this->m_abilityCurrentCooldown = 0;
+
+			// Ability was Successful
+			return true;
 		}
 
 		// Ability Failed

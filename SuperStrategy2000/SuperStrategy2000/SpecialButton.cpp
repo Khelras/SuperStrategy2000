@@ -25,4 +25,6 @@ SpecialButton::~SpecialButton() {
 }
 
 void SpecialButton::execute() {
+	// Set the Level Turn State to Special
+	TurnController::getInstance()->m_turnState = TurnController::TurnStates::SPECIAL;
 }

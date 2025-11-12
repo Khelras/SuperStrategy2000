@@ -181,6 +181,18 @@ void Level::process() {
 					false
 				);
 			}
+			// Special Attack Turn State
+			else if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::SPECIAL) {
+				// Select the Square
+				this->m_levelGameBoard->selectSquare(this->m_levelCurrentUnit);
+
+				// Show this Units Attack Range
+				this->m_levelGameBoard->breadthFirstSearch(
+					this->m_levelGameBoard->m_selectedSquare,
+					static_cast<int>(this->m_levelCurrentUnit->getUnitRange()),
+					false
+				);
+			}
 		}
 		// Enemys Turn
 		else if (this->m_levelCurrentUnit->getActorType() == Actor::Type::UNIT_ENEMY_KNIGHT ||

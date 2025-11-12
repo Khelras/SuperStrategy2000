@@ -25,6 +25,6 @@ BasicButton::~BasicButton() {
 }
 
 void BasicButton::execute() {
-	// Set the Level Turn State to moving
+	// Set the Level Turn State to Basic
 	TurnController::getInstance()->m_turnState = TurnController::TurnStates::BASIC;
 }
