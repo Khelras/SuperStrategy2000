@@ -166,28 +166,6 @@ void Level::process() {
 		this->m_levelCurrentUnit = this->m_levelTurnOrder.front(); // New Current Unit
 		TurnController::getInstance()->reset(); // Reset the Turn Controller
 	}
-
-	// Check if there is a Selected Square
-	if (this->m_levelGameBoard->m_selectedSquare != nullptr) {
-		// Check if that Selected Square has an Actor
-		Actor* actor = this->m_levelGameBoard->m_selectedSquare->m_actorOnSquare;
-		if (actor != nullptr) {
-			// Check if that Actor is a Player Unit
-			if (actor->getActorType() == Actor::Type::UNIT_PLAYER_KNIGHT ||
-				actor->getActorType() == Actor::Type::UNIT_PLAYER_ARCHER ||
-				actor->getActorType() == Actor::Type::UNIT_PLAYER_MAGE) {
-				// Downcast to Unit
-				Unit* unit = dynamic_cast<Unit*>(actor);
-
-				// Show the Range
-				this->m_levelGameBoard->breadthFirstSearch(
-					this->m_levelGameBoard->m_selectedSquare,
-					static_cast<int>(unit->getUnitSpeed()),
-					true
-				);
-			}
-		}
-	}
 }
 
 void Level::drawLevel(sf::RenderWindow& _window) {
@@ -205,6 +183,7 @@ void Level::drawLevel(sf::RenderWindow& _window) {
 			if (square->m_actorOnSquare != nullptr) {
 				// Ensure that the Actor Sprite exists
 				if (square->m_actorOnSquare->getActorSprite() != nullptr) {
+
 					// Draw the Actor Sprite
 					_window.draw(*(square->m_actorOnSquare->getActorSprite()));
 				}

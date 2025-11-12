@@ -41,5 +41,8 @@ public:
 	void clear(); // Resets every Square on the Grid by to its Default Colours
 	void selectSquare(Actor* _actor); // Select the Square of the given Actor
 	void breadthFirstSearch(Square* _start, int _depth, bool _checkActors = false); // Level-Ordered Search with a given Depth
+
+	// Math
+	float getManhattanDistance(Square* _start, Square* _end);
 };
 

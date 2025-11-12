@@ -13,6 +13,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "EventManager.h"
 #include "GameManager.h"
 #include "GameSettings.h"
+#include "TurnController.h"
 
 EventManager::EventManager() {
     this->m_isShiftPressed = false;
@@ -45,8 +46,8 @@ void EventManager::process(WindowManager& _windowManager) {
                 // Left-Button Mouse Pressed Event
                 if (mousePressed->button == sf::Mouse::Button::Left) {
                     // Pointer to the Game Board of the Current Selected Level
-                    Grid* gameBoard = GameManager::getInstance()->m_levelManager.m_currentLevel->m_levelGameBoard;
-                    gameBoard->clear(); // Clear the Grid
+                    Level*& level = GameManager::getInstance()->m_levelManager.m_currentLevel;
+                    level->m_levelGameBoard->clear(); // Clear the Grid
 
                     // Check if Mouse clicked on a Button UI
                     UIManager uiManager = GameManager::getInstance()->m_uiManager;
@@ -59,22 +60,31 @@ void EventManager::process(WindowManager& _windowManager) {
                         }
                     }
                     else if (uiManager.isMouseOnUI() == false) { // Mouse is NOT hovering over UI
-                        // If there is a pre-exisiting Selection
-                        if (gameBoard->m_selectedSquare != nullptr) {
-                            // Reset Selection
-                            gameBoard->m_selectedSquare->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_DEFAULT);
-                        }
+                        // Moving Turn State
+                        if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::MOVING) {
+                            // There IS a Square being Hovered
+                            if (level->m_levelGameBoard->m_hoverSquare != nullptr) {
+                                Square* start = level->m_levelGameBoard->m_selectedSquare; // Start Square
+                                Square* end = level->m_levelGameBoard->m_hoverSquare; // End Square
+                                Unit* unit = dynamic_cast<Unit*>(start->m_actorOnSquare); // Unit
 
-                        // There is NO Square being Hovered
-                        if (gameBoard->m_hoverSquare == nullptr) {
-                            // Remove Selection
-                            gameBoard->m_selectedSquare = nullptr;
-                        }
-                        // There IS a Square being Hovered
-                        else if (gameBoard->m_hoverSquare != nullptr) {
-                            // New Selection
-                            gameBoard->m_selectedSquare = gameBoard->m_hoverSquare;
-                            gameBoard->m_selectedSquare->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_SELECTED);
+                                // Check if Unit can Move here
+                                if (level->m_levelGameBoard->getManhattanDistance(start, end) <= unit->getUnitSpeed()) {
+                                    // Perform Move
+                                    end->m_actorOnSquare = start->m_actorOnSquare;
+                                    start->m_actorOnSquare = nullptr;
+
+                                    // Move the Actor Sprite
+                                    end->m_actorOnSquare->setActorSpritePosition(end->m_squareShape.getGlobalBounds().getCenter());
+
+                                    TurnController::getInstance()->m_hasMoved = true;
+                                    level->m_levelGameBoard->clear(); // Clear the Grid
+                                }
+                            }
+                        } 
+                        // Attacking Turn State
+                        else if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::ATTACKING) {
+
                         }
                     }
                 }

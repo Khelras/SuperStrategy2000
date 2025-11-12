@@ -11,6 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
+#include "Ability.hpp"
 
 class TurnController {
 private:
@@ -49,13 +50,11 @@ public:
 	// Turn Order Attributes
 	TurnStates m_turnState = TurnStates::DECIDING;
 	bool m_hasMoved = false;
-	bool m_hasAttacked = false;
 
 	// Turn Order Functions Functions
 	void reset() {
 		// Reset to Default
 		this->m_turnState = TurnStates::DECIDING;
 		this->m_hasMoved = false;
-		this->m_hasAttacked = false;
 	}
 };

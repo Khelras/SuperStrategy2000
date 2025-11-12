@@ -51,11 +51,13 @@ void Actor::setActorSprite(unsigned int _index) {
 			Actor::ACTOR_TILE_MAP.getTileMapTexture(), // Set the Texture
 			Actor::ACTOR_TILE_MAP.getTile(_index) // Set the TextureRect given the Tile Index
 		);
+
+		// Center the Origin
+		this->m_actorSprite->setOrigin(this->m_actorSprite->getGlobalBounds().getCenter());
 	}
 }
 
 void Actor::setActorSpritePosition(sf::Vector2f _position) {
-	this->m_actorSprite->setOrigin(this->m_actorSprite->getGlobalBounds().getCenter());
 	this->m_actorSprite->setPosition(_position);
 }
 
