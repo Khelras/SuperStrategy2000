@@ -86,7 +86,7 @@ void Level::process() {
 				// Show the Range
 				this->m_levelGameBoard->breadthFirstSearch(
 					this->m_levelGameBoard->m_selectedSquare,
-					unit->getUnitSpeed(),
+					static_cast<int>(unit->getUnitSpeed()),
 					true
 				);
 			}

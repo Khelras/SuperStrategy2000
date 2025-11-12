@@ -14,6 +14,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "GameSettings.h"
 #include "EventManager.h"
 #include "CameraManager.h"
+#include "UIManager.h"
 #include "LevelManager.h"
 #include "SoundManager.h"
 
@@ -34,6 +35,7 @@ public:
 	WindowManager m_windowManager; // Window Manager
 	EventManager m_eventManager; // Event Manager
 	CameraManager m_cameraManager; // Camera Manager
+	UIManager m_uiManager; // UI Manager
 	LevelManager m_levelManager; // Level Manager
 	SoundManager m_soundManager; // Sound Manager
 

@@ -62,6 +62,9 @@ void GameManager::process() {
 
         // Allow Game Processes if Debug Window is Closed
         if (this->m_windowManager.m_debugWindow.isOpen() == false) {
+            // Process UI Manager
+            this->m_uiManager.process();
+
             // Process Level Manager
             this->m_levelManager.process();
 
@@ -73,12 +76,13 @@ void GameManager::process() {
         this->m_windowManager.clear(); // Clear
         // -------------------- Clear --------------------
         // -------------------- Draw --------------------
-        // Draw World Actors
+        // Draw World Objects
         this->m_cameraManager.processCameraView(); // Camera View
-        this->m_windowManager.draw(); // Draw
+        this->m_windowManager.draw(); // Draw World Objects
 
         // Draw UI
         this->m_cameraManager.processUIView(); // UI View
+        this->m_uiManager.drawUI(this->m_windowManager.m_mainWindow); // Draw UI
         // -------------------- Draw --------------------
         // -------------------- Display --------------------
         this->m_windowManager.display(); // Display

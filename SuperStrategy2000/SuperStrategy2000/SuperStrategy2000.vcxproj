@@ -83,6 +83,7 @@ sfml-window-d.lib
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -97,6 +98,7 @@ sfml-window-d.lib
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
@@ -106,6 +108,7 @@ sfml-window-d.lib
     <ClInclude Include="Archer.h" />
     <ClInclude Include="ArchersMark.hpp" />
     <ClInclude Include="BasicAttack.hpp" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameManager.h" />
@@ -117,10 +120,12 @@ sfml-window-d.lib
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Mage.h" />
     <ClInclude Include="MagesHeal.hpp" />
+    <ClInclude Include="MoveButton.hpp" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="UIManager.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>

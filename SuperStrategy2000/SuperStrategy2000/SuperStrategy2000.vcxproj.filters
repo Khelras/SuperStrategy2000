@@ -41,6 +41,12 @@
     <Filter Include="Source Files\Actors\Units\Mage">
       <UniqueIdentifier>{35092b6e-7a76-4c8b-a8e7-6c4085a5a9ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\UserInterface">
+      <UniqueIdentifier>{5aa4891f-097a-475b-8e45-0317b388fd2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UserInterface\Buttons">
+      <UniqueIdentifier>{b8a868bc-2128-4e44-8ccc-dd5ece204558}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,6 +102,12 @@
     </ClCompile>
     <ClCompile Include="Mage.cpp">
       <Filter>Source Files\Actors\Units\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +176,15 @@
     </ClInclude>
     <ClInclude Include="Mage.h">
       <Filter>Source Files\Actors\Units\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveButton.hpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Source Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
