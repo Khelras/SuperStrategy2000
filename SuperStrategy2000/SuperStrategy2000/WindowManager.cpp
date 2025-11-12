@@ -12,6 +12,8 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "WindowManager.h"
 #include "GameManager.h"
+#include "GameSettings.h"
+#include "DebugSettings.h"
 
 WindowManager::WindowManager() {
     // Game Settings
@@ -55,7 +57,7 @@ WindowManager::WindowManager() {
     this->m_debugWindow.close();
 
     // Debug Text
-    if (this->m_debugFont.openFromFile("fonts/arial.ttf")) {
+    if (this->m_debugFont.openFromFile("assets/fonts/arial.ttf")) {
         // Font Loaded Successfully
         this->m_debugText = new sf::Text(this->m_debugFont);
         this->m_debugText->setCharacterSize(20); // Set Text Size to 20px
@@ -72,7 +74,18 @@ WindowManager::WindowManager() {
             "[SHIFT + ...] Inverts\n"
             "\n"
             "Press [ENTER] to Save Changes!\n"
-            "Press [ESC] to Exit!";
+            "Press [ESC] to Exit!\n"
+            "\n"
+            "\n"
+            "Debug Settings:\n"
+            "[Q] Force Quit Game \n"
+            "[W] Force Win (Go-to next)\n"
+            "[O] Force One-Shot (Toggle)\n"
+            "[H] Heal +5 to Self\n"
+            "[D] Damage  -5 to Self\n"
+            "\n"
+            "Saves automatically!\n"
+            "Press [ESC] to Exit!\n";
 
         // Set the Debug Text to the Debug Text String
         this->m_debugText->setString(debugText);
@@ -143,27 +156,11 @@ void WindowManager::draw() {
 
     // Draw to Main Window
     if (this->m_mainWindow.isOpen() == true) {
-        // Draw the Current Level
+        // Ensures that there is a Loaded and Selected Level
         Level* currentLevel = GameManager::getInstance()->m_levelManager.m_currentLevel; 
-        Grid* gameBoard = currentLevel->m_gameBoard;
-        this->m_mainWindow.draw(gameBoard->m_gridBackground); // Draw the Background of the Board
-
-        // Draw the Tiles of the Game Board
-        for (int y = 0; y < gameBoard->m_gridSize.y; y++) { // Loop down the y-axis
-            for (int x = 0; x < gameBoard->m_gridSize.x; x++) { // Loop down the x-axis
-                // The Tile
-                Tile* tile = gameBoard->m_grid[y][x];
-
-                // Calculating the World Position of the Tile base on the Position of the Game Board
-                float relativeTilePositionX = static_cast<float>(tile->m_tilePosition.x) * tile->TILE_SIZE.x; // Relative X
-                float relativeTilePositionY = static_cast<float>(tile->m_tilePosition.y) * tile->TILE_SIZE.y; // Relative Y
-                float worldTilePositionX = gameBoard->m_gridBackground.getPosition().x + relativeTilePositionX; // World X
-                float worldTilePositionY = gameBoard->m_gridBackground.getPosition().y + relativeTilePositionY; // World Y
-
-                // Setting and Drawing the Tile Shape Position
-                tile->m_tileShape.setPosition(sf::Vector2f(worldTilePositionX, worldTilePositionY));
-                this->m_mainWindow.draw(tile->m_tileShape); // Draw the Tile Shape
-            }
+        if (currentLevel != nullptr) {
+            // Draw the Current Level
+            currentLevel->drawLevel(this->m_mainWindow);
         }
     }
 }
@@ -183,7 +180,7 @@ void WindowManager::display() {
 
 void WindowManager::openDebugWindow() {
     // Create Debug Window
-    this->m_debugWindow.create(sf::VideoMode({ 400, 400 }), "Super Debug 2000!", sf::Style::Titlebar);
+    this->m_debugWindow.create(sf::VideoMode({ 400, 600 }), "Super Debug 2000!", sf::Style::Titlebar);
 
     // Disable the Mouse Clamp to Main Window
     this->m_mainWindow.setMouseCursorGrabbed(false);

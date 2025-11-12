@@ -8,14 +8,47 @@
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{30d67280-c64e-47b0-9ae2-d05621556474}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameSettings">
-      <UniqueIdentifier>{e6ac5a67-275b-450d-b6da-181162276779}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\TileSystem">
-      <UniqueIdentifier>{b7509a3d-941c-4c27-8862-17484e710ed0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Level">
       <UniqueIdentifier>{a2dbaa22-ca5a-45d0-8926-0e83c48a1996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actors">
+      <UniqueIdentifier>{9fa22aab-9044-4e05-a2ba-e37c6d1eb424}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GridSystem">
+      <UniqueIdentifier>{b7509a3d-941c-4c27-8862-17484e710ed0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TileMap">
+      <UniqueIdentifier>{ac8a8d15-f82f-49b3-b13c-2435b7def304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Abilities">
+      <UniqueIdentifier>{ab56cd9b-41c4-435f-bd1c-a27ae0c032b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actors\Units">
+      <UniqueIdentifier>{8c368ac7-1f4e-42c4-9465-1dd01b01eff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actors\Obstacle">
+      <UniqueIdentifier>{6d8244d3-cb16-421f-967b-2b421871579b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actors\Units\Knight">
+      <UniqueIdentifier>{c7a46110-3cbb-458a-849a-1a8a2eb67544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actors\Units\Archer">
+      <UniqueIdentifier>{6628fa1a-e09d-4504-9d9b-33cf9f837535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actors\Units\Mage">
+      <UniqueIdentifier>{35092b6e-7a76-4c8b-a8e7-6c4085a5a9ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UserInterface">
+      <UniqueIdentifier>{5aa4891f-097a-475b-8e45-0317b388fd2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UserInterface\Buttons">
+      <UniqueIdentifier>{b8a868bc-2128-4e44-8ccc-dd5ece204558}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Controllers">
+      <UniqueIdentifier>{92ba13d2-a8b0-4058-8d61-241e6651042a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Settings">
+      <UniqueIdentifier>{e6ac5a67-275b-450d-b6da-181162276779}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -32,13 +65,10 @@
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="GameSettings.cpp">
-      <Filter>Source Files\GameSettings</Filter>
-    </ClCompile>
-    <ClCompile Include="Tile.cpp">
-      <Filter>Source Files\TileSystem</Filter>
+      <Filter>Source Files\Settings</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
-      <Filter>Source Files\TileSystem</Filter>
+      <Filter>Source Files\GridSystem</Filter>
     </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>Source Files\Managers</Filter>
@@ -52,6 +82,57 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Square.cpp">
+      <Filter>Source Files\GridSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Source Files\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Source Files\Actors\Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Source Files\Actors\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Source Files\Actors\Units\Knight</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Source Files\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Archer.cpp">
+      <Filter>Source Files\Actors\Units\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="Mage.cpp">
+      <Filter>Source Files\Actors\Units\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicButton.h">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicButton.cpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecialButton.cpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveButton.cpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="TurnController.cpp">
+      <Filter>Source Files\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="DoneButton.cpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugSettings.cpp">
+      <Filter>Source Files\Settings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -64,13 +145,10 @@
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
-      <Filter>Source Files\GameSettings</Filter>
-    </ClInclude>
-    <ClInclude Include="Tile.h">
-      <Filter>Source Files\TileSystem</Filter>
+      <Filter>Source Files\Settings</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
-      <Filter>Source Files\TileSystem</Filter>
+      <Filter>Source Files\GridSystem</Filter>
     </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>Source Files\Managers</Filter>
@@ -83,6 +161,66 @@
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Source Files\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Square.h">
+      <Filter>Source Files\GridSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Source Files\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Ability.hpp">
+      <Filter>Source Files\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="ArchersMark.hpp">
+      <Filter>Source Files\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicAttack.hpp">
+      <Filter>Source Files\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="KnightsMight.hpp">
+      <Filter>Source Files\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="MagesHeal.hpp">
+      <Filter>Source Files\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Source Files\Actors\Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>Source Files\Actors\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Archer.h">
+      <Filter>Source Files\Actors\Units\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="Knight.h">
+      <Filter>Source Files\Actors\Units\Knight</Filter>
+    </ClInclude>
+    <ClInclude Include="Mage.h">
+      <Filter>Source Files\Actors\Units\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveButton.h">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>Source Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecialButton.h">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnController.h">
+      <Filter>Source Files\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="DoneButton.h">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugSettings.h">
+      <Filter>Source Files\Settings</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

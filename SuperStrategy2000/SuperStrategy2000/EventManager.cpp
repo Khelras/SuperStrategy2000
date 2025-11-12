@@ -12,6 +12,9 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "EventManager.h"
 #include "GameManager.h"
+#include "GameSettings.h"
+#include "TurnController.h"
+#include "DebugSettings.h"
 
 EventManager::EventManager() {
     this->m_isShiftPressed = false;
@@ -44,24 +47,176 @@ void EventManager::process(WindowManager& _windowManager) {
                 // Left-Button Mouse Pressed Event
                 if (mousePressed->button == sf::Mouse::Button::Left) {
                     // Pointer to the Game Board of the Current Selected Level
-                    Grid* gameBoard = GameManager::getInstance()->m_levelManager.m_currentLevel->m_gameBoard;
+                    Level*& level = GameManager::getInstance()->m_levelManager.m_currentLevel;
+                    level->m_levelGameBoard->clear(); // Clear the Grid
 
-                    // If there is a pre-exisiting Selection
-                    if (gameBoard->m_selectedTile != nullptr) {
-                        // Reset Selection
-                        gameBoard->m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_DEFAULT);
+                    // Check if Mouse clicked on a Button UI
+                    UIManager uiManager = GameManager::getInstance()->m_uiManager;
+                    if (uiManager.isMouseOnUI() == true) { // Mouse IS hovering over UI
+                        // Check if User clicked on a Button
+                        Button* button = uiManager.getButtonFromMouse();
+                        if (button != nullptr) { 
+                            // Execute Button
+                            button->execute();
+                        }
                     }
+                    else if (uiManager.isMouseOnUI() == false) { // Mouse is NOT hovering over UI
+                        // Moving Turn State
+                        if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::MOVING) {
+                            // There IS a Square being Hovered
+                            if (level->m_levelGameBoard->m_hoverSquare != nullptr) {
+                                Square* start = level->m_levelGameBoard->m_selectedSquare; // Start Square
+                                Square* end = level->m_levelGameBoard->m_hoverSquare; // End Square
+                                Unit* unit = dynamic_cast<Unit*>(start->m_actorOnSquare); // Unit
 
-                    // There is NO Tile being Hovered
-                    if (gameBoard->m_hoverTile == nullptr) {
-                        // Remove Selection
-                        gameBoard->m_selectedTile = nullptr;
-                    }
-                    // There IS a Tile being Hovered
-                    else if (gameBoard->m_hoverTile != nullptr) {
-                        // New Selection
-                        gameBoard->m_selectedTile = gameBoard->m_hoverTile;
-                        gameBoard->m_selectedTile->m_tileShape.setFillColor(Tile::TILE_FILLCOLOR_SELECTED);
+                                // Check if Unit can Move here
+                                if (end->m_actorOnSquare == nullptr &&
+                                    level->m_levelGameBoard->getManhattanDistance(start, end) <= unit->getUnitSpeed()) {
+                                    // Perform Move
+                                    end->m_actorOnSquare = start->m_actorOnSquare;
+                                    start->m_actorOnSquare = nullptr;
+
+                                    // Attack Message
+                                    std::cout << unit->getUnitName() << " moved ";
+                                    std::cout << level->m_levelGameBoard->getManhattanDistance(start, end);
+                                    std::cout << " squares!" << std::endl;
+
+                                    // Move the Actor Sprite
+                                    end->m_actorOnSquare->setActorSpritePosition(end->m_squareShape.getGlobalBounds().getCenter());
+                                    TurnController::getInstance()->m_turnState = TurnController::TurnStates::DECIDING;
+                                    TurnController::getInstance()->m_hasMoved = true;
+                                }
+                                level->m_levelGameBoard->selectSquare(end);
+                            }
+                        } 
+                        // Basic Attack Turn State
+                        else if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::BASIC) {
+                            // There IS a Square being Hovered
+                            if (level->m_levelGameBoard->m_hoverSquare != nullptr) {
+                                Square* selected = level->m_levelGameBoard->m_selectedSquare; // Selected Square
+                                Square* hover = level->m_levelGameBoard->m_hoverSquare; // Hover Square
+
+                                // Check if the Hover Square has an Actor
+                                if (hover->m_actorOnSquare != nullptr) {
+                                    // Check if this Actor is an Enemy
+                                    if (hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_ENEMY_KNIGHT ||
+                                        hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_ENEMY_ARCHER ||
+                                        hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_ENEMY_MAGE) {
+                                        // User Unit
+                                        Unit* unit = dynamic_cast<Unit*>(selected->m_actorOnSquare);
+
+                                        // Target Unit
+                                        Unit* target = dynamic_cast<Unit*>(hover->m_actorOnSquare);
+
+                                        // Attack Message
+                                        std::cout << unit->getUnitName() << " used Basic Attack!";
+                                        std::cout << std::endl;
+
+                                        // Use the Basic Attack
+                                        if (unit->m_unitAbilities[0]->execute(unit, target) == true) {
+                                            // Target Enemy Health Message
+                                            std::cout << target->getUnitName() << " Health: ";
+                                            std::cout << target->getUnitCurrentHealth() << "/" << target->getUnitMaxHeatlh();
+                                            std::cout << std::endl;
+
+                                            // Completed Turn
+                                            TurnController::getInstance()->m_turnState = TurnController::TurnStates::DONE;
+                                        }
+                                        else {
+                                            std::cout << "Attack Failed :(\n";
+
+                                            // Completed Turn
+                                            TurnController::getInstance()->m_turnState = TurnController::TurnStates::DONE;
+                                        }
+                                    }
+                                }
+                                level->m_levelGameBoard->selectSquare(selected);
+                            }
+                        }
+                        // Special Attack Turn State
+                        else if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::SPECIAL) {
+                            // There IS a Square being Hovered
+                            if (level->m_levelGameBoard->m_hoverSquare != nullptr) {
+                                Square* selected = level->m_levelGameBoard->m_selectedSquare; // Selected Square
+                                Square* hover = level->m_levelGameBoard->m_hoverSquare; // Hover Square
+                                Unit* unit = dynamic_cast<Unit*>(selected->m_actorOnSquare); // Unit
+
+                                // Knight Special Ability
+                                if (unit->getActorType() == Actor::Type::UNIT_PLAYER_KNIGHT) {
+                                    // Just for executions sake :O
+                                    unit->m_unitAbilities[1]->execute(unit, unit);
+                                }
+                                // Archer Special Ability
+                                else if (unit->getActorType() == Actor::Type::UNIT_PLAYER_ARCHER) {
+                                    // Check if the Hover Square has an Actor
+                                    if (hover->m_actorOnSquare != nullptr) {
+                                        // Targets are Enemies
+                                        if (hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_ENEMY_KNIGHT ||
+                                            hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_ENEMY_ARCHER ||
+                                            hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_ENEMY_MAGE) {
+                                            // Target Unit
+                                            Unit* target = dynamic_cast<Unit*>(hover->m_actorOnSquare);
+
+                                            // Attack Message
+                                            std::cout << unit->getUnitName() << " used ";
+                                            std::cout << unit->m_unitAbilities[0]->getAbilityName() << "!";
+                                            std::cout << std::endl;
+
+                                            // Use the Special
+                                            if (unit->m_unitAbilities[0]->execute(unit, target) == true) {
+                                                // Target Enemy Marked
+                                                std::cout << target->getUnitName() << " marked!";
+                                                std::cout << std::endl;
+
+                                                // Completed Turn
+                                                TurnController::getInstance()->m_turnState = TurnController::TurnStates::DONE;
+                                            }
+                                            else {
+                                                std::cout << "Attack Failed :(\n";
+
+                                                // Completed Turn
+                                                TurnController::getInstance()->m_turnState = TurnController::TurnStates::DONE;
+                                            }
+                                        }
+                                    }
+                                }
+                                // Mage Special Ability
+                                else if (unit->getActorType() == Actor::Type::UNIT_PLAYER_MAGE) {
+                                    // Check if the Hover Square has an Actor
+                                    if (hover->m_actorOnSquare != nullptr) {
+                                        // Targets are Players
+                                        if (hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_PLAYER_KNIGHT ||
+                                            hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_PLAYER_ARCHER ||
+                                            hover->m_actorOnSquare->getActorType() == Actor::Type::UNIT_PLAYER_MAGE) {
+                                            // Target Unit
+                                            Unit* target = dynamic_cast<Unit*>(hover->m_actorOnSquare);
+
+                                            // Attack Message
+                                            std::cout << unit->getUnitName() << " used ";
+                                            std::cout << unit->m_unitAbilities[1]->getAbilityName() << "!";
+                                            std::cout << std::endl;
+
+                                            // Use the Special
+                                            if (unit->m_unitAbilities[1]->execute(unit, target) == true) {
+                                                // Target Player Health Message
+                                                std::cout << target->getUnitName() << " Health: ";
+                                                std::cout << target->getUnitCurrentHealth() << "/" << target->getUnitMaxHeatlh();
+                                                std::cout << std::endl;
+
+                                                // Completed Turn
+                                                TurnController::getInstance()->m_turnState = TurnController::TurnStates::DONE;
+                                            }
+                                            else {
+                                                std::cout << "Heal Failed :(\n";
+
+                                                // Completed Turn
+                                                TurnController::getInstance()->m_turnState = TurnController::TurnStates::DONE;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -238,6 +393,80 @@ void EventManager::process(WindowManager& _windowManager) {
                     // Print Music Volume to Console
                     std::cout << "Music Volume: " << GameSettings::getInstance()->m_musicVolume;
                     std::cout << std::endl;
+                }
+
+                // Q Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Q) {
+                    // Force Quit Game
+                    mainWindow.close();
+                    debugWindow.close();
+                }
+
+                // W Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::W) {
+                    // Force Win
+                    Level* level = GameManager::getInstance()->m_levelManager.m_currentLevel;
+                    if (level != nullptr) {
+                        level->m_levelHasWon = true;
+
+                        std::cout << "Forcing the Win..." << std::endl;
+                    }
+                }
+
+                // O Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::O) {
+                    // Toggle Force One-Shot
+                    DebugSettings* settings = DebugSettings::getInstance();
+                    settings->m_oneShot = (settings->m_oneShot == false) ? true : false;
+
+                    // Console Output
+                    std::cout << "Force One-Shot: ";
+                    std::cout << ((settings->m_oneShot == true) ? "true" : "false");
+                    std::cout << std::endl;
+                }
+
+                // H Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::H) {
+                    // Heal +5
+                    Level* level = GameManager::getInstance()->m_levelManager.m_currentLevel;
+                    if (level != nullptr) {
+                        // There is a selected Unit
+                        if (level->m_levelGameBoard->m_selectedSquare->m_actorOnSquare != nullptr) {
+                            Unit* unit = dynamic_cast<Unit*>(level->m_levelGameBoard->m_selectedSquare->m_actorOnSquare);
+                            unit->healUnit(5);
+
+                            // Console Message
+                            std::cout << unit->getUnitName() << " health: ";
+                            std::cout << unit->getUnitCurrentHealth() << "/" << unit->getUnitMaxHeatlh();
+                            std::cout << std::endl;
+                        }
+                        else {
+                            // Error Message
+                            std::cout << "A unit needs to be selected!" << std::endl;
+                        }
+                    }
+                }
+
+                // D Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::D) {
+                    // Damage -5
+                    Level* level = GameManager::getInstance()->m_levelManager.m_currentLevel;
+                    if (level != nullptr) {
+                        // There is a selected Unit
+                        if (level->m_levelGameBoard->m_selectedSquare->m_actorOnSquare != nullptr) {
+                            Unit* unit = dynamic_cast<Unit*>(level->m_levelGameBoard->m_selectedSquare->m_actorOnSquare);
+                            unit->damageUnit(5);
+
+                            // Console Message
+                            std::cout << unit->getUnitName() << " health: ";
+                            std::cout << unit->getUnitCurrentHealth() << "/" << unit->getUnitMaxHeatlh();
+                            std::cout << std::endl;
+                        }
+                        else {
+                            // Error Message
+                            std::cout << "A unit needs to be selected!" << std::endl;
+                        }
+                    }
                 }
             }
 

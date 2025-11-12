@@ -5,7 +5,7 @@ Auckland
 New Zealand
 (c) 2025 Media Design School
 File Name   : Grid.cpp
-Description : Defines the Grid Class Functions and Properties
+Description : Defines the Grid Class Functions and Properties.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
@@ -13,17 +13,27 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "Grid.h"
 #include "GameManager.h"
 
-Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _tileSize) {
-	// Resize the Tile
-	Tile::TILE_SIZE = _tileSize;
-
-	// Selected and Hover Tile
-	this->m_selectedTile = nullptr;
-	this->m_hoverTile = nullptr;
-
-	// Grid Size
-	this->m_gridSize = _gridSize;
+Grid::Grid(std::ifstream& _gridFile) {
+	/*
+		Level Files are expected to have a width and height and a 2D Grid of double-digit numbers.
+		The first 2 numbers will represent the width and the height of the Grid respectively.
+		the next 2 numbers will represent the width and the height of each Square respectively.
+		Afterwards, the file loader will expect to see 'w*h' amount of numbers.
+		Each of those numbers (after the width and height) will represent an actor or space in the world.
+		Each number are spaced out so that we can use the '<<' operator to read those numbers.
+	*/
 	
+	// Read the Size of the Grid and the Size of each Square
+	_gridFile >> this->m_gridSize.x >> this->m_gridSize.y; // Reading Size of the Grid
+	_gridFile >> this->m_squareSize.x >> this->m_squareSize.y; // Reading Size of each Square
+
+	// The World Space the Grid takes
+	float gridWorldSpaceX = static_cast<float>(this->m_squareSize.x * this->m_gridSize.x); // Static Cast to Float
+	float gridWorldSpaceY = static_cast<float>(this->m_squareSize.y * this->m_gridSize.y); // Static Cast to Float
+	this->m_gridBackground.setSize(sf::Vector2f(gridWorldSpaceX, gridWorldSpaceY));
+	this->m_gridBackground.setFillColor(sf::Color(220, 220, 220)); // Faded-White
+	this->m_gridBackground.setPosition(sf::Vector2f(0.0f, 0.0f)); // Set at Origin
+
 	// Resize the 2D Grid Array
 	this->m_grid.clear(); // Clear the 2D Grid Array
 	this->m_grid.resize(this->m_gridSize.y); // Resize the Columns (Down the y-axis) BEFORE the Rows
@@ -35,55 +45,104 @@ Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _tileSize) {
 	// Creating the Grid
 	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
-			// Creating the Tile
-			this->m_grid[y][x] = new Tile(sf::Vector2i(x, y));
+			// Creating the Square
+			this->m_grid[y][x] = new Square(this->m_squareSize, sf::Vector2i(x, y));
+
+			// Setting the World Position of the Square
+			this->m_grid[y][x]->m_squareShape.setPosition( 
+				sf::Vector2f(
+					static_cast<float>(x * this->m_squareSize.x),
+					static_cast<float>(y * this->m_squareSize.y)
+				)
+			);
+
+			// Checking the Number for the Actor Type
+			int actorType;
+			_gridFile >> actorType;
+			Actor*& actor = this->m_grid[y][x]->m_actorOnSquare;
+
+			// 0 means it is an empty Square
+			if (actorType == 0) continue;
+
+			// Evalutate the Actor Type
+			switch (actorType) {
+				// Obstacle
+				case 1: { actor = new Obstacle(); } break;
+
+				// Knight
+				case 2: 
+				case 5: { actor = new Knight(actorType == 5); } break;
+
+				// Archer
+				case 3: 
+				case 6: { actor = new Archer(actorType == 6); } break;
+
+				// Mage
+				case 4: 
+				case 7: { actor = new Mage(actorType == 7); } break;
+			}
+
+			// Update the Actor's Grid Position
+			actor->setActorSpritePosition(this->m_grid[y][x]->m_squareShape.getGlobalBounds().getCenter());
 		}
 	}
 
-	// Connecting each Tile of the Grid
+	// Connecting each Square of the Grid
 	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
-			// Connecting Tile to its surrounding Tiles
-			for (int dx = -1; dx <= 1; dx++) { // Loops through the surroundings across the x-axis
-				for (int dy = -1; dy <= 1; dy++) { // Loops through the surroundings across the y-axis
-					if (dx == 0 && dy == 0) continue; // Skip itself
+			// List of Orthogonal Directions (no Corners)
+			const std::vector<sf::Vector2i> directions = {
+				{ 0, -1 }, // Up
+				{ 0, 1 }, // Down
+				{ -1, 0 }, // Left
+				{ 1, 0 } // Right
+			};
 
-					// Calculate the Position of this Neighboring Tile
-					sf::Vector2i neighborPos(x + dx, y + dy);
+			for (auto direction : directions) {
+				// Calculate the Position of this Neighboring Square
+				sf::Vector2i neighborPos(x + direction.x, y + direction.y);
 
-					// Boolean to check the Position of this Neighboring Tile is within the Grid
-					bool validNeighborPos = (
-						neighborPos.x >= 0 &&
-						neighborPos.x < this->m_gridSize.x &&
-						neighborPos.y >= 0 &&
-						neighborPos.y < this->m_gridSize.y
+				// Boolean to check the Position of this Neighboring Square is within the Grid
+				bool validNeighborPos = (
+					neighborPos.x >= 0 &&
+					neighborPos.x < this->m_gridSize.x &&
+					neighborPos.y >= 0 &&
+					neighborPos.y < this->m_gridSize.y
 					);
-					
-					// Ensure the Position of this Neighboring Tile is within the Grid
-					if (validNeighborPos) {
-						// Connect the Tile to its Neighboring Tile
-						this->m_grid[y][x]->m_tileNeighbors.push_back(this->m_grid[neighborPos.y][neighborPos.x]);
+
+				// Ensure the Position of this Neighboring Square is within the Grid
+				if (validNeighborPos) {
+					// Neighboring Square
+					Square* neighboringSquare = this->m_grid[neighborPos.y][neighborPos.x];
+
+					// If there is an Actor on this Neighboring Square
+					if (neighboringSquare->m_actorOnSquare != nullptr) {
+						// Prevent pointing to Obstacles
+						if (neighboringSquare->m_actorOnSquare->getActorType() == Actor::Type::OBSTACLE) {
+							// Skip this Neighboring Square
+							continue;
+						}
 					}
+
+					// Connect the Square to its Neighboring Square
+					this->m_grid[y][x]->m_squareNeighbors.push_back(neighboringSquare);
 				}
 			}
 		}
 	}
 
-	// The Screen Space the Grid takes
-	float gridSpaceX = static_cast<float>(Tile::TILE_SIZE.x * this->m_gridSize.x); // Static Cast to Float
-	float gridSpaceY = static_cast<float>(Tile::TILE_SIZE.y * this->m_gridSize.y); // Static Cast to Float
-	this->m_gridBackground.setSize(sf::Vector2f(gridSpaceX, gridSpaceY));
-	this->m_gridBackground.setFillColor(sf::Color::White); // White
-	this->m_gridBackground.setPosition(sf::Vector2f(Grid::MARGIN, Grid::MARGIN)); // Account for the Margin
+	// Default
+	this->m_selectedSquare = nullptr;
+	this->m_hoverSquare = nullptr;
 }
 
 Grid::~Grid() {
-	// Delete all Tiles in the 2D Grid Array
+	// Delete all Squares in the 2D Grid Array
 	for (auto& row : this->m_grid) {
-		for (auto& tile : row) {
-			// Delete Tile
-			delete (tile); 
-			tile = nullptr;
+		for (auto& square : row) {
+			// Delete Square
+			delete (square); 
+			square = nullptr;
 		}
 	}
 
@@ -104,46 +163,162 @@ void Grid::process() {
 
 	// Mouse is within the bounds of the Grid Space
 	if (gridSpace.contains(mouseWorldPosition) == true) {
-		// Now find the Tile the Mouse is hovering over
-		sf::Vector2i tileSize = Tile::TILE_SIZE; // The size of each Tile
-		
 		/*
-			Find which Tile the Mouse is hovering over:
+			Find which Square the Mouse is hovering over:
 			- Convert the Mouse World Position into Grid Coordinates.
 			- Subtract the Grid's Position Offset from World Origin.
-			- Divide by Tile Size to get the Tile Index (x, y) within the Grid Array.
+			- Divide by Square Size to get the Square Index (x, y) within the Grid Array.
 		*/
 
-		// Tile Index (x, y) within the Grid Array
-		int tileX = static_cast<int>((mouseWorldPosition.x - gridSpace.position.x) / tileSize.x);
-		int tileY = static_cast<int>((mouseWorldPosition.y - gridSpace.position.y) / tileSize.y);
+		// Square Index (x, y) within the Grid Array
+		int squareX = static_cast<int>((mouseWorldPosition.x - gridSpace.position.x) / this->m_squareSize.x);
+		int squareY = static_cast<int>((mouseWorldPosition.y - gridSpace.position.y) / this->m_squareSize.y);
 
 		// Clamp indices to ensure they are within bounds
-		tileX = std::clamp(tileX, 0, this->m_gridSize.x - 1);
-		tileY = std::clamp(tileY, 0, this->m_gridSize.y - 1);\
+		squareX = std::clamp(squareX, 0, this->m_gridSize.x - 1);
+		squareY = std::clamp(squareY, 0, this->m_gridSize.y - 1);\
 		
 		// Performing Hover
-		if (this->m_hoverTile == nullptr) { // There is NO pre-existing Hover
+		if (this->m_hoverSquare == nullptr) { // There is NO pre-existing Hover
 			// Hover
-			this->m_hoverTile = this->m_grid[tileY][tileX];
-			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_SELECTED);
+			this->m_hoverSquare = this->m_grid[squareY][squareX];
+			this->m_hoverSquare->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_SELECTED);
 		}
-		else if (this->m_hoverTile != nullptr) { // There IS a pre-existing Hover
+		else if (this->m_hoverSquare != nullptr) { // There IS a pre-existing Hover
 			// Reset the pre-existing Hover
-			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_DEFAULT);
+			this->m_hoverSquare->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_DEFAULT);
 
 			// Then, set a new Hover
-			this->m_hoverTile = this->m_grid[tileY][tileX];
-			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_SELECTED);
+			this->m_hoverSquare = this->m_grid[squareY][squareX];
+			this->m_hoverSquare->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_SELECTED);
 		}
 	}
 	// Mouse is outside the bounds of the Grid Space
 	else {
 		// If there IS a pre-existing Hover
-		if (this->m_hoverTile != nullptr) {
+		if (this->m_hoverSquare != nullptr) {
 			// Reset and Remove Hovers
-			this->m_hoverTile->m_tileShape.setOutlineColor(Tile::TILE_OUTLINECOLOR_DEFAULT); // Reset Hover
-			this->m_hoverTile = nullptr; // Remove Hover
+			this->m_hoverSquare->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_DEFAULT); // Reset Hover
+			this->m_hoverSquare = nullptr; // Remove Hover
 		}
 	}
+}
+
+void Grid::clear() {
+	// Loop through each Square on the Grid
+	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
+		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
+			// If this Square is not Selected or Hovered
+			if (this->m_grid[y][x] != this->m_selectedSquare) {
+				// Reset the Square
+				this->m_grid[y][x]->reset();
+			}
+		}
+	}
+}
+
+void Grid::selectSquare(Actor* _actor) {
+	// Override the Select Square
+	this->clear();
+	this->m_selectedSquare = nullptr;
+
+	// Loop through each Square on the Grid
+	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
+		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
+			// If this Square is not Selected or Hovered
+			if (this->m_grid[y][x]->m_actorOnSquare == _actor) {
+				this->m_selectedSquare = this->m_grid[y][x];
+				break;
+			}
+		}
+
+		if (this->m_selectedSquare != nullptr) break;
+	}
+}
+
+void Grid::selectSquare(Square* _actor) {
+	// Override the Select Square
+	this->clear();
+	this->m_selectedSquare = _actor;
+}
+
+Square* Grid::getSquare(Actor* _actor) {
+	Square* square = nullptr;
+
+	// Loop through each Square on the Grid
+	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
+		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
+			// If this Square is not Selected or Hovered
+			if (this->m_grid[y][x]->m_actorOnSquare == _actor) {
+				square = this->m_grid[y][x];
+				break;
+			}
+		}
+
+		if (square != nullptr) break;
+	}
+
+	return square;
+}
+
+void Grid::breadthFirstSearch(Square* _start, int _depth, bool _checkActors) {
+	std::vector<Square*> visited; // List of Visited Squares
+	std::queue<Square*> toVisit; // Queue of Squares to Visit
+	toVisit.push(_start); // Add the Start
+	int depth = 0; // Start at 0
+
+	// Loop until reaching the given Depth
+	while (depth <= _depth) {
+		// List of Neighbors at this Depth
+		std::vector<Square*> nextToVisit;
+
+		// Loop until the to Visit Queue is Empty
+		while (toVisit.empty() == false) {
+			// Dequeue the Front
+			Square* square = toVisit.front();
+			toVisit.pop();
+
+			// Loop through the Neighbors
+			for (auto& neighbor : square->m_squareNeighbors) {
+				// Skip Neighor Squares with an Actor
+				if (_checkActors == true && neighbor->m_actorOnSquare != nullptr) continue;
+
+				// Check if this Neighbor Square has been Visited
+				bool hasVisited = false;
+				for (auto& visitedSquare : visited) {
+					// This Neighbor Square has already been Visisted
+					if (neighbor == visitedSquare) {
+						hasVisited = true;
+						break;
+					}
+				}
+
+				// If this Neighbor Square has not already been Visited
+				if (hasVisited == false) {
+					// Add to the Next to Visit List
+					nextToVisit.push_back(neighbor);
+				}
+			}
+
+			// Highlight Square
+			square->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_SELECTED);
+			visited.push_back(square); // This Square has now been Visited
+		}
+
+		// Next to Visit List into the to Visit Queue
+		for (auto& toVisitSquare : nextToVisit) {
+			toVisit.push(toVisitSquare);
+		}
+
+		// Increase Depth
+		depth++;
+	}
+}
+
+float Grid::getManhattanDistance(Square* _start, Square* _end) {
+	// Manhattan Distnace Formula: |_end.x - _start.x| + |_end.y - _start.y|
+	float xDifference = static_cast<float>(_end->m_squarePosition.x - _start->m_squarePosition.x);
+	float yDifference = static_cast<float>(_end->m_squarePosition.y - _start->m_squarePosition.y);
+	float distance = (std::abs(xDifference) + std::abs(yDifference));
+	return distance;
 }

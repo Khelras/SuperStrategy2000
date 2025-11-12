@@ -81,28 +81,63 @@ sfml-window-d.lib
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="BasicButton.cpp" />
+    <ClCompile Include="BasicButton.h" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="DebugSettings.cpp" />
+    <ClCompile Include="DoneButton.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Knight.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
+    <ClCompile Include="Mage.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MoveButton.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="SoundManager.cpp" />
-    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="SpecialButton.cpp" />
+    <ClCompile Include="Square.cpp" />
+    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TurnController.cpp" />
+    <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="Unit.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ability.hpp" />
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="Archer.h" />
+    <ClInclude Include="ArchersMark.hpp" />
+    <ClInclude Include="BasicAttack.hpp" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="DebugSettings.h" />
+    <ClInclude Include="DoneButton.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="Knight.h" />
+    <ClInclude Include="KnightsMight.hpp" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
+    <ClInclude Include="Mage.h" />
+    <ClInclude Include="MagesHeal.hpp" />
+    <ClInclude Include="MoveButton.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="SoundManager.h" />
-    <ClInclude Include="Tile.h" />
+    <ClInclude Include="SpecialButton.h" />
+    <ClInclude Include="Square.h" />
+    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TurnController.h" />
+    <ClInclude Include="UIManager.h" />
+    <ClInclude Include="Unit.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

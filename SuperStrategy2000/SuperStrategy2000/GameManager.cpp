@@ -1,4 +1,17 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name   : GameManager.h
+Description : Defines the GameManager Class Functions and Properties.
+Author      : Angelo Joseph Arawiran Bohol
+Mail        : angelo.bohol@mds.ac.nz
+**************************************************************************/
+
 #include "GameManager.h"
+#include "GameSettings.h"
 
 // Define the Static GameManager Instance
 GameManager* GameManager::m_instance = nullptr;
@@ -7,19 +20,15 @@ GameManager::GameManager() {
     // Instantiate the Game Settings Singleton Instance
     GameSettings::getInstance();
 
-    // --- REMOVE LATER ---
-    this->m_levelManager.loadLevel(0, "Levels/level1.txt");
-    // --- REMOVE LATER ---
-
     // Delta Time
     this->m_deltaTime = 0.0f;
 
     // Background Music Sound
-    this->m_soundManager.playMusic("Sounds/BG/background.wav");
+    this->m_soundManager.playMusic("assets/sounds/bg/background.wav");
 }
 
 GameManager::~GameManager() {
-
+    
 }
 
 GameManager* GameManager::getInstance() {
@@ -34,14 +43,11 @@ GameManager* GameManager::getInstance() {
 }
 
 void GameManager::process() {
-    // Top-Left Square --- REMOVE LATER ---
-    sf::RectangleShape square({ 100, 100 });
-    square.setPosition({ 0, 0 });
-    square.setFillColor(sf::Color::Red);
-    // Top-Left Square --- REMOVE LATER ---
-
     // Clock to Measure Delta Time
     sf::Clock deltaClock;
+
+    // Load Levels
+    this->m_levelManager.loadLevels();
 
     // Centers the Camera View relative to Game Board
     this->m_cameraManager.centerCameraView();
@@ -54,8 +60,19 @@ void GameManager::process() {
         // Process Events
         this->m_eventManager.process(this->m_windowManager);
 
+        // Game Won
+        if (this->m_levelManager.m_gameWon) {
+            this->m_windowManager.clear(); // Clear
+            this->m_cameraManager.processUIView(); // UI View
+            this->m_windowManager.display(); // Display
+            continue;
+        }
+
         // Allow Game Processes if Debug Window is Closed
         if (this->m_windowManager.m_debugWindow.isOpen() == false) {
+            // Process UI Manager
+            this->m_uiManager.process();
+
             // Process Level Manager
             this->m_levelManager.process();
 
@@ -63,17 +80,19 @@ void GameManager::process() {
             this->m_soundManager.process();
         }
 
+        
+
         // -------------------- Clear --------------------
         this->m_windowManager.clear(); // Clear
         // -------------------- Clear --------------------
         // -------------------- Draw --------------------
-        // Draw World Actors
+        // Draw World Objects
         this->m_cameraManager.processCameraView(); // Camera View
-        this->m_windowManager.draw(); // Draw
-        this->m_windowManager.m_mainWindow.draw(square); // --- REMOVE LATER ---
+        this->m_windowManager.draw(); // Draw World Objects
 
         // Draw UI
         this->m_cameraManager.processUIView(); // UI View
+        this->m_uiManager.drawUI(this->m_windowManager.m_mainWindow); // Draw UI
         // -------------------- Draw --------------------
         // -------------------- Display --------------------
         this->m_windowManager.display(); // Display

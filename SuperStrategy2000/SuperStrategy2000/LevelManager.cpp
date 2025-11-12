@@ -12,9 +12,18 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "LevelManager.h"
 #include "GameManager.h"
+#include "GameSettings.h"
 
 LevelManager::LevelManager() {
 	this->m_currentLevel = nullptr;
+
+	if (GameSettings::getInstance()->m_completedLevels > 3 ||
+		GameSettings::getInstance()->m_completedLevels < 0) {
+		this->m_completedLevels = 0;
+	}
+	else {
+		this->m_completedLevels = GameSettings::getInstance()->m_completedLevels;
+	}
 }
 
 LevelManager::~LevelManager() {
@@ -31,13 +40,57 @@ LevelManager::~LevelManager() {
 
 void LevelManager::process() {
 	// Ensure there is a Selected Level
-	if (this->m_currentLevel == nullptr) return;
+	if (this->m_currentLevel != nullptr) {
+		// If Level Won
+		if (this->m_currentLevel->m_levelHasWon == true) {
+			this->m_completedLevels++;
+			this->saveLevelProgress();
+			this->nextLevel();
 
-	// Process the Game Board of the Current Selected Level
-	this->m_currentLevel->m_gameBoard->process();
+			return;
+		}
+
+		// Process the Current Selected Level
+		this->m_currentLevel->process();
+	};
+
+	
 }
 
-bool LevelManager::loadLevel(int _levelNumber, std::string _path) {
+void LevelManager::loadLevels() {
+	this->loadLevel(1, this->LEVEL1);
+	this->loadLevel(2, this->LEVEL2);
+	this->loadLevel(3, this->LEVEL3);
+
+	// Load Last Level
+	this->m_completedLevels = GameSettings::getInstance()->m_completedLevels;
+	if (this->m_completedLevels = 0) {
+		this->m_currentLevel = this->m_levels[0];
+	}
+	else if (this->m_completedLevels = 1) {
+		this->m_currentLevel = this->m_levels[1];
+	}
+	else if (this->m_completedLevels = 2) {
+		this->m_currentLevel = this->m_levels[2];
+	}
+	// Reset Progress
+	else {
+		this->m_currentLevel = this->m_levels[0];
+		GameSettings::getInstance()->m_completedLevels = 0;
+		this->m_completedLevels = 0;
+	}
+}
+
+bool LevelManager::loadLevel(unsigned int _levelNumber, std::string _path) {
+	/*
+		Level Files are expected to have a width and height and a 2D Grid of double-digit numbers.
+		The first 2 numbers will represent the width and the height of the Grid respectively.
+		the next 2 numbers will represent the width and the height of each Square respectively.
+		Afterwards, the file loader will expect to see 'w*h' amount of numbers.
+		Each of those numbers (after the width and height) will represent an actor or space in the world.
+		Each number are spaced out so that we can use the '<<' operator to read those numbers.
+	*/
+
 	// Open File
 	std::ifstream levelFile(_path);
 
@@ -47,22 +100,9 @@ bool LevelManager::loadLevel(int _levelNumber, std::string _path) {
 		std::cout << "Unable to load level file from '" << _path << "'!\n";
 		return false;
 	}
-
-	/*
-		Level Files are expected to have a width and height and a 2D Grid of double-digit numbers.
-		Each number are spaced out so that we can use the '<<' operator to read those numbers.
-		Each number will represent an actor or space in the world.
-	*/
-
-	// Attributes from File
-	std::string line; // Line
-	int width, height; // Width and Height
-	levelFile >> width >> height; // Read the Width and the Height
-
-	// TODO: READ EACH NUMBER TO LOAD THEIR RESPECTIVE ACTOR
-
+	
 	// Create the Level
-	Level* level = new Level(_levelNumber, sf::Vector2i(width, height));
+	Level* level = new Level(_levelNumber, levelFile);
 
 	// Add Level to the Levels Array
 	this->m_levels.push_back(level); 
@@ -76,12 +116,30 @@ bool LevelManager::loadLevel(int _levelNumber, std::string _path) {
 	return true;
 }
 
-bool LevelManager::saveLevel(int _levelNumber, std::string _path) {
-	// TODO: MAKE LEVEL SAVING
-	return true;
+void LevelManager::saveLevelProgress() {
+	GameSettings::getInstance()->m_completedLevels = this->m_completedLevels;
 }
 
-void LevelManager::selectLevel(int _levelNumber) {
+void LevelManager::nextLevel() {
+	int currentLevelPosition = 0;
+	for (int i = 0; i < this->m_levels.size(); i++) {
+		if (this->m_levels[i] == this->m_currentLevel) {
+			currentLevelPosition = i;
+			break;
+		}
+	}
+
+	if (currentLevelPosition + 1 >= this->m_levels.size()) {
+		// Won the Game
+		this->m_gameWon = true;
+	}
+	else {
+		// Select new Level
+		this->m_currentLevel = this->m_levels[currentLevelPosition + 1];
+	}
+}
+
+void LevelManager::selectLevel(unsigned int _levelNumber) {
 	// Level
 	Level* level = this->findLevel(_levelNumber);
 
@@ -95,7 +153,7 @@ void LevelManager::selectLevel(int _levelNumber) {
 	}
 }
 
-Level* LevelManager::findLevel(int _levelNumber) {
+Level* LevelManager::findLevel(unsigned int _levelNumber) {
 	// Result
 	Level* result = nullptr; // Default to nullptr
 
