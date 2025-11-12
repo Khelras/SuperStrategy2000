@@ -145,7 +145,7 @@ void WindowManager::draw() {
     if (this->m_mainWindow.isOpen() == true) {
         // Draw the Current Level
         Level* currentLevel = GameManager::getInstance()->m_levelManager.m_currentLevel; 
-        Grid* gameBoard = currentLevel->m_gameBoard;
+        Grid* gameBoard = currentLevel->m_levelGameBoard;
         this->m_mainWindow.draw(gameBoard->m_gridBackground); // Draw the Background of the Board
 
         // Draw the Squares of the Game Board
@@ -155,10 +155,14 @@ void WindowManager::draw() {
                 Square* square = gameBoard->m_grid[y][x];
 
                 // Calculating the World Position of the Square base on the Position of the Game Board
-                float relativeSquarePositionX = static_cast<float>(square->m_squarePosition.x) * square->SQUARE_SIZE.x; // Relative X
-                float relativeSquarePositionY = static_cast<float>(square->m_squarePosition.y) * square->SQUARE_SIZE.y; // Relative Y
-                float worldSquarePositionX = gameBoard->m_gridBackground.getPosition().x + relativeSquarePositionX; // World X
-                float worldSquarePositionY = gameBoard->m_gridBackground.getPosition().y + relativeSquarePositionY; // World Y
+                float relativeSquarePositionX = // Relative X Position
+                    static_cast<float>(square->m_squarePosition.x) * square->m_squareShape.getSize().x; 
+                float relativeSquarePositionY = // Relative Y Position
+                    static_cast<float>(square->m_squarePosition.y) * square->m_squareShape.getSize().y; 
+                float worldSquarePositionX = // World X Position
+                    gameBoard->m_gridBackground.getPosition().x + relativeSquarePositionX; 
+                float worldSquarePositionY = // World Y Position
+                    gameBoard->m_gridBackground.getPosition().y + relativeSquarePositionY; 
 
                 // Setting and Drawing the Square Shape Position
                 square->m_squareShape.setPosition(sf::Vector2f(worldSquarePositionX, worldSquarePositionY));

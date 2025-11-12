@@ -12,15 +12,20 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "Level.h"
 
-Level::Level(int _levelNumber, sf::Vector2i _gridSize, sf::Vector2i _squareSize) {
+Level::Level(unsigned int _levelNumber, std::ifstream& _gridFile) {
 	this->m_levelNumber = _levelNumber;
-	this->m_gameBoard = new Grid(_gridSize, _squareSize);
+	this->m_levelGameBoard = new Grid(_gridFile);
 }
 
 Level::~Level() {
 	// Ensure Game Board exists
-	if (this->m_gameBoard != nullptr) {
+	if (this->m_levelGameBoard != nullptr) {
 		// Delete Game Board
-		delete (this->m_gameBoard);
+		delete (this->m_levelGameBoard);
 	}
+}
+
+void Level::process() {
+	// Process the Game Board
+	this->m_levelGameBoard->process();
 }

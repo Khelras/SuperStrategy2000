@@ -13,6 +13,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Actor.h"
 
 class Square {
 public:
@@ -22,16 +23,19 @@ public:
 	static const sf::Color SQUARE_OUTLINECOLOR_DEFAULT;
 	static const sf::Color SQUARE_OUTLINECOLOR_SELECTED;
 
-	// Static Square Size Attribute for ALL Squares
-	static sf::Vector2i SQUARE_SIZE;
-
 	// Square Attributes
-	sf::Vector2i m_squarePosition;
-	std::vector<Square*> m_squareNeighbors;
-	sf::RectangleShape m_squareShape;
+	sf::RectangleShape m_squareShape; // The Square Shape
+	sf::Vector2i m_squarePosition; // Position on the Grid (not World Space)
+	std::vector<Square*> m_squareNeighbors; // Surrounding Squares
+
+	// Actor Related Attributes
+	Actor* m_actorOnSquare; // The Current Actor sitting on the Square
 
 	// Constructor and Destructor
-	Square(sf::Vector2i _squarePosition); // Constructor
+	Square(sf::Vector2i _squareSize, sf::Vector2i _squarePosition); // Constructor
 	~Square(); // Destructor
+
+	// Square Functions
+	void reset(); // Reset this Square back to its Default Colours
 };
 
