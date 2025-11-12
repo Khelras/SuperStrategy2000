@@ -90,45 +90,46 @@ Grid::Grid(std::ifstream& _gridFile) {
 	// Connecting each Square of the Grid
 	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
-			// Connecting Square to its surrounding Squares
-			for (int dx = -1; dx <= 1; dx++) { // Loops through the surroundings across the x-axis
-				for (int dy = -1; dy <= 1; dy++) { // Loops through the surroundings across the y-axis
-					if (dx == 0 && dy == 0) continue; // Skip itself
+			// List of Orthogonal Directions (no Corners)
+			const std::vector<sf::Vector2i> directions = {
+				{ 0, -1 }, // Up
+				{ 0, 1 }, // Down
+				{ -1, 0 }, // Left
+				{ 1, 0 } // Right
+			};
 
-					// Calculate the Position of this Neighboring Square
-					sf::Vector2i neighborPos(x + dx, y + dy);
+			for (auto direction : directions) {
+				// Calculate the Position of this Neighboring Square
+				sf::Vector2i neighborPos(x + direction.x, y + direction.y);
 
-					// Boolean to check the Position of this Neighboring Square is within the Grid
-					bool validNeighborPos = (
-						neighborPos.x >= 0 &&
-						neighborPos.x < this->m_gridSize.x &&
-						neighborPos.y >= 0 &&
-						neighborPos.y < this->m_gridSize.y
-						);
+				// Boolean to check the Position of this Neighboring Square is within the Grid
+				bool validNeighborPos = (
+					neighborPos.x >= 0 &&
+					neighborPos.x < this->m_gridSize.x &&
+					neighborPos.y >= 0 &&
+					neighborPos.y < this->m_gridSize.y
+					);
 
-					// Ensure the Position of this Neighboring Square is within the Grid
-					if (validNeighborPos) {
-						// Neighboring Square
-						Square* neighboringSquare = this->m_grid[neighborPos.y][neighborPos.x];
+				// Ensure the Position of this Neighboring Square is within the Grid
+				if (validNeighborPos) {
+					// Neighboring Square
+					Square* neighboringSquare = this->m_grid[neighborPos.y][neighborPos.x];
 
-						// If there is an Actor on this Neighboring Square
-						if (neighboringSquare->m_actorOnSquare != nullptr) {
-							// Prevent pointing to Obstacles
-							if (neighboringSquare->m_actorOnSquare->getActorType() == Actor::Type::OBSTACLE) {
-								// Skip this Neighboring Square
-								continue;
-							}
+					// If there is an Actor on this Neighboring Square
+					if (neighboringSquare->m_actorOnSquare != nullptr) {
+						// Prevent pointing to Obstacles
+						if (neighboringSquare->m_actorOnSquare->getActorType() == Actor::Type::OBSTACLE) {
+							// Skip this Neighboring Square
+							continue;
 						}
-
-						// Connect the Square to its Neighboring Square
-						this->m_grid[y][x]->m_squareNeighbors.push_back(neighboringSquare);
 					}
+
+					// Connect the Square to its Neighboring Square
+					this->m_grid[y][x]->m_squareNeighbors.push_back(neighboringSquare);
 				}
 			}
 		}
 	}
-
-	
 
 	// Default
 	this->m_selectedSquare = nullptr;
@@ -216,7 +217,7 @@ void Grid::clear() {
 	}
 }
 
-void Grid::breadthFirstSearch(Square* _start, int _depth) {
+void Grid::breadthFirstSearch(Square* _start, int _depth, bool _checkActors) {
 	std::vector<Square*> visited; // List of Visited Squares
 	std::queue<Square*> toVisit; // Queue of Squares to Visit
 	toVisit.push(_start); // Add the Start
@@ -235,6 +236,9 @@ void Grid::breadthFirstSearch(Square* _start, int _depth) {
 
 			// Loop through the Neighbors
 			for (auto& neighbor : square->m_squareNeighbors) {
+				// Skip Neighor Squares with an Actor
+				if (_checkActors == true && neighbor->m_actorOnSquare != nullptr) continue;
+
 				// Check if this Neighbor Square has been Visited
 				bool hasVisited = false;
 				for (auto& visitedSquare : visited) {
