@@ -51,11 +51,46 @@ Level::~Level() {
 		// Delete Game Board
 		delete (this->m_levelGameBoard);
 	}
+
+	// Delete all the Actors
+	for (auto& actor : this->m_levelActors) {
+		// Ensure Actor exists
+		if (actor != nullptr) {
+			// Delete Actor
+			delete(actor);
+			actor = nullptr;
+		}
+	}
+
+	// Clear Actor and Unit Arrays
+	this->m_levelActors.clear();
+	this->m_levelUnits.clear();
 }
 
 void Level::process() {
 	// Game Board Grid Process Loop
 	this->m_levelGameBoard->process();
+
+	// Check if there is a Selected Square
+	if (this->m_levelGameBoard->m_selectedSquare != nullptr) {
+		// Check if that Selected Square has an Actor
+		Actor* actor = this->m_levelGameBoard->m_selectedSquare->m_actorOnSquare;
+		if (actor != nullptr) {
+			// Check if that Actor is a Player Unit
+			if (actor->getActorType() == Actor::Type::UNIT_PLAYER_KNIGHT ||
+				actor->getActorType() == Actor::Type::UNIT_PLAYER_ARCHER ||
+				actor->getActorType() == Actor::Type::UNIT_PLAYER_MAGE) {
+				// Downcast to Unit
+				Unit* unit = dynamic_cast<Unit*>(actor);
+
+				// Show the Range
+				this->m_levelGameBoard->breadthFirstSearch(
+					this->m_levelGameBoard->m_selectedSquare,
+					unit->getUnitSpeed()
+				);
+			}
+		}
+	}
 }
 
 void Level::drawLevel(sf::RenderWindow& _window) {

@@ -45,6 +45,7 @@ void EventManager::process(WindowManager& _windowManager) {
                 if (mousePressed->button == sf::Mouse::Button::Left) {
                     // Pointer to the Game Board of the Current Selected Level
                     Grid* gameBoard = GameManager::getInstance()->m_levelManager.m_currentLevel->m_levelGameBoard;
+                    gameBoard->clear(); // Clear the Grid
 
                     // If there is a pre-exisiting Selection
                     if (gameBoard->m_selectedSquare != nullptr) {

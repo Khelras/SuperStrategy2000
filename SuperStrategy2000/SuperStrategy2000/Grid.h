@@ -15,6 +15,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <queue>
 #include "Square.h"
 #include "Obstacle.h"
 #include "Knight.h"
@@ -38,5 +39,6 @@ public:
 	// Grid Functions
 	void process(); // Grid Process Loop
 	void clear(); // Resets every Square on the Grid by to its Default Colours
+	void breadthFirstSearch(Square* _start, int _depth); // Level-Ordered Search with a given Depth
 };
 

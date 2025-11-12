@@ -207,8 +207,62 @@ void Grid::clear() {
 	// Loop through each Square on the Grid
 	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
-			// Reset the Square
-			this->m_grid[y][x]->reset();
+			// If this Square is not Selected or Hovered
+			if (this->m_grid[y][x] != this->m_selectedSquare) {
+				// Reset the Square
+				this->m_grid[y][x]->reset();
+			}
 		}
+	}
+}
+
+void Grid::breadthFirstSearch(Square* _start, int _depth) {
+	std::vector<Square*> visited; // List of Visited Squares
+	std::queue<Square*> toVisit; // Queue of Squares to Visit
+	toVisit.push(_start); // Add the Start
+	int depth = 0; // Start at 0
+
+	// Loop until reaching the given Depth
+	while (depth <= _depth) {
+		// List of Neighbors at this Depth
+		std::vector<Square*> nextToVisit;
+
+		// Loop until the to Visit Queue is Empty
+		while (toVisit.empty() == false) {
+			// Dequeue the Front
+			Square* square = toVisit.front();
+			toVisit.pop();
+
+			// Loop through the Neighbors
+			for (auto& neighbor : square->m_squareNeighbors) {
+				// Check if this Neighbor Square has been Visited
+				bool hasVisited = false;
+				for (auto& visitedSquare : visited) {
+					// This Neighbor Square has already been Visisted
+					if (neighbor == visitedSquare) {
+						hasVisited = true;
+						break;
+					}
+				}
+
+				// If this Neighbor Square has not already been Visited
+				if (hasVisited == false) {
+					// Add to the Next to Visit List
+					nextToVisit.push_back(neighbor);
+				}
+			}
+
+			// Highlight Square
+			square->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_SELECTED);
+			visited.push_back(square); // This Square has now been Visited
+		}
+
+		// Next to Visit List into the to Visit Queue
+		for (auto& toVisitSquare : nextToVisit) {
+			toVisit.push(toVisitSquare);
+		}
+
+		// Increase Depth
+		depth++;
 	}
 }
