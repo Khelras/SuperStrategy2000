@@ -18,20 +18,23 @@ const sf::Color Square::SQUARE_FILLCOLOR_SELECTED = sf::Color::Green;
 const sf::Color Square::SQUARE_OUTLINECOLOR_DEFAULT = sf::Color::Black;
 const sf::Color Square::SQUARE_OUTLINECOLOR_SELECTED = sf::Color::Green;
 
-// Defining the Statc Square Size Attribute for ALL Squares
-sf::Vector2i Square::SQUARE_SIZE = sf::Vector2i(32, 32); // Default to 32x32
-
-Square::Square(sf::Vector2i _squarePosition) {
+Square::Square(sf::Vector2i _squareSize, sf::Vector2i _squarePosition) {
 	// Square Attributes
-	sf::Vector2f squareSize = sf::Vector2f(static_cast<float>(Square::SQUARE_SIZE.x), static_cast<float>(Square::SQUARE_SIZE.y));
-	this->m_squareShape.setSize(squareSize);
+	this->m_squareShape.setSize(sf::Vector2f(static_cast<float>(_squareSize.x), static_cast<float>(_squareSize.y)));
 	this->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_DEFAULT); // Fill Color
 	this->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_DEFAULT); // Outline Color
 	this->m_squareShape.setOutlineThickness(-1.0f);
-
-	// Square Attributes
 	this->m_squarePosition = _squarePosition;
+
+	// Actor Related Attributes
+	this->m_actorOnSquare = nullptr;
 }
 
 Square::~Square() {
+}
+
+void Square::reset() {
+	// Reset the Square Shape Colors
+	this->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_DEFAULT); // Fill Color
+	this->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_DEFAULT); // Outline Color
 }

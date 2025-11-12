@@ -33,11 +33,20 @@ void LevelManager::process() {
 	// Ensure there is a Selected Level
 	if (this->m_currentLevel == nullptr) return;
 
-	// Process the Game Board of the Current Selected Level
-	this->m_currentLevel->m_gameBoard->process();
+	// Process the Current Selected Level
+	this->m_currentLevel->process();
 }
 
-bool LevelManager::loadLevel(int _levelNumber, std::string _path) {
+bool LevelManager::loadLevel(unsigned int _levelNumber, std::string _path) {
+	/*
+		Level Files are expected to have a width and height and a 2D Grid of double-digit numbers.
+		The first 2 numbers will represent the width and the height of the Grid respectively.
+		the next 2 numbers will represent the width and the height of each Square respectively.
+		Afterwards, the file loader will expect to see 'w*h' amount of numbers.
+		Each of those numbers (after the width and height) will represent an actor or space in the world.
+		Each number are spaced out so that we can use the '<<' operator to read those numbers.
+	*/
+
 	// Open File
 	std::ifstream levelFile(_path);
 
@@ -47,22 +56,9 @@ bool LevelManager::loadLevel(int _levelNumber, std::string _path) {
 		std::cout << "Unable to load level file from '" << _path << "'!\n";
 		return false;
 	}
-
-	/*
-		Level Files are expected to have a width and height and a 2D Grid of double-digit numbers.
-		Each number are spaced out so that we can use the '<<' operator to read those numbers.
-		Each number will represent an actor or space in the world.
-	*/
-
-	// Attributes from File
-	std::string line; // Line
-	int width, height; // Width and Height
-	levelFile >> width >> height; // Read the Width and the Height
-
-	// TODO: READ EACH NUMBER TO LOAD THEIR RESPECTIVE ACTOR
-
+	
 	// Create the Level
-	Level* level = new Level(_levelNumber, sf::Vector2i(width, height));
+	Level* level = new Level(_levelNumber, levelFile);
 
 	// Add Level to the Levels Array
 	this->m_levels.push_back(level); 
@@ -76,12 +72,12 @@ bool LevelManager::loadLevel(int _levelNumber, std::string _path) {
 	return true;
 }
 
-bool LevelManager::saveLevel(int _levelNumber, std::string _path) {
+bool LevelManager::saveLevel(unsigned int _levelNumber, std::string _path) {
 	// TODO: MAKE LEVEL SAVING
 	return true;
 }
 
-void LevelManager::selectLevel(int _levelNumber) {
+void LevelManager::selectLevel(unsigned int _levelNumber) {
 	// Level
 	Level* level = this->findLevel(_levelNumber);
 
@@ -95,7 +91,7 @@ void LevelManager::selectLevel(int _levelNumber) {
 	}
 }
 
-Level* LevelManager::findLevel(int _levelNumber) {
+Level* LevelManager::findLevel(unsigned int _levelNumber) {
 	// Result
 	Level* result = nullptr; // Default to nullptr
 

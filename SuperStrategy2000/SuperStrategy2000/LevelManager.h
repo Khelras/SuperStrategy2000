@@ -19,12 +19,12 @@ public:
 
 	// Level Manager Functions and Properties
 	void process(); // Level Manager Process Loop
-	bool loadLevel(int _levelNumber, std::string _path); // Load Level
-	bool saveLevel(int _levelNumber, std::string _path); // Save Level
-	void selectLevel(int _levelNumber); // Select Level
+	bool loadLevel(unsigned int _levelNumber, std::string _path); // Load Level
+	bool saveLevel(unsigned int _levelNumber, std::string _path); // Save Level
+	void selectLevel(unsigned int _levelNumber); // Select Level
 
 private:
 	// Private Functions
-	Level* findLevel(int _levelNumber); // Returns a Level given the Level Number
+	Level* findLevel(unsigned int _levelNumber); // Returns a Level given the Level Number
 };
 

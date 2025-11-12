@@ -13,17 +13,27 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "Grid.h"
 #include "GameManager.h"
 
-Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _squareSize) {
-	// Resize the Square
-	Square::SQUARE_SIZE = _squareSize;
-
-	// Selected and Hover Square
-	this->m_selectedSquare = nullptr;
-	this->m_hoverSquare = nullptr;
-
-	// Grid Size
-	this->m_gridSize = _gridSize;
+Grid::Grid(std::ifstream& _gridFile) {
+	/*
+		Level Files are expected to have a width and height and a 2D Grid of double-digit numbers.
+		The first 2 numbers will represent the width and the height of the Grid respectively.
+		the next 2 numbers will represent the width and the height of each Square respectively.
+		Afterwards, the file loader will expect to see 'w*h' amount of numbers.
+		Each of those numbers (after the width and height) will represent an actor or space in the world.
+		Each number are spaced out so that we can use the '<<' operator to read those numbers.
+	*/
 	
+	// Read the Size of the Grid and the Size of each Square
+	_gridFile >> this->m_gridSize.x >> this->m_gridSize.y; // Reading Size of the Grid
+	_gridFile >> this->m_squareSize.x >> this->m_squareSize.y; // Reading Size of each Square
+
+	// The World Space the Grid takes
+	float gridWorldSpaceX = static_cast<float>(this->m_squareSize.x * this->m_gridSize.x); // Static Cast to Float
+	float gridWorldSpaceY = static_cast<float>(this->m_squareSize.y * this->m_gridSize.y); // Static Cast to Float
+	this->m_gridBackground.setSize(sf::Vector2f(gridWorldSpaceX, gridWorldSpaceY));
+	this->m_gridBackground.setFillColor(sf::Color(220, 220, 220)); // Faded-White
+	this->m_gridBackground.setPosition(sf::Vector2f(0.0f, 0.0f)); // Set at Origin
+
 	// Resize the 2D Grid Array
 	this->m_grid.clear(); // Clear the 2D Grid Array
 	this->m_grid.resize(this->m_gridSize.y); // Resize the Columns (Down the y-axis) BEFORE the Rows
@@ -36,7 +46,44 @@ Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _squareSize) {
 	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
 			// Creating the Square
-			this->m_grid[y][x] = new Square(sf::Vector2i(x, y));
+			this->m_grid[y][x] = new Square(this->m_squareSize, sf::Vector2i(x, y));
+
+			// Setting the World Position of the Square
+			this->m_grid[y][x]->m_squareShape.setPosition( 
+				sf::Vector2f(
+					static_cast<float>(x * this->m_squareSize.x),
+					static_cast<float>(y * this->m_squareSize.y)
+				)
+			);
+
+			// Checking the Number for the Actor Type
+			int actorType;
+			_gridFile >> actorType;
+			Actor*& actor = this->m_grid[y][x]->m_actorOnSquare;
+
+			// 0 means it is an empty Square
+			if (actorType == 0) continue;
+
+			// Evalutate the Actor Type
+			switch (actorType) {
+				// Obstacle
+				case 1: { actor = new Obstacle(); } break;
+
+				// Knight
+				case 2: 
+				case 5: { actor = new Knight(actorType == 5); } break;
+
+				// Archer
+				case 3: 
+				case 6: { actor = new Archer(actorType == 6); } break;
+
+				// Mage
+				case 4: 
+				case 7: { actor = new Mage(actorType == 7); } break;
+			}
+
+			// Update the Actor's Grid Position
+			actor->setActorSpritePosition(this->m_grid[y][x]->m_squareShape.getGlobalBounds().getCenter());
 		}
 	}
 
@@ -57,24 +104,35 @@ Grid::Grid(sf::Vector2i _gridSize, sf::Vector2i _squareSize) {
 						neighborPos.x < this->m_gridSize.x &&
 						neighborPos.y >= 0 &&
 						neighborPos.y < this->m_gridSize.y
-					);
-					
+						);
+
 					// Ensure the Position of this Neighboring Square is within the Grid
 					if (validNeighborPos) {
+						// Neighboring Square
+						Square* neighboringSquare = this->m_grid[neighborPos.y][neighborPos.x];
+
+						// If there is an Actor on this Neighboring Square
+						if (neighboringSquare->m_actorOnSquare != nullptr) {
+							// Prevent pointing to Obstacles
+							if (neighboringSquare->m_actorOnSquare->getActorType() == Actor::Type::OBSTACLE) {
+								// Skip this Neighboring Square
+								continue;
+							}
+						}
+
 						// Connect the Square to its Neighboring Square
-						this->m_grid[y][x]->m_squareNeighbors.push_back(this->m_grid[neighborPos.y][neighborPos.x]);
+						this->m_grid[y][x]->m_squareNeighbors.push_back(neighboringSquare);
 					}
 				}
 			}
 		}
 	}
 
-	// The Screen Space the Grid takes
-	float gridSpaceX = static_cast<float>(Square::SQUARE_SIZE.x * this->m_gridSize.x); // Static Cast to Float
-	float gridSpaceY = static_cast<float>(Square::SQUARE_SIZE.y * this->m_gridSize.y); // Static Cast to Float
-	this->m_gridBackground.setSize(sf::Vector2f(gridSpaceX, gridSpaceY));
-	this->m_gridBackground.setFillColor(sf::Color::White); // White
-	this->m_gridBackground.setPosition(sf::Vector2f(0.0f, 0.0f)); // Set at Origin
+	
+
+	// Default
+	this->m_selectedSquare = nullptr;
+	this->m_hoverSquare = nullptr;
 }
 
 Grid::~Grid() {
@@ -104,9 +162,6 @@ void Grid::process() {
 
 	// Mouse is within the bounds of the Grid Space
 	if (gridSpace.contains(mouseWorldPosition) == true) {
-		// Now find the Square the Mouse is hovering over
-		sf::Vector2i squareSize = Square::SQUARE_SIZE; // The size of each Square
-		
 		/*
 			Find which Square the Mouse is hovering over:
 			- Convert the Mouse World Position into Grid Coordinates.
@@ -115,8 +170,8 @@ void Grid::process() {
 		*/
 
 		// Square Index (x, y) within the Grid Array
-		int squareX = static_cast<int>((mouseWorldPosition.x - gridSpace.position.x) / squareSize.x);
-		int squareY = static_cast<int>((mouseWorldPosition.y - gridSpace.position.y) / squareSize.y);
+		int squareX = static_cast<int>((mouseWorldPosition.x - gridSpace.position.x) / this->m_squareSize.x);
+		int squareY = static_cast<int>((mouseWorldPosition.y - gridSpace.position.y) / this->m_squareSize.y);
 
 		// Clamp indices to ensure they are within bounds
 		squareX = std::clamp(squareX, 0, this->m_gridSize.x - 1);
@@ -144,6 +199,16 @@ void Grid::process() {
 			// Reset and Remove Hovers
 			this->m_hoverSquare->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_DEFAULT); // Reset Hover
 			this->m_hoverSquare = nullptr; // Remove Hover
+		}
+	}
+}
+
+void Grid::clear() {
+	// Loop through each Square on the Grid
+	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
+		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
+			// Reset the Square
+			this->m_grid[y][x]->reset();
 		}
 	}
 }

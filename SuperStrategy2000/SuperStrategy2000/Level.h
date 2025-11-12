@@ -15,11 +15,20 @@ Mail        : angelo.bohol@mds.ac.nz
 
 class Level {
 public:
-	int m_levelNumber;
-	Grid* m_gameBoard;
+	// Level Attributes
+	unsigned int m_levelNumber;
+	Grid* m_levelGameBoard;
+
+	// Actor Attributes
+	std::vector<Actor*> m_levelActors; // All Actors in the Level
+	std::vector<Unit*> m_levelUnits; // All the Units in the Level
 
 	// Constructor and Destructor
-	Level(int _levelNumber, sf::Vector2i _gridSize, sf::Vector2i _squareSize = sf::Vector2i(32, 32));
+	Level(unsigned int _levelNumber, std::ifstream& _filePath);
 	~Level();
+
+	// Level Functions
+	void process(); // Level Logic Loop
+	void drawLevel(sf::RenderWindow& _window);
 };
 

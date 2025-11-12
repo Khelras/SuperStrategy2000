@@ -11,8 +11,15 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
+#include <fstream>
+#include <iostream>
+#include <string>
 #include <cmath>
 #include "Square.h"
+#include "Obstacle.h"
+#include "Knight.h"
+#include "Archer.h"
+#include "Mage.h"
 
 class Grid {
 public:
@@ -20,14 +27,16 @@ public:
 	sf::RectangleShape m_gridBackground; // Grid Space
 	std::vector<std::vector<Square*>> m_grid; // 2D Grid Array
 	sf::Vector2i m_gridSize; // Size of Grid Array
+	sf::Vector2i m_squareSize; // Size of each Square on the Grid
 	Square* m_selectedSquare; // The Selected Square on the Grid
 	Square* m_hoverSquare; // The Hovered Square on the Grid
 
 	// Constructor and Destructor
-	Grid(sf::Vector2i _gridSize, sf::Vector2i _squareSize); // Constructor
+	Grid(std::ifstream& _gridFile); // Constructor
 	~Grid(); // Destructor
 
 	// Grid Functions
-	void process();
+	void process(); // Grid Process Loop
+	void clear(); // Resets every Square on the Grid by to its Default Colours
 };
 

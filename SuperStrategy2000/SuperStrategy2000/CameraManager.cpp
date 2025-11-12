@@ -86,12 +86,15 @@ void CameraManager::processUIView() {
 }
 
 void CameraManager::centerCameraView() {
-	// Pointer to the Game Board of the Current Selected Level
-	Grid* gameBoard = GameManager::getInstance()->m_levelManager.m_currentLevel->m_gameBoard;
+	// Ensure a Level has been Loaded and Selected
+	if (GameManager::getInstance()->m_levelManager.m_currentLevel != nullptr) {
+		// Pointer to the Game Board of the Current Selected Level
+		Grid* gameBoard = GameManager::getInstance()->m_levelManager.m_currentLevel->m_levelGameBoard;
 
-	// Center of Game Board
-	sf::Vector2f center = gameBoard->m_gridBackground.getGlobalBounds().getCenter();
-	this->m_cameraView.setCenter(center); 
+		// Center of Game Board
+		sf::Vector2f center = gameBoard->m_gridBackground.getGlobalBounds().getCenter();
+		this->m_cameraView.setCenter(center);
+	}
 }
 
 sf::Vector2i CameraManager::getAspectRatio(sf::Vector2f _resolution) {
@@ -112,7 +115,7 @@ void CameraManager::moveCamera(sf::Vector2f _offset) {
 	this->m_cameraView.move(_offset);
 
 	// Pointer to the Game Board of the Current Selected Level
-	Grid* gameBoard = GameManager::getInstance()->m_levelManager.m_currentLevel->m_gameBoard;
+	Grid* gameBoard = GameManager::getInstance()->m_levelManager.m_currentLevel->m_levelGameBoard;
 	sf::FloatRect gameBoardBounds = gameBoard->m_gridBackground.getGlobalBounds();
 
 	// Camera Position

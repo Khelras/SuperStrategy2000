@@ -143,27 +143,11 @@ void WindowManager::draw() {
 
     // Draw to Main Window
     if (this->m_mainWindow.isOpen() == true) {
-        // Draw the Current Level
+        // Ensures that there is a Loaded and Selected Level
         Level* currentLevel = GameManager::getInstance()->m_levelManager.m_currentLevel; 
-        Grid* gameBoard = currentLevel->m_gameBoard;
-        this->m_mainWindow.draw(gameBoard->m_gridBackground); // Draw the Background of the Board
-
-        // Draw the Squares of the Game Board
-        for (int y = 0; y < gameBoard->m_gridSize.y; y++) { // Loop down the y-axis
-            for (int x = 0; x < gameBoard->m_gridSize.x; x++) { // Loop down the x-axis
-                // The Square
-                Square* square = gameBoard->m_grid[y][x];
-
-                // Calculating the World Position of the Square base on the Position of the Game Board
-                float relativeSquarePositionX = static_cast<float>(square->m_squarePosition.x) * square->SQUARE_SIZE.x; // Relative X
-                float relativeSquarePositionY = static_cast<float>(square->m_squarePosition.y) * square->SQUARE_SIZE.y; // Relative Y
-                float worldSquarePositionX = gameBoard->m_gridBackground.getPosition().x + relativeSquarePositionX; // World X
-                float worldSquarePositionY = gameBoard->m_gridBackground.getPosition().y + relativeSquarePositionY; // World Y
-
-                // Setting and Drawing the Square Shape Position
-                square->m_squareShape.setPosition(sf::Vector2f(worldSquarePositionX, worldSquarePositionY));
-                this->m_mainWindow.draw(square->m_squareShape); // Draw the Square Shape
-            }
+        if (currentLevel != nullptr) {
+            // Draw the Current Level
+            currentLevel->drawLevel(this->m_mainWindow);
         }
     }
 }

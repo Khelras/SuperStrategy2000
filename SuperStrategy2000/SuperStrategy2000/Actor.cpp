@@ -11,19 +11,18 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "Actor.h"
+#include "GameManager.h"
 
 // Defining the Static Constant Tile Map
 const TileMap Actor::ACTOR_TILE_MAP = TileMap();
 
 Actor::Actor() {
 	// Default Attributes
-	this->m_actorPosition = sf::Vector2f(0.0f, 0.0f);
 	this->m_actorSprite = nullptr;
 	this->m_actorType = Actor::Type::NONE;
 }
 
-Actor::Actor(sf::Vector2f _position, Actor::Type _type) {
-	this->m_actorPosition = _position;
+Actor::Actor(sf::Vector2i _positionOnGrid, Actor::Type _type) {
 	this->m_actorSprite = nullptr;
 	this->m_actorType = _type;
 }
@@ -35,21 +34,6 @@ Actor::~Actor() {
 		delete (this->m_actorSprite);
 		this->m_actorSprite = nullptr;
 	}
-}
-
-void Actor::setActorPosition(sf::Vector2f _position) {
-	// Set the Actor Position
-	this->m_actorPosition = _position;
-	
-	// Ensure that Actor Sprite exists
-	if (this->m_actorSprite != nullptr) {
-		// Set the Actor Sprite Position
-		this->m_actorSprite->setPosition(_position);
-	}
-}
-
-const sf::Vector2f& Actor::getActorPosition() const {
-	return this->m_actorPosition;
 }
 
 void Actor::setActorSprite(unsigned int _index) {
@@ -67,10 +51,12 @@ void Actor::setActorSprite(unsigned int _index) {
 			Actor::ACTOR_TILE_MAP.getTileMapTexture(), // Set the Texture
 			Actor::ACTOR_TILE_MAP.getTile(_index) // Set the TextureRect given the Tile Index
 		);
-
-		// Set the Position of the Actor Sprite to the Actor Position
-		this->m_actorSprite->setPosition(this->m_actorPosition);
 	}
+}
+
+void Actor::setActorSpritePosition(sf::Vector2f _position) {
+	this->m_actorSprite->setOrigin(this->m_actorSprite->getGlobalBounds().getCenter());
+	this->m_actorSprite->setPosition(_position);
 }
 
 const sf::Sprite* Actor::getActorSprite() const {

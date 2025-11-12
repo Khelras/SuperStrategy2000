@@ -35,22 +35,18 @@ public:
 
 protected:
 	// Actor Attributes
-	sf::Vector2f m_actorPosition; // The Position of the Actor
 	sf::Sprite* m_actorSprite; // The Sprite of the Actor
 	Actor::Type m_actorType; // The Type of the Actor
 
 public:
 	// Constructor and Destructor
 	Actor(); // Default Constructor
-	Actor(sf::Vector2f _position, Actor::Type _type); // Constructor
+	Actor(sf::Vector2i _positionOnGrid, Actor::Type _type); // Constructor
 	virtual ~Actor(); // Virtual Destructor
-
-	// Virtual Actor Position Functions
-	virtual void setActorPosition(sf::Vector2f _position); // Sets the Actor Position
-	virtual const sf::Vector2f& getActorPosition() const; // Returns the Actor Position
 
 	// Virtual Actor Sprite Functions
 	virtual void setActorSprite(unsigned int _index); // Sets the Actor Sprite
+	virtual void setActorSpritePosition(sf::Vector2f _position); // Sets the Actor Sprite Position
 	virtual const sf::Sprite* getActorSprite() const; // Returns the Actor Sprite
 
 	// Virtual Actor Type Functions
