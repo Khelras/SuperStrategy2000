@@ -15,8 +15,10 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "GameSettings.h"
 
 UIManager::UIManager() {
-	// Move Button
-	this->m_buttons.push_back(new MoveButton());
+	// Buttons
+	this->m_buttons.push_back(new BasicButton()); // Basic Attack Button
+	this->m_buttons.push_back(new SpecialButton()); // Special Attack Button
+	this->m_buttons.push_back(new MoveButton()); // Move Unit Button
 }
 
 UIManager::~UIManager() {
@@ -41,10 +43,6 @@ void UIManager::process() {
 			button->m_buttonShape.setOutlineColor(Button::BUTTON_OUTLINECOLOR_SELECTED);
 		}
 	}
-}
-
-void UIManager::positionButtons() {
-	
 }
 
 void UIManager::drawUI(sf::RenderWindow& _window) {

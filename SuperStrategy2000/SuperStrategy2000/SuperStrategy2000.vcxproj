@@ -83,6 +83,7 @@ sfml-window-d.lib
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="BasicButton.hpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="EventManager.cpp" />
@@ -123,6 +124,7 @@ sfml-window-d.lib
     <ClInclude Include="MoveButton.hpp" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="SpecialButton.hpp" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="UIManager.h" />
