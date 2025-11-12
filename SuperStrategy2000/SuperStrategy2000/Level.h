@@ -11,7 +11,10 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
+#include <cstdlib>
+#include <ctime>
 #include "Grid.h"
+
 
 class Level {
 public:

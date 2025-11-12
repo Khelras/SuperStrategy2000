@@ -146,39 +146,120 @@ void Level::process() {
 	this->m_levelGameBoard->process();
 
 	// Until Turn is Done
-	if (TurnController::getInstance()->m_turnState != TurnController::TurnStates::DONE && 
-		this->m_levelCurrentUnit->getActorType() != Actor::Type::UNIT_ENEMY_KNIGHT &&
-		this->m_levelCurrentUnit->getActorType() != Actor::Type::UNIT_ENEMY_ARCHER &&
-		this->m_levelCurrentUnit->getActorType() != Actor::Type::UNIT_ENEMY_MAGE) {
-		// Ensure that the Current Unit is the First in the Turn Order
-		this->m_levelCurrentUnit = this->m_levelTurnOrder.front();
+	if (TurnController::getInstance()->m_turnState != TurnController::TurnStates::DONE) {
+		// Players Turn
+		if (this->m_levelCurrentUnit->getActorType() == Actor::Type::UNIT_PLAYER_KNIGHT ||
+			this->m_levelCurrentUnit->getActorType() == Actor::Type::UNIT_PLAYER_ARCHER ||
+			this->m_levelCurrentUnit->getActorType() == Actor::Type::UNIT_PLAYER_MAGE) {
+			// Ensure that the Current Unit is the First in the Turn Order
+			this->m_levelCurrentUnit = this->m_levelTurnOrder.front();
 
-		// Select the Square with the Current Unit
-		this->m_levelGameBoard->selectSquare(this->m_levelCurrentUnit);
-
-		// Moving Turn State
-		if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::MOVING) {
 			// Select the Square with the Current Unit
 			this->m_levelGameBoard->selectSquare(this->m_levelCurrentUnit);
 
-			// Show this Units Movement Range
-			this->m_levelGameBoard->breadthFirstSearch(
-				this->m_levelGameBoard->m_selectedSquare,
-				static_cast<int>(this->m_levelCurrentUnit->getUnitSpeed()),
-				true
-			);
-		}
-		// Basic Attack Turn State
-		else if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::BASIC) {
-			// Select the Square
-			this->m_levelGameBoard->selectSquare(this->m_levelCurrentUnit);
+			// Moving Turn State
+			if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::MOVING) {
+				// Select the Square with the Current Unit
+				this->m_levelGameBoard->selectSquare(this->m_levelCurrentUnit);
 
-			// Show this Units Attack Range
-			this->m_levelGameBoard->breadthFirstSearch(
-				this->m_levelGameBoard->m_selectedSquare,
-				static_cast<int>(this->m_levelCurrentUnit->getUnitRange()),
-				false
-			);
+				// Show this Units Movement Range
+				this->m_levelGameBoard->breadthFirstSearch(
+					this->m_levelGameBoard->m_selectedSquare,
+					static_cast<int>(this->m_levelCurrentUnit->getUnitSpeed()),
+					true
+				);
+			}
+			// Basic Attack Turn State
+			else if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::BASIC) {
+				// Select the Square
+				this->m_levelGameBoard->selectSquare(this->m_levelCurrentUnit);
+
+				// Show this Units Attack Range
+				this->m_levelGameBoard->breadthFirstSearch(
+					this->m_levelGameBoard->m_selectedSquare,
+					static_cast<int>(this->m_levelCurrentUnit->getUnitRange()),
+					false
+				);
+			}
+		}
+		// Enemys Turn
+		else if (this->m_levelCurrentUnit->getActorType() == Actor::Type::UNIT_ENEMY_KNIGHT ||
+			this->m_levelCurrentUnit->getActorType() == Actor::Type::UNIT_ENEMY_ARCHER ||
+			this->m_levelCurrentUnit->getActorType() == Actor::Type::UNIT_ENEMY_MAGE) {
+			// Random Direction
+			std::srand(std::time(nullptr)); // Seed with current time
+			int randomDirection = std::rand() % 4 + 1; // Random Direction between 1 and 4
+
+			// Square
+			Square* square = this->m_levelGameBoard->getSquare(this->m_levelCurrentUnit);
+
+			// North
+			if (randomDirection == 1) {
+				// Ensure direction is Valid
+				if (square->m_squarePosition.y - 1 >= 0) {
+					int yPosition = square->m_squarePosition.y - 1;
+					int xPosition = square->m_squarePosition.x;
+					Square* end = this->m_levelGameBoard->m_grid[yPosition][xPosition];
+
+					// Perform move
+					if (end->m_actorOnSquare == nullptr) {
+						end->m_actorOnSquare = square->m_actorOnSquare;
+						square->m_actorOnSquare = nullptr;
+						end->m_actorOnSquare->setActorSpritePosition(end->m_squareShape.getGlobalBounds().getCenter());
+					}
+				}
+			}
+			// South
+			else if (randomDirection == 2) {
+				// Ensure direction is Valid
+				if (square->m_squarePosition.y + 1 < this->m_levelGameBoard->m_gridSize.y) {
+					int yPosition = square->m_squarePosition.y + 1;
+					int xPosition = square->m_squarePosition.x;
+					Square* end = this->m_levelGameBoard->m_grid[yPosition][xPosition];
+
+					// Perform move
+					if (end->m_actorOnSquare == nullptr) {
+						end->m_actorOnSquare = square->m_actorOnSquare;
+						square->m_actorOnSquare = nullptr;
+						end->m_actorOnSquare->setActorSpritePosition(end->m_squareShape.getGlobalBounds().getCenter());
+					}
+				}
+			}
+			// East
+			else if (randomDirection == 3) {
+				// Ensure direction is Valid
+				if (square->m_squarePosition.x - 1 >= 0) {
+					int yPosition = square->m_squarePosition.y;
+					int xPosition = square->m_squarePosition.x - 1;
+					Square* end = this->m_levelGameBoard->m_grid[yPosition][xPosition];
+
+					// Perform move
+					if (end->m_actorOnSquare == nullptr) {
+						end->m_actorOnSquare = square->m_actorOnSquare;
+						square->m_actorOnSquare = nullptr;
+						end->m_actorOnSquare->setActorSpritePosition(end->m_squareShape.getGlobalBounds().getCenter());
+					}
+				}
+			}
+			// West
+			else if (randomDirection == 4) {
+				// Ensure direction is Valid
+				if (square->m_squarePosition.x + 1 < this->m_levelGameBoard->m_gridSize.x) {
+					int yPosition = square->m_squarePosition.y;
+					int xPosition = square->m_squarePosition.x + 1;
+					Square* end = this->m_levelGameBoard->m_grid[yPosition][xPosition];
+
+					// Perform move
+					if (end->m_actorOnSquare == nullptr) {
+						end->m_actorOnSquare = square->m_actorOnSquare;
+						square->m_actorOnSquare = nullptr;
+						end->m_actorOnSquare->setActorSpritePosition(end->m_squareShape.getGlobalBounds().getCenter());
+					}
+				}
+			}
+
+			// Done
+			TurnController::getInstance()->m_turnState = TurnController::TurnStates::DONE;
 		}
 	}
 	// Turn is Done
