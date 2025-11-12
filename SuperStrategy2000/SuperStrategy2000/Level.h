@@ -18,6 +18,7 @@ public:
 	// Level Attributes
 	unsigned int m_levelNumber;
 	Grid* m_levelGameBoard;
+	std::queue<Unit*> m_turnOrder;
 
 	// Actor Attributes
 	std::vector<Actor*> m_levelActors; // All Actors in the Level

@@ -19,8 +19,7 @@ Level::Level(unsigned int _levelNumber, std::ifstream& _gridFile) {
 	// After constructing the Game Board Grid
 	if (this->m_levelGameBoard != nullptr) {
 		// Loop through each Square on the Game Board and collect the Actors
-		const auto& grid = this->m_levelGameBoard->m_grid;
-		for (const auto& row : grid) { // Loop down each Row
+		for (const auto& row : this->m_levelGameBoard->m_grid) { // Loop down each Row
 			for (const auto& square : row) { // Loop through each Square on this Row
 				// Square has an Actor on it
 				if (square->m_actorOnSquare != nullptr) {
@@ -36,6 +35,68 @@ Level::Level(unsigned int _levelNumber, std::ifstream& _gridFile) {
 						this->m_levelUnits.push_back(unit);
 					}
 				}
+			}
+		}
+
+		// Queues
+		std::queue<Unit*> playerKnights; // All Player Knights Present
+		std::queue<Unit*> enemyKnights; // All Enemy Knights Present
+		std::queue<Unit*> playerArchers; // All Player Archers Present
+		std::queue<Unit*> enemyArchers; // All Enemy Archers Present
+		std::queue<Unit*> playerMages; // All Player Mages Present
+		std::queue<Unit*> enemyMages; // All Enemy Mages Present
+
+		// Sort into their repsective queue
+		for (const auto& unit : this->m_levelUnits) {
+			switch (unit->getActorType()) {
+				case (Actor::Type::UNIT_PLAYER_KNIGHT): { playerKnights.push(unit); } break;
+				case (Actor::Type::UNIT_ENEMY_KNIGHT): { enemyKnights.push(unit); } break;
+				case (Actor::Type::UNIT_PLAYER_ARCHER): { playerArchers.push(unit); } break;
+				case (Actor::Type::UNIT_ENEMY_ARCHER): { enemyArchers.push(unit); } break;
+				case (Actor::Type::UNIT_PLAYER_MAGE): { playerMages.push(unit); } break;
+				case (Actor::Type::UNIT_ENEMY_MAGE): { enemyMages.push(unit); } break;
+				default: { continue; } break;
+			}
+		}
+
+		// Construct the Turn Order
+		while (playerKnights.empty() == false || enemyKnights.empty() == false ||
+			playerArchers.empty() == false || enemyArchers.empty() == false ||
+			playerMages.empty() == false || enemyMages.empty() == false) {
+			// Player Knights
+			if (playerKnights.empty() == false) {
+				this->m_turnOrder.push(playerKnights.front());
+				playerKnights.pop();
+			}
+			
+			// Enemy Knights
+			if (enemyKnights.empty() == false) {
+				this->m_turnOrder.push(enemyKnights.front());
+				enemyKnights.pop();
+			}
+			
+			// Player Archers
+			if (playerArchers.empty() == false) {
+				this->m_turnOrder.push(playerArchers.front());
+				playerArchers.pop();
+			}
+			
+			// Enemy Archers
+			if (enemyArchers.empty() == false) {
+				this->m_turnOrder.push(enemyArchers.front());
+				enemyArchers.pop();
+			}
+			
+			// Player Mages
+			if (playerMages.empty() == false) {
+				this->m_turnOrder.push(playerMages.front());
+				playerMages.pop();
+			}
+			
+			// Enemy Mages
+			if (enemyMages.empty() == false) {
+				this->m_turnOrder.push(enemyMages.front());
+				enemyMages.pop();
 			}
 		}
 	}
