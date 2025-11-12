@@ -1,3 +1,15 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name   : GameManager.h
+Description : Declares the GameManager Class Functions and Properties.
+Author      : Angelo Joseph Arawiran Bohol
+Mail        : angelo.bohol@mds.ac.nz
+**************************************************************************/
+
 #pragma once
 #include "GameSettings.h"
 #include "EventManager.h"

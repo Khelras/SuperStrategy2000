@@ -5,7 +5,7 @@ Auckland
 New Zealand
 (c) 2025 Media Design School
 File Name   : GameSettings.cpp
-Description : Defines the GameSettingsIO Load() and Save() Functions
+Description : Defines the GameSettingsIO Load() and Save() Functions.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/

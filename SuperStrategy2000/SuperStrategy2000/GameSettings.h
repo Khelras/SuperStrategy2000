@@ -5,7 +5,7 @@ Auckland
 New Zealand
 (c) 2025 Media Design School
 File Name   : GameSettings.h
-Description : Holds all the Game Settings information. Follows a Singleton Design Pattern
+Description : Holds all the Game Settings information. Follows a Singleton Design Pattern.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
