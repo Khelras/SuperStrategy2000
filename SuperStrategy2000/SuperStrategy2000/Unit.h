@@ -41,5 +41,13 @@ public:
 	// Constructor and Destructor
 	Unit();
 	virtual ~Unit();
+
+	// Getters
+	float getUnitStrength() const { return this->m_unitStrength; };
+	float getUnitRange() const { return this->m_unitRange; };
+	float getUnitDefense() const { return this->m_unitDefense; };
+	float getUnitSpeed() const { return this->m_unitSpeed; };
+	float getUnitMaxHeatlh() const { return this->m_unitHealth; };
+	float getUnitCurrentHeatlh() const { return this->m_unitCurrentHealth; };
 };
 

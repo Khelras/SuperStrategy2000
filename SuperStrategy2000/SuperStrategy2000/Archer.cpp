@@ -14,6 +14,14 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "ArchersMark.hpp"
 
 Archer::Archer(bool _isEnemy) {
+	// Set the Unit Stats
+	this->m_unitStrength = 12.0f; // Strength of the Unit
+	this->m_unitRange = 5.0f; // Attack Range of the Unit
+	this->m_unitDefense = 2.0f; // Defense of the Unit
+	this->m_unitSpeed = 3.0f; // Movement Speed of the Unit
+	this->m_unitHealth = 30.0f; // Health of the unit
+	this->m_unitCurrentHealth = this->m_unitHealth;
+
 	// Set the Actor Sprite and the Actor Type
 	if (_isEnemy == false) {
 		// Player
