@@ -19,6 +19,7 @@ public:
 		// Ensure that Button Text Exists
 		if (this->m_buttonText != nullptr) {
 			this->m_buttonText->setString("Move");
+			this->m_buttonText->setOrigin(this->m_buttonText->getLocalBounds().getCenter()); // Center Origin
 		}
 	};
 

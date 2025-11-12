@@ -47,22 +47,34 @@ void EventManager::process(WindowManager& _windowManager) {
                     Grid* gameBoard = GameManager::getInstance()->m_levelManager.m_currentLevel->m_levelGameBoard;
                     gameBoard->clear(); // Clear the Grid
 
-                    // If there is a pre-exisiting Selection
-                    if (gameBoard->m_selectedSquare != nullptr) {
-                        // Reset Selection
-                        gameBoard->m_selectedSquare->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_DEFAULT);
+                    // Check if Mouse clicked on a Button UI
+                    UIManager uiManager = GameManager::getInstance()->m_uiManager;
+                    if (uiManager.isMouseOnUI() == true) { // Mouse IS hovering over UI
+                        // Check if User clicked on a Button
+                        Button* button = uiManager.getButtonFromMouse();
+                        if (button != nullptr) { 
+                            // Execute Button
+                            button->execute();
+                        }
                     }
+                    else if (uiManager.isMouseOnUI() == false) { // Mouse is NOT hovering over UI
+                        // If there is a pre-exisiting Selection
+                        if (gameBoard->m_selectedSquare != nullptr) {
+                            // Reset Selection
+                            gameBoard->m_selectedSquare->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_DEFAULT);
+                        }
 
-                    // There is NO Square being Hovered
-                    if (gameBoard->m_hoverSquare == nullptr) {
-                        // Remove Selection
-                        gameBoard->m_selectedSquare = nullptr;
-                    }
-                    // There IS a Square being Hovered
-                    else if (gameBoard->m_hoverSquare != nullptr) {
-                        // New Selection
-                        gameBoard->m_selectedSquare = gameBoard->m_hoverSquare;
-                        gameBoard->m_selectedSquare->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_SELECTED);
+                        // There is NO Square being Hovered
+                        if (gameBoard->m_hoverSquare == nullptr) {
+                            // Remove Selection
+                            gameBoard->m_selectedSquare = nullptr;
+                        }
+                        // There IS a Square being Hovered
+                        else if (gameBoard->m_hoverSquare != nullptr) {
+                            // New Selection
+                            gameBoard->m_selectedSquare = gameBoard->m_hoverSquare;
+                            gameBoard->m_selectedSquare->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_SELECTED);
+                        }
                     }
                 }
             }

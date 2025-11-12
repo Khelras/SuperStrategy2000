@@ -25,6 +25,9 @@ public:
 
 	// UI Manager Functions
 	void process(); // UI Manager Process Loop
+	void positionButtons(); // Split all the Buttons at the Bottom of the Screen.
 	void drawUI(sf::RenderWindow& _window); // Draws all the UI
+	bool isMouseOnUI(); // Returns whether the Mouse is hovering over UI
+	Button* getButtonFromMouse(); // Return the Button the Mouse is hovering over
 };
 

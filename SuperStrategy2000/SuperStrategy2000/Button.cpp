@@ -18,17 +18,17 @@ const sf::Color Button::BUTTON_OUTLINECOLOR_SELECTED = sf::Color::Black;
 
 Button::Button() {
 	// Button Shape
-	this->m_buttonShape.setSize(sf::Vector2f(250, 100)); // 500x200 Button
+	this->m_buttonShape.setSize(sf::Vector2f(160.0f, 50.0f));
 	this->m_buttonShape.setFillColor(sf::Color::Yellow);
 	this->m_buttonShape.setOutlineColor(Button::BUTTON_OUTLINECOLOR_DEFAULT);
-	this->m_buttonShape.setOutlineThickness(10.0f);
+	this->m_buttonShape.setOutlineThickness(5.0f);
+	this->m_buttonShape.setOrigin(this->m_buttonShape.getLocalBounds().getCenter()); // Center Origin
 
 	// Load Button Font
 	if (this->m_buttonFont.openFromFile("assets/fonts/arial.ttf")) {
 		this->m_buttonText = new sf::Text(this->m_buttonFont);
 		this->m_buttonText->setFillColor(sf::Color::Black);
-		this->m_buttonText->setCharacterSize(80);
-		this->m_buttonText->setOrigin(this->m_buttonText->getGlobalBounds().getCenter()); // Center Origin
+		this->m_buttonText->setCharacterSize(30);
 	}
 	// Failed to load Button Font
 	else {
@@ -52,8 +52,7 @@ void Button::setButtonPosition(sf::Vector2f _position) {
 	this->m_buttonShape.setPosition(_position);
 
 	// Set the Button Text Position to the Center of the Button Shape
-	this->m_buttonText->setOrigin(this->m_buttonText->getGlobalBounds().getCenter());
-	this->m_buttonText->setPosition(this->m_buttonShape.getGlobalBounds().getCenter());
+	this->m_buttonText->setPosition(_position);
 }
 
 void Button::drawButton(sf::RenderWindow& _window) {

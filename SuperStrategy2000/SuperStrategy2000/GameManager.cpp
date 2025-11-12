@@ -52,6 +52,8 @@ void GameManager::process() {
     // Centers the Camera View relative to Game Board
     this->m_cameraManager.centerCameraView();
 
+    this->m_uiManager.positionButtons();
+
     // Game Loop based on Window Manager Process
     while (this->m_windowManager.process() == true) {
         // Delta Time

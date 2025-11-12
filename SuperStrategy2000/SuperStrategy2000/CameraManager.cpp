@@ -79,9 +79,9 @@ void CameraManager::processUIView() {
 	// Main Window
 	sf::RenderWindow& mainWindow = GameManager::getInstance()->m_windowManager.m_mainWindow;
 
-	// Set the Camera View
-	this->m_uiView.setSize(sf::Vector2f(mainWindow.getSize())); // Setting to the Size of the Main Window
-	this->m_cameraView.setCenter(this->m_cameraView.getCenter()); // Use the Center of the Camera View
+	// Set the UI View
+	sf::Vector2f uiViewSize(this->m_cameraView.getSize().x * 2, this->m_cameraView.getSize().y * 2);
+	this->m_uiView.setSize(uiViewSize); // Setting to the Size of the Camera View
 	mainWindow.setView(this->m_uiView); // Setting the View of Main Window
 }
 
