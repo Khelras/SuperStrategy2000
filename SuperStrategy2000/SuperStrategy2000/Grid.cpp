@@ -203,3 +203,28 @@ void Grid::clear() {
 		}
 	}
 }
+
+void Grid::updateActorGridPositions() {
+	// Loop through every Square with an Actor
+	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
+		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
+			// Skip Squares with no Actors
+			if (this->m_grid[y][x]->m_actorOnSquare == nullptr) continue; 
+
+			// Check if the Actor on this Square and the Actors Grid Position do NOT match
+			sf::Vector2i squarePosition = this->m_grid[y][x]->m_squarePosition; // Square Grid Position
+			sf::Vector2i actorPosition = this->m_grid[y][x]->m_actorOnSquare->getActorPositionOnGrid(); // Actor Grid Position
+			if (squarePosition != actorPosition) {
+				// Ensure that the Actor Grid Position is Valid
+				if (this->m_grid[actorPosition.y][actorPosition.x]->m_actorOnSquare == nullptr) {
+					// Move the Actor to this new Square
+					this->m_grid[actorPosition.y][actorPosition.x]->m_actorOnSquare = this->m_grid[y][x]->m_actorOnSquare;
+
+					// Remove the Actor from the old Square
+					this->m_grid[y][x]->m_actorOnSquare = nullptr;
+				}
+			}
+			
+		}
+	}
+}

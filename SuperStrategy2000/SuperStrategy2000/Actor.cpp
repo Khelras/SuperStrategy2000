@@ -85,22 +85,32 @@ bool Actor::assertPositionOnGrid(sf::Vector2i _positionOnGrid) {
 	const Level* const& level = GameManager::getInstance()->m_levelManager.m_currentLevel;
 	if (level != nullptr) {
 		// Assert the given Position-On-Grid
-		sf::Vector2i gridSize = level->m_levelGameBoard->m_gridSize;
-		if ((_positionOnGrid.x >= 0 && _positionOnGrid.x < gridSize.x) ||
-			(_positionOnGrid.y >= 0 && _positionOnGrid.y < gridSize.y)) {
-			return true;
+		const Grid* const& gameBoard = level->m_levelGameBoard;
+		if ((_positionOnGrid.x >= 0 && _positionOnGrid.x < gameBoard->m_gridSize.x) ||
+			(_positionOnGrid.y >= 0 && _positionOnGrid.y < gameBoard->m_gridSize.y)) {
+			// Check if the Square on 'Position-On-Grid' already does NOT have an Actor sitting on it
+			if (gameBoard->m_grid[_positionOnGrid.y][_positionOnGrid.x]->m_actorOnSquare == nullptr) {
+				// Assert Passed
+				return true;
+			}
+			// Assertion Failed
+			else {
+				// Error Message
+				std::cerr << "An Actor already sits on the given 'Position-On-Grid'!'\n";
+				return false;
+			}
 		}
 		// Assertion Failed
 		else {
 			// Error Message
-			std::cerr << "Unable to set the actor 'Position-On-Grid', invalid 'Position-On-Grid was given!'\n";
+			std::cerr << "Invalid 'Position-On-Grid' was given!'\n";
 			return false;
 		}
 	}
 	// Assertion Failed
 	else {
 		// Error Message
-		std::cerr << "Unable to set the actor 'Position-On-Grid', no level has been selected!\n";
+		std::cerr << "There is no level present, unable to assert 'Position-On-Grid'!\n";
 		return false;
 	}
 }

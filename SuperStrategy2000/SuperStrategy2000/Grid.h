@@ -38,5 +38,6 @@ public:
 	// Grid Functions
 	void process(); // Grid Process Loop
 	void clear(); // Resets every Square on the Grid by to its Default Colours
+	void updateActorGridPositions(); // Updates all Actor Grid Positions
 };
 

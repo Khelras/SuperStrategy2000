@@ -18,10 +18,9 @@ Level::Level(unsigned int _levelNumber, std::ifstream& _gridFile) {
 
 	// After constructing the Game Board Grid
 	if (this->m_levelGameBoard != nullptr) {
-		const auto& gameBoardGrid = this->m_levelGameBoard->m_grid;
-
 		// Loop through each Square on the Game Board and collect the Actors
-		for (const auto& row : gameBoardGrid) { // Loop down each Row
+		const auto& grid = this->m_levelGameBoard->m_grid;
+		for (const auto& row : grid) { // Loop down each Row
 			for (const auto& square : row) { // Loop through each Square on this Row
 				// Square has an Actor on it
 				if (square->m_actorOnSquare != nullptr) {
@@ -55,6 +54,9 @@ Level::~Level() {
 }
 
 void Level::process() {
-	// Process the Game Board
+	// Update all Actor Positions
+	this->m_levelGameBoard->updateActorGridPositions();
+
+	// Game Board Grid Process Loop
 	this->m_levelGameBoard->process();
 }
