@@ -59,8 +59,8 @@ void LevelManager::process() {
 
 void LevelManager::loadLevels() {
 	this->loadLevel(1, this->LEVEL1);
-	this->loadLevel(2, this->LEVEL1);
-	this->loadLevel(3, this->LEVEL1);
+	this->loadLevel(2, this->LEVEL2);
+	this->loadLevel(3, this->LEVEL3);
 
 	// Load Last Level
 	this->m_completedLevels = GameSettings::getInstance()->m_completedLevels;

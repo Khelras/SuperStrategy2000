@@ -47,9 +47,7 @@ void GameManager::process() {
     sf::Clock deltaClock;
 
     // Load Levels
-    this->m_levelManager.loadLevel(1, this->m_levelManager.LEVEL1);
-    this->m_levelManager.loadLevel(2, this->m_levelManager.LEVEL2);
-    this->m_levelManager.loadLevel(3, this->m_levelManager.LEVEL3);
+    this->m_levelManager.loadLevels();
 
     // Centers the Camera View relative to Game Board
     this->m_cameraManager.centerCameraView();
