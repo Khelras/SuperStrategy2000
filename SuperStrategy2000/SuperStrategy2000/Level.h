@@ -12,14 +12,16 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 #include "Grid.h"
-#include "Actor.h"
 
 class Level {
 public:
 	// Level Attributes
 	unsigned int m_levelNumber;
 	Grid* m_levelGameBoard;
-	std::vector<Actor*> _levelActors;
+
+	// Actor Attributes
+	std::vector<Actor*> m_levelActors; // All Actors in the Level
+	std::vector<Unit*> m_levelUnits; // All the Units in the Level
 
 	// Constructor and Destructor
 	Level(unsigned int _levelNumber, std::ifstream& _filePath);

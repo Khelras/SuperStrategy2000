@@ -16,6 +16,10 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <string>
 #include <cmath>
 #include "Square.h"
+#include "Obstacle.h"
+#include "Knight.h"
+#include "Archer.h"
+#include "Mage.h"
 
 class Grid {
 public:

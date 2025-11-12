@@ -41,6 +41,35 @@ Grid::Grid(std::ifstream& _gridFile) {
 			// Creating the Square
 			sf::Vector2i squarePosition(x, y); // Position of Square relative to the Grid
 			this->m_grid[y][x] = new Square(this->m_squareSize, squarePosition);
+
+			// Checking the Number for the Actor Type
+			int actorType;
+			_gridFile >> actorType;
+			Actor*& actor = this->m_grid[y][x]->m_actorOnSquare;
+
+			// 0 means it is an empty Square
+			if (actorType == 0) continue;
+
+			// Evalutate the Actor Type
+			switch (actorType) {
+				// Obstacle
+				case 1: { actor = new Obstacle(); } break;
+
+				// Knight
+				case 2: 
+				case 5: { actor = new Knight(actorType == 5); } break;
+
+				// Archer
+				case 3: 
+				case 6: { actor = new Archer(actorType == 6); } break;
+
+				// Mage
+				case 4: 
+				case 7: { actor = new Mage(actorType == 7); } break;
+			}
+
+			// Update the Actor's Grid Position
+			actor->setActorPositionOnGrid(sf::Vector2i(x, y));
 		}
 	}
 
