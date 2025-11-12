@@ -18,10 +18,16 @@ Mail        : angelo.bohol@mds.ac.nz
 
 class LevelManager {
 public:
+	// File Paths
+	const std::string LEVEL1 = "assets/levels/level1.txt";
+	const std::string LEVEL2 = "assets/levels/level2.txt";
+	const std::string LEVEL3 = "assets/levels/level3.txt";
+
 	// Levels
 	std::vector<Level*> m_levels; // All Levels
-	std::vector<Level*> m_completedLevels; // Completed Levels
+	int m_completedLevels; // Completed Levels
 	Level* m_currentLevel; // Current Level
+	bool m_gameWon = false;
 
 	// Constructor and Destructor
 	LevelManager();
@@ -29,8 +35,10 @@ public:
 
 	// Level Manager Functions and Properties
 	void process(); // Level Manager Process Loop
+	void loadLevels(); // Load all the Levels
 	bool loadLevel(unsigned int _levelNumber, std::string _path); // Load Level
-	bool saveLevel(unsigned int _levelNumber, std::string _path); // Save Level
+	void saveLevelProgress(); // Save Level Progess
+	void nextLevel(); // Next Level
 	void selectLevel(unsigned int _levelNumber); // Select Level
 
 private:

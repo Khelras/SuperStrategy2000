@@ -315,6 +315,52 @@ bool GameSettings::loadGameSettings() {
 	// -------------------- Line: "musicVolume=<value>" --------------------
 
 
+
+	// -------------------- Line: "completedLevels=<value>" --------------------
+	std::getline(file, line); // "completedLevels=<value>"
+	std::string completedLevelsName; // The Name
+	std::string completedLevelsValue; // The Value
+
+	// Loop until '='
+	for (int i = 0; i < static_cast<int>(line.length()); i++) {
+		// Skip any Whitespace Characters
+		if (std::isspace(static_cast<unsigned int>(line[i]))) continue;
+
+		// If this Character is '='
+		if (line[i] == '=') {
+			// Save the Equals Position
+			equalsPos = i;
+			continue;
+		}
+
+		// Position of '=' has NOT been found
+		if (equalsPos == -1) {
+			// Push Back this Character to the Name
+			completedLevelsName.push_back(line[i]);
+		}
+		// Position of '=' HAS been found
+		else {
+			// If i is greater than the Position of '='
+			if (i > equalsPos) {
+				// Push Back this Character to the Value
+				completedLevelsValue.push_back(line[i]);
+			}
+		}
+	}
+
+	// If the Name is wrong
+	if (completedLevelsName != "completedLevels") {
+		// Error Message
+		std::cerr << "Invalid settings file!\n";
+		return false; // Loading Failed
+	}
+
+	// Afterwards
+	this->m_completedLevels = std::stoi(completedLevelsValue);
+	equalsPos = -1; // Reset the Position of '='
+	// -------------------- Line: "completedLevels=<value>" --------------------
+
+
 	
 	// Game Settings Successfully Loaded
 	return true;
@@ -336,5 +382,6 @@ bool GameSettings::saveGameSettings() {
 	file << "masterVolume=" << this->m_masterVolume << std::endl; // Master Volume
 	file << "effectsVolume=" << this->m_effectsVolume << std::endl; // Sound Effects Volume
 	file << "musicVolume=" << this->m_musicVolume << std::endl; // Background Music Volume
+	file << "completedLevels=" << this->m_completedLevels << std::endl; // Completed Levels
 	return true; // Saving Successful
 }

@@ -14,6 +14,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #include "GameManager.h"
 #include "GameSettings.h"
 #include "TurnController.h"
+#include "DebugSettings.h"
 
 EventManager::EventManager() {
     this->m_isShiftPressed = false;
@@ -392,6 +393,80 @@ void EventManager::process(WindowManager& _windowManager) {
                     // Print Music Volume to Console
                     std::cout << "Music Volume: " << GameSettings::getInstance()->m_musicVolume;
                     std::cout << std::endl;
+                }
+
+                // Q Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Q) {
+                    // Force Quit Game
+                    mainWindow.close();
+                    debugWindow.close();
+                }
+
+                // W Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::W) {
+                    // Force Win
+                    Level* level = GameManager::getInstance()->m_levelManager.m_currentLevel;
+                    if (level != nullptr) {
+                        level->m_levelHasWon = true;
+
+                        std::cout << "Forcing the Win..." << std::endl;
+                    }
+                }
+
+                // O Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::O) {
+                    // Toggle Force One-Shot
+                    DebugSettings* settings = DebugSettings::getInstance();
+                    settings->m_oneShot = (settings->m_oneShot == false) ? true : false;
+
+                    // Console Output
+                    std::cout << "Force One-Shot: ";
+                    std::cout << ((settings->m_oneShot == true) ? "true" : "false");
+                    std::cout << std::endl;
+                }
+
+                // H Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::H) {
+                    // Heal +5
+                    Level* level = GameManager::getInstance()->m_levelManager.m_currentLevel;
+                    if (level != nullptr) {
+                        // There is a selected Unit
+                        if (level->m_levelGameBoard->m_selectedSquare->m_actorOnSquare != nullptr) {
+                            Unit* unit = dynamic_cast<Unit*>(level->m_levelGameBoard->m_selectedSquare->m_actorOnSquare);
+                            unit->healUnit(5);
+
+                            // Console Message
+                            std::cout << unit->getUnitName() << " health: ";
+                            std::cout << unit->getUnitCurrentHealth() << "/" << unit->getUnitMaxHeatlh();
+                            std::cout << std::endl;
+                        }
+                        else {
+                            // Error Message
+                            std::cout << "A unit needs to be selected!" << std::endl;
+                        }
+                    }
+                }
+
+                // D Key Pressed
+                if (keyPressed->scancode == sf::Keyboard::Scancode::D) {
+                    // Damage -5
+                    Level* level = GameManager::getInstance()->m_levelManager.m_currentLevel;
+                    if (level != nullptr) {
+                        // There is a selected Unit
+                        if (level->m_levelGameBoard->m_selectedSquare->m_actorOnSquare != nullptr) {
+                            Unit* unit = dynamic_cast<Unit*>(level->m_levelGameBoard->m_selectedSquare->m_actorOnSquare);
+                            unit->damageUnit(5);
+
+                            // Console Message
+                            std::cout << unit->getUnitName() << " health: ";
+                            std::cout << unit->getUnitCurrentHealth() << "/" << unit->getUnitMaxHeatlh();
+                            std::cout << std::endl;
+                        }
+                        else {
+                            // Error Message
+                            std::cout << "A unit needs to be selected!" << std::endl;
+                        }
+                    }
                 }
             }
 

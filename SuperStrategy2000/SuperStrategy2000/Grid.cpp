@@ -317,8 +317,8 @@ void Grid::breadthFirstSearch(Square* _start, int _depth, bool _checkActors) {
 
 float Grid::getManhattanDistance(Square* _start, Square* _end) {
 	// Manhattan Distnace Formula: |_end.x - _start.x| + |_end.y - _start.y|
-	float xDifference = _end->m_squarePosition.x - _start->m_squarePosition.x;
-	float yDifference = _end->m_squarePosition.y - _start->m_squarePosition.y;
+	float xDifference = static_cast<float>(_end->m_squarePosition.x - _start->m_squarePosition.x);
+	float yDifference = static_cast<float>(_end->m_squarePosition.y - _start->m_squarePosition.y);
 	float distance = (std::abs(xDifference) + std::abs(yDifference));
 	return distance;
 }

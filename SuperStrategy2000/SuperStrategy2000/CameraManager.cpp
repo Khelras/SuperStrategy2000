@@ -24,6 +24,8 @@ CameraManager::~CameraManager() {
 }
 
 void CameraManager::processCameraView() {
+	if (GameManager::getInstance()->m_levelManager.m_currentLevel == nullptr) return;
+
 	// Main Window
 	sf::RenderWindow& mainWindow = GameManager::getInstance()->m_windowManager.m_mainWindow;
 	float mainWindowX = static_cast<float>(mainWindow.getSize().x);
@@ -111,6 +113,8 @@ sf::Vector2i CameraManager::getAspectRatio(sf::Vector2f _resolution) {
 }
 
 void CameraManager::moveCamera(sf::Vector2f _offset) {
+	if (GameManager::getInstance()->m_levelManager.m_currentLevel == nullptr) return;
+
 	// Perform Movement
 	this->m_cameraView.move(_offset);
 

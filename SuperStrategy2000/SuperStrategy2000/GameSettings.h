@@ -58,6 +58,7 @@ public:
 	int m_masterVolume = 50; // Volume of the Game
 	int m_effectsVolume = 100; // Volume of Sound Effects
 	int m_musicVolume = 100; // Volume of Background Music
+	int m_completedLevels = 0; // Total Completed Level
 
 	// Game Settings Load and Save Functions
 	bool loadGameSettings(); 

@@ -8,9 +8,6 @@
     <Filter Include="Source Files\Managers">
       <UniqueIdentifier>{30d67280-c64e-47b0-9ae2-d05621556474}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GameSettings">
-      <UniqueIdentifier>{e6ac5a67-275b-450d-b6da-181162276779}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Level">
       <UniqueIdentifier>{a2dbaa22-ca5a-45d0-8926-0e83c48a1996}</UniqueIdentifier>
     </Filter>
@@ -50,6 +47,9 @@
     <Filter Include="Source Files\Controllers">
       <UniqueIdentifier>{92ba13d2-a8b0-4058-8d61-241e6651042a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Settings">
+      <UniqueIdentifier>{e6ac5a67-275b-450d-b6da-181162276779}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -65,7 +65,7 @@
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
     <ClCompile Include="GameSettings.cpp">
-      <Filter>Source Files\GameSettings</Filter>
+      <Filter>Source Files\Settings</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Source Files\GridSystem</Filter>
@@ -130,6 +130,9 @@
     <ClCompile Include="DoneButton.cpp">
       <Filter>Source Files\UserInterface\Buttons</Filter>
     </ClCompile>
+    <ClCompile Include="DebugSettings.cpp">
+      <Filter>Source Files\Settings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowManager.h">
@@ -142,7 +145,7 @@
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
     <ClInclude Include="GameSettings.h">
-      <Filter>Source Files\GameSettings</Filter>
+      <Filter>Source Files\Settings</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Source Files\GridSystem</Filter>
@@ -215,6 +218,9 @@
     </ClInclude>
     <ClInclude Include="DoneButton.h">
       <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugSettings.h">
+      <Filter>Source Files\Settings</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

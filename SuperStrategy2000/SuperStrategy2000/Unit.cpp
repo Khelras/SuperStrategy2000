@@ -32,7 +32,7 @@ Unit::Unit() {
 	this->m_unitAbilities.push_back(new BasicAttack());
 
 	// Marked for Double Damage
-	bool m_isMarkedForDouble;
+	this->m_isMarkedForDouble = false;
 }
 
 Unit::~Unit() {

@@ -4,21 +4,12 @@ Media Design School
 Auckland
 New Zealand
 (c) 2025 Media Design School
-File Name   : main.cpp
-Description : Starts the Game.
+File Name   : DebugSettings.cpp
+Description : Defines the Singleton Instance
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
-#include "GameManager.h"
-#include "GameSettings.h"
+#include "DebugSettings.h"
 
-int main() {
-    // Start the Game Manager Process
-    GameManager::getInstance()->process();
-
-    // Save Game Settings
-    GameSettings::getInstance()->saveGameSettings();
-
-    return 0;
-}
+DebugSettings* DebugSettings::m_instance = nullptr;

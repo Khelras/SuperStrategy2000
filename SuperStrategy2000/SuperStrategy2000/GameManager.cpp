@@ -28,7 +28,7 @@ GameManager::GameManager() {
 }
 
 GameManager::~GameManager() {
-
+    
 }
 
 GameManager* GameManager::getInstance() {
@@ -47,7 +47,9 @@ void GameManager::process() {
     sf::Clock deltaClock;
 
     // Load Levels
-    this->m_levelManager.loadLevel(1, "assets/levels/level1.txt");
+    this->m_levelManager.loadLevel(1, this->m_levelManager.LEVEL1);
+    this->m_levelManager.loadLevel(2, this->m_levelManager.LEVEL2);
+    this->m_levelManager.loadLevel(3, this->m_levelManager.LEVEL3);
 
     // Centers the Camera View relative to Game Board
     this->m_cameraManager.centerCameraView();
@@ -60,6 +62,14 @@ void GameManager::process() {
         // Process Events
         this->m_eventManager.process(this->m_windowManager);
 
+        // Game Won
+        if (this->m_levelManager.m_gameWon) {
+            this->m_windowManager.clear(); // Clear
+            this->m_cameraManager.processUIView(); // UI View
+            this->m_windowManager.display(); // Display
+            continue;
+        }
+
         // Allow Game Processes if Debug Window is Closed
         if (this->m_windowManager.m_debugWindow.isOpen() == false) {
             // Process UI Manager
@@ -71,6 +81,8 @@ void GameManager::process() {
             // Process Sound Manager
             this->m_soundManager.process();
         }
+
+        
 
         // -------------------- Clear --------------------
         this->m_windowManager.clear(); // Clear

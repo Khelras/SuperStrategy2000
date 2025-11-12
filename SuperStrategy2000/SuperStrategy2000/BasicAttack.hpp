@@ -12,6 +12,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 #include "Ability.hpp"
+#include "DebugSettings.h"
 
 class BasicAttack : public Ability {
 public:
@@ -44,6 +45,11 @@ public:
 				if (_target->m_isMarkedForDouble) {
 					damage += damage; // Double Damage
 					_target->m_isMarkedForDouble = false;
+				}
+
+				// Check if Force One-Shot was Enabled
+				if (DebugSettings::getInstance()->m_oneShot == true) {
+					damage = 10000;
 				}
 
 				// Deal Damage to Target
