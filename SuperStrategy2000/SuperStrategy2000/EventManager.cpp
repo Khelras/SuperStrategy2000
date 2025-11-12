@@ -69,10 +69,16 @@ void EventManager::process(WindowManager& _windowManager) {
                                 Unit* unit = dynamic_cast<Unit*>(start->m_actorOnSquare); // Unit
 
                                 // Check if Unit can Move here
-                                if (level->m_levelGameBoard->getManhattanDistance(start, end) <= unit->getUnitSpeed()) {
+                                if (end->m_actorOnSquare == nullptr &&
+                                    level->m_levelGameBoard->getManhattanDistance(start, end) <= unit->getUnitSpeed()) {
                                     // Perform Move
                                     end->m_actorOnSquare = start->m_actorOnSquare;
                                     start->m_actorOnSquare = nullptr;
+
+                                    // Attack Message
+                                    std::cout << unit->getUnitName() << " moved ";
+                                    std::cout << level->m_levelGameBoard->getManhattanDistance(start, end);
+                                    std::cout << " squares!" << std::endl;
 
                                     // Move the Actor Sprite
                                     end->m_actorOnSquare->setActorSpritePosition(end->m_squareShape.getGlobalBounds().getCenter());
@@ -100,6 +106,10 @@ void EventManager::process(WindowManager& _windowManager) {
 
                                         // Target Unit
                                         Unit* target = dynamic_cast<Unit*>(hover->m_actorOnSquare);
+
+                                        // Attack Message
+                                        std::cout << unit->getUnitName() << " used Basic Attack!";
+                                        std::cout << std::endl;
 
                                         // Use the Basic Attack
                                         if (unit->m_unitAbilities[0]->execute(unit, target) == true) {

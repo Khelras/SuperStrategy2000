@@ -17,7 +17,6 @@ Level::Level(unsigned int _levelNumber, std::ifstream& _gridFile) {
 	this->m_levelNumber = _levelNumber;
 	this->m_levelGameBoard = new Grid(_gridFile);
 	this->m_levelCurrentUnit = nullptr;
-	this->m_levelWon = false;
 
 	// After constructing the Game Board Grid
 	if (this->m_levelGameBoard != nullptr) {
@@ -61,6 +60,10 @@ Level::Level(unsigned int _levelNumber, std::ifstream& _gridFile) {
 				default: { continue; } break;
 			}
 		}
+
+		// Unit Count
+		this->m_totalEnemies = static_cast<int>(enemyKnights.size() + enemyArchers.size() + enemyMages.size());
+		this->m_totalPlayers = static_cast<int>(playerKnights.size() + playerArchers.size() + playerMages.size());
 
 		// Construct the Turn Order
 		while (playerKnights.empty() == false || enemyKnights.empty() == false ||
@@ -145,9 +148,12 @@ void Level::process() {
 		// Ensure that the Current Unit is the First in the Turn Order
 		this->m_levelCurrentUnit = this->m_levelTurnOrder.front();
 
+		// Select the Square with the Current Unit
+		this->m_levelGameBoard->selectSquare(this->m_levelCurrentUnit);
+
 		// Moving Turn State
 		if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::MOVING) {
-			// Select the Square
+			// Select the Square with the Current Unit
 			this->m_levelGameBoard->selectSquare(this->m_levelCurrentUnit);
 
 			// Show this Units Movement Range
@@ -178,11 +184,40 @@ void Level::process() {
 		// Put the Front Unit to the Back of the Queue
 		this->m_levelTurnOrder.push(this->m_levelTurnOrder.front()); // Push Front Unit to the Back
 		this->m_levelTurnOrder.pop(); // Remove the Front Unit
+
+		// Evaluate the next Unit whether they are dead or not
+		while (this->m_levelTurnOrder.front()->getUnitCurrentHealth() <= 0) {
+			// Death Message
+			std::cout << this->m_levelTurnOrder.front()->getUnitName();
+			std::cout << " is dead!" << std::endl;
+
+			// Update Death Count
+			if (this->m_levelTurnOrder.front()->getActorType() == Actor::Type::UNIT_PLAYER_KNIGHT ||
+				this->m_levelTurnOrder.front()->getActorType() == Actor::Type::UNIT_PLAYER_ARCHER ||
+				this->m_levelTurnOrder.front()->getActorType() == Actor::Type::UNIT_PLAYER_MAGE) {
+				// Player Death Count
+				this->m_deadPlayers++;
+			} 
+			else if (this->m_levelTurnOrder.front()->getActorType() == Actor::Type::UNIT_ENEMY_KNIGHT ||
+				this->m_levelTurnOrder.front()->getActorType() == Actor::Type::UNIT_ENEMY_ARCHER ||
+				this->m_levelTurnOrder.front()->getActorType() == Actor::Type::UNIT_ENEMY_MAGE) {
+				// Enemy Death Count
+				this->m_deadEnemies++;
+			}
+
+			// Remove the Front Unit
+			this->m_levelTurnOrder.pop(); 
+		}
+
+		// Death Count Message
+		std::cout << this->m_totalEnemies - this->m_deadEnemies << " enemies remain!" << std::endl;
+		std::cout << this->m_totalPlayers - this->m_deadPlayers << " players remain!" << std::endl;
+
 		this->m_levelCurrentUnit = this->m_levelTurnOrder.front(); // New Current Unit
 		TurnController::getInstance()->reset(); // Reset the Turn Controller
 
 		// Output to Console
-		std::cout << std::endl;
+		std::cout << std::endl << std::endl << std::endl;
 		std::cout << this->m_levelCurrentUnit->getUnitName() << " turn!" << std::endl;
 	}
 }
