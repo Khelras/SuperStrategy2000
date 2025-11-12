@@ -24,6 +24,9 @@ public:
 			"Take the damage they were supposed to take and deal it to you instead.\n"
 			"The damage absorbed will be halved.\n";
 
+		// Ability Type
+		Type m_abilityType = Type::KNIGHT;
+
 		// Ability Cooldown
 		this->m_abilityCooldown = 3; // Ability can only be used after 3 Turns
 		this->m_abilityCurrentCooldown = 3; // Player to can use Ability as soon as the game starts
@@ -33,8 +36,9 @@ public:
 	virtual ~KnightsMight() {};
 
 	// Execute
-	bool execute(Unit* _user, Unit* _target) const override {
+	bool execute(Unit* _user, Unit* _target) override {
 		// TODO: MAKE KNIGHTS MIGHT
+		std::cout << "Work in progress...\n";
 		return false;
 	};
 };

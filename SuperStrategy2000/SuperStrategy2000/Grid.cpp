@@ -5,7 +5,7 @@ Auckland
 New Zealand
 (c) 2025 Media Design School
 File Name   : Grid.cpp
-Description : Defines the Grid Class Functions and Properties
+Description : Defines the Grid Class Functions and Properties.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
@@ -90,45 +90,46 @@ Grid::Grid(std::ifstream& _gridFile) {
 	// Connecting each Square of the Grid
 	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
-			// Connecting Square to its surrounding Squares
-			for (int dx = -1; dx <= 1; dx++) { // Loops through the surroundings across the x-axis
-				for (int dy = -1; dy <= 1; dy++) { // Loops through the surroundings across the y-axis
-					if (dx == 0 && dy == 0) continue; // Skip itself
+			// List of Orthogonal Directions (no Corners)
+			const std::vector<sf::Vector2i> directions = {
+				{ 0, -1 }, // Up
+				{ 0, 1 }, // Down
+				{ -1, 0 }, // Left
+				{ 1, 0 } // Right
+			};
 
-					// Calculate the Position of this Neighboring Square
-					sf::Vector2i neighborPos(x + dx, y + dy);
+			for (auto direction : directions) {
+				// Calculate the Position of this Neighboring Square
+				sf::Vector2i neighborPos(x + direction.x, y + direction.y);
 
-					// Boolean to check the Position of this Neighboring Square is within the Grid
-					bool validNeighborPos = (
-						neighborPos.x >= 0 &&
-						neighborPos.x < this->m_gridSize.x &&
-						neighborPos.y >= 0 &&
-						neighborPos.y < this->m_gridSize.y
-						);
+				// Boolean to check the Position of this Neighboring Square is within the Grid
+				bool validNeighborPos = (
+					neighborPos.x >= 0 &&
+					neighborPos.x < this->m_gridSize.x &&
+					neighborPos.y >= 0 &&
+					neighborPos.y < this->m_gridSize.y
+					);
 
-					// Ensure the Position of this Neighboring Square is within the Grid
-					if (validNeighborPos) {
-						// Neighboring Square
-						Square* neighboringSquare = this->m_grid[neighborPos.y][neighborPos.x];
+				// Ensure the Position of this Neighboring Square is within the Grid
+				if (validNeighborPos) {
+					// Neighboring Square
+					Square* neighboringSquare = this->m_grid[neighborPos.y][neighborPos.x];
 
-						// If there is an Actor on this Neighboring Square
-						if (neighboringSquare->m_actorOnSquare != nullptr) {
-							// Prevent pointing to Obstacles
-							if (neighboringSquare->m_actorOnSquare->getActorType() == Actor::Type::OBSTACLE) {
-								// Skip this Neighboring Square
-								continue;
-							}
+					// If there is an Actor on this Neighboring Square
+					if (neighboringSquare->m_actorOnSquare != nullptr) {
+						// Prevent pointing to Obstacles
+						if (neighboringSquare->m_actorOnSquare->getActorType() == Actor::Type::OBSTACLE) {
+							// Skip this Neighboring Square
+							continue;
 						}
-
-						// Connect the Square to its Neighboring Square
-						this->m_grid[y][x]->m_squareNeighbors.push_back(neighboringSquare);
 					}
+
+					// Connect the Square to its Neighboring Square
+					this->m_grid[y][x]->m_squareNeighbors.push_back(neighboringSquare);
 				}
 			}
 		}
 	}
-
-	
 
 	// Default
 	this->m_selectedSquare = nullptr;
@@ -207,8 +208,117 @@ void Grid::clear() {
 	// Loop through each Square on the Grid
 	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
-			// Reset the Square
-			this->m_grid[y][x]->reset();
+			// If this Square is not Selected or Hovered
+			if (this->m_grid[y][x] != this->m_selectedSquare) {
+				// Reset the Square
+				this->m_grid[y][x]->reset();
+			}
 		}
 	}
+}
+
+void Grid::selectSquare(Actor* _actor) {
+	// Override the Select Square
+	this->clear();
+	this->m_selectedSquare = nullptr;
+
+	// Loop through each Square on the Grid
+	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
+		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
+			// If this Square is not Selected or Hovered
+			if (this->m_grid[y][x]->m_actorOnSquare == _actor) {
+				this->m_selectedSquare = this->m_grid[y][x];
+				break;
+			}
+		}
+
+		if (this->m_selectedSquare != nullptr) break;
+	}
+}
+
+void Grid::selectSquare(Square* _actor) {
+	// Override the Select Square
+	this->clear();
+	this->m_selectedSquare = _actor;
+}
+
+Square* Grid::getSquare(Actor* _actor) {
+	Square* square = nullptr;
+
+	// Loop through each Square on the Grid
+	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
+		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
+			// If this Square is not Selected or Hovered
+			if (this->m_grid[y][x]->m_actorOnSquare == _actor) {
+				square = this->m_grid[y][x];
+				break;
+			}
+		}
+
+		if (square != nullptr) break;
+	}
+
+	return square;
+}
+
+void Grid::breadthFirstSearch(Square* _start, int _depth, bool _checkActors) {
+	std::vector<Square*> visited; // List of Visited Squares
+	std::queue<Square*> toVisit; // Queue of Squares to Visit
+	toVisit.push(_start); // Add the Start
+	int depth = 0; // Start at 0
+
+	// Loop until reaching the given Depth
+	while (depth <= _depth) {
+		// List of Neighbors at this Depth
+		std::vector<Square*> nextToVisit;
+
+		// Loop until the to Visit Queue is Empty
+		while (toVisit.empty() == false) {
+			// Dequeue the Front
+			Square* square = toVisit.front();
+			toVisit.pop();
+
+			// Loop through the Neighbors
+			for (auto& neighbor : square->m_squareNeighbors) {
+				// Skip Neighor Squares with an Actor
+				if (_checkActors == true && neighbor->m_actorOnSquare != nullptr) continue;
+
+				// Check if this Neighbor Square has been Visited
+				bool hasVisited = false;
+				for (auto& visitedSquare : visited) {
+					// This Neighbor Square has already been Visisted
+					if (neighbor == visitedSquare) {
+						hasVisited = true;
+						break;
+					}
+				}
+
+				// If this Neighbor Square has not already been Visited
+				if (hasVisited == false) {
+					// Add to the Next to Visit List
+					nextToVisit.push_back(neighbor);
+				}
+			}
+
+			// Highlight Square
+			square->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_SELECTED);
+			visited.push_back(square); // This Square has now been Visited
+		}
+
+		// Next to Visit List into the to Visit Queue
+		for (auto& toVisitSquare : nextToVisit) {
+			toVisit.push(toVisitSquare);
+		}
+
+		// Increase Depth
+		depth++;
+	}
+}
+
+float Grid::getManhattanDistance(Square* _start, Square* _end) {
+	// Manhattan Distnace Formula: |_end.x - _start.x| + |_end.y - _start.y|
+	float xDifference = static_cast<float>(_end->m_squarePosition.x - _start->m_squarePosition.x);
+	float yDifference = static_cast<float>(_end->m_squarePosition.y - _start->m_squarePosition.y);
+	float distance = (std::abs(xDifference) + std::abs(yDifference));
+	return distance;
 }

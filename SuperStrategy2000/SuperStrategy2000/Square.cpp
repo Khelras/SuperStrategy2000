@@ -5,7 +5,7 @@ Auckland
 New Zealand
 (c) 2025 Media Design School
 File Name   : Square.cpp
-Description : Defines the Square Class Functions and Properties
+Description : Defines the Square Class Functions and Properties.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
@@ -36,5 +36,4 @@ Square::~Square() {
 void Square::reset() {
 	// Reset the Square Shape Colors
 	this->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_DEFAULT); // Fill Color
-	this->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_DEFAULT); // Outline Color
 }

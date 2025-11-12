@@ -34,12 +34,28 @@ protected:
 	// Dynamic Unit Stats
 	float m_unitCurrentHealth; // Current Health of the Unit
 
+public:
+	
 	// Abilities
 	std::vector<Ability*> m_unitAbilities;
+	bool m_isMarkedForDouble; // Marked for Double Damage
 
-public:
 	// Constructor and Destructor
 	Unit();
 	virtual ~Unit();
+
+	// Getters
+	std::string getUnitName() const { return this->m_unitName; };
+	float getUnitStrength() const { return this->m_unitStrength; };
+	float getUnitRange() const { return this->m_unitRange; };
+	float getUnitDefense() const { return this->m_unitDefense; };
+	float getUnitSpeed() const { return this->m_unitSpeed; };
+	float getUnitMaxHeatlh() const { return this->m_unitHealth; };
+	float getUnitCurrentHealth() const { return this->m_unitCurrentHealth; };
+
+	// Unit Functions
+	void updateAbilityCooldowns();
+	void damageUnit(float _damage);
+	void healUnit(float _heal);
 };
 

@@ -11,13 +11,25 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
+#include <cstdlib>
+#include <ctime>
 #include "Grid.h"
+
 
 class Level {
 public:
 	// Level Attributes
 	unsigned int m_levelNumber;
-	Grid* m_levelGameBoard;
+	Grid* m_levelGameBoard; // The Game Board Grid
+	std::queue<Unit*> m_levelTurnOrder; // The Turn Order of the Level
+	Unit* m_levelCurrentUnit; // The Current Unit
+	bool m_levelHasWon = false;
+
+	// Unit Counts
+	int m_totalEnemies = 0;
+	int m_deadEnemies = 0;
+	int m_totalPlayers = 0;
+	int m_deadPlayers = 0;
 
 	// Actor Attributes
 	std::vector<Actor*> m_levelActors; // All Actors in the Level

@@ -5,7 +5,7 @@ Auckland
 New Zealand
 (c) 2025 Media Design School
 File Name   : GameSettings.h
-Description : Holds all the Game Settings information. Follows a Singleton Design Pattern
+Description : Holds all the Game Settings information. Follows a Singleton Design Pattern.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
@@ -58,6 +58,7 @@ public:
 	int m_masterVolume = 50; // Volume of the Game
 	int m_effectsVolume = 100; // Volume of Sound Effects
 	int m_musicVolume = 100; // Volume of Background Music
+	int m_completedLevels = 0; // Total Completed Level
 
 	// Game Settings Load and Save Functions
 	bool loadGameSettings(); 

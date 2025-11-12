@@ -12,6 +12,8 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "WindowManager.h"
 #include "GameManager.h"
+#include "GameSettings.h"
+#include "DebugSettings.h"
 
 WindowManager::WindowManager() {
     // Game Settings
@@ -72,7 +74,18 @@ WindowManager::WindowManager() {
             "[SHIFT + ...] Inverts\n"
             "\n"
             "Press [ENTER] to Save Changes!\n"
-            "Press [ESC] to Exit!";
+            "Press [ESC] to Exit!\n"
+            "\n"
+            "\n"
+            "Debug Settings:\n"
+            "[Q] Force Quit Game \n"
+            "[W] Force Win (Go-to next)\n"
+            "[O] Force One-Shot (Toggle)\n"
+            "[H] Heal +5 to Self\n"
+            "[D] Damage  -5 to Self\n"
+            "\n"
+            "Saves automatically!\n"
+            "Press [ESC] to Exit!\n";
 
         // Set the Debug Text to the Debug Text String
         this->m_debugText->setString(debugText);
@@ -167,7 +180,7 @@ void WindowManager::display() {
 
 void WindowManager::openDebugWindow() {
     // Create Debug Window
-    this->m_debugWindow.create(sf::VideoMode({ 400, 400 }), "Super Debug 2000!", sf::Style::Titlebar);
+    this->m_debugWindow.create(sf::VideoMode({ 400, 600 }), "Super Debug 2000!", sf::Style::Titlebar);
 
     // Disable the Mouse Clamp to Main Window
     this->m_mainWindow.setMouseCursorGrabbed(false);

@@ -4,21 +4,12 @@ Media Design School
 Auckland
 New Zealand
 (c) 2025 Media Design School
-File Name   : main.cpp
-Description : Starts the Game.
+File Name   : TurnController.h
+Description : Controls the Turn. Follows a Singleton Design Pattern.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
-#include "GameManager.h"
-#include "GameSettings.h"
+#include "TurnController.h"
 
-int main() {
-    // Start the Game Manager Process
-    GameManager::getInstance()->process();
-
-    // Save Game Settings
-    GameSettings::getInstance()->saveGameSettings();
-
-    return 0;
-}
+TurnController* TurnController::m_instance = nullptr;

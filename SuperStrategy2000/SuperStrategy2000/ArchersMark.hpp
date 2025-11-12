@@ -23,6 +23,9 @@ public:
 			"Mark an enemy.\n"
 			"The marked enemy will take double damage the next time they take damage.";
 
+		// Ability Type
+		Type m_abilityType = Type::ARCHER;
+
 		// Ability Cooldown
 		this->m_abilityCooldown = 5; // Ability can only be used after 3 Turns
 		this->m_abilityCurrentCooldown = 5; // Player to can use Ability as soon as the game starts
@@ -32,9 +35,25 @@ public:
 	virtual ~ArchersMark() {};
 
 	// Execute
-	bool execute(Unit* _user, Unit* _target) const override {
-		// TODO: MAKE ARCHERS MARK
+	bool execute(Unit* _user, Unit* _target) override {
+		// Ensure Target is not User
+		if (_target != _user) {
+			// Ensure Target is an Enemy
+			if (_target->getActorType() == Actor::Type::UNIT_PLAYER_KNIGHT ||
+				_target->getActorType() == Actor::Type::UNIT_PLAYER_ARCHER ||
+				_target->getActorType() == Actor::Type::UNIT_PLAYER_MAGE) {
+				// Mark the Target
+				_target->m_isMarkedForDouble = true;
 
+				// Ability Cooldown
+				this->m_abilityCurrentCooldown = 0;
+
+				// Ability was Successful
+				return true;
+			}
+		}
+
+		// Ability Failed
 		return false;
 	};
 };

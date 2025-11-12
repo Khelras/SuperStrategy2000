@@ -5,7 +5,7 @@ Auckland
 New Zealand
 (c) 2025 Media Design School
 File Name   : Grid.h
-Description : Declares the Grid Class Functions and Properties
+Description : Declares the Grid Class Functions and Properties.
 Author      : Angelo Joseph Arawiran Bohol
 Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
@@ -15,6 +15,7 @@ Mail        : angelo.bohol@mds.ac.nz
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <queue>
 #include "Square.h"
 #include "Obstacle.h"
 #include "Knight.h"
@@ -38,5 +39,12 @@ public:
 	// Grid Functions
 	void process(); // Grid Process Loop
 	void clear(); // Resets every Square on the Grid by to its Default Colours
+	void selectSquare(Actor* _actor); // Select the Square of the given Actor
+	void selectSquare(Square* _actor); // Select the Square
+	Square* getSquare(Actor* _actor); // Return the Square of the given Actor
+	void breadthFirstSearch(Square* _start, int _depth, bool _checkActors = false); // Level-Ordered Search with a given Depth
+
+	// Math
+	float getManhattanDistance(Square* _start, Square* _end);
 };
 

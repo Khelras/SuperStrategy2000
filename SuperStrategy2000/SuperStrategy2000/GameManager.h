@@ -1,7 +1,19 @@
+/***********************************************************************
+Bachelor of Software Engineering
+Media Design School
+Auckland
+New Zealand
+(c) 2025 Media Design School
+File Name   : GameManager.h
+Description : Declares the GameManager Class Functions and Properties.
+Author      : Angelo Joseph Arawiran Bohol
+Mail        : angelo.bohol@mds.ac.nz
+**************************************************************************/
+
 #pragma once
-#include "GameSettings.h"
 #include "EventManager.h"
 #include "CameraManager.h"
+#include "UIManager.h"
 #include "LevelManager.h"
 #include "SoundManager.h"
 
@@ -22,6 +34,7 @@ public:
 	WindowManager m_windowManager; // Window Manager
 	EventManager m_eventManager; // Event Manager
 	CameraManager m_cameraManager; // Camera Manager
+	UIManager m_uiManager; // UI Manager
 	LevelManager m_levelManager; // Level Manager
 	SoundManager m_soundManager; // Sound Manager
 
