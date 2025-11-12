@@ -12,6 +12,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "WindowManager.h"
 #include "GameManager.h"
+#include "GameSettings.h"
 
 WindowManager::WindowManager() {
     // Game Settings

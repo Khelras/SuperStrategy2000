@@ -11,7 +11,6 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #pragma once
-#include "GameSettings.h"
 #include "EventManager.h"
 #include "CameraManager.h"
 #include "UIManager.h"

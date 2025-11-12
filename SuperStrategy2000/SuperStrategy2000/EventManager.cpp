@@ -12,6 +12,7 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #include "EventManager.h"
 #include "GameManager.h"
+#include "GameSettings.h"
 
 EventManager::EventManager() {
     this->m_isShiftPressed = false;

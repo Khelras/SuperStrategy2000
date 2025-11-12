@@ -12,9 +12,9 @@ Mail        : angelo.bohol@mds.ac.nz
 
 #pragma once
 #include <vector>
-#include "BasicButton.hpp"
-#include "SpecialButton.hpp"
-#include "MoveButton.hpp"
+#include "BasicButton.h"
+#include "SpecialButton.h"
+#include "MoveButton.h"
 
 class UIManager {
 public:

@@ -25,11 +25,13 @@ Knight::Knight(bool _isEnemy) {
 	// Set the Actor Sprite and the Actor Type
 	if (_isEnemy == false) {
 		// Player
+		this->m_unitName = "Player Knight";
 		this->setActorSprite(2);
 		this->setActorType(Actor::Type::UNIT_PLAYER_KNIGHT);
 	}
 	else if (_isEnemy == true) {
 		// Enemy
+		this->m_unitName = "Enemy Knight";
 		this->setActorSprite(5);
 		this->setActorType(Actor::Type::UNIT_ENEMY_KNIGHT);
 	}

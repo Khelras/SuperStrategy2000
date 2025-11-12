@@ -47,17 +47,16 @@ void UIManager::process() {
 
 void UIManager::drawUI(sf::RenderWindow& _window) {
 	// Constant References to Main Window and UI View
-	const sf::RenderWindow& MAIN_WINDOW = GameManager::getInstance()->m_windowManager.m_mainWindow;
 	const sf::View& UI_VIEW = GameManager::getInstance()->m_cameraManager.m_uiView;
 
 	// Evenly spread all the Buttons on the Bottom of the Screen
-	int xSplit = static_cast<int>(MAIN_WINDOW.getSize().x) / (static_cast<int>(this->m_buttons.size()) + 1);
-	int yPosition = static_cast<int>(MAIN_WINDOW.getSize().y) - 100;
+	int xSplit = static_cast<int>(_window.getSize().x) / (static_cast<int>(this->m_buttons.size()) + 1);
+	int yPosition = static_cast<int>(_window.getSize().y) - 100;
 	
 	// Loop through all the Buttons
-	for (int i = 0; i < this->m_buttons.size(); i++) {
+	for (int i = 0; i < static_cast<int>(this->m_buttons.size()); i++) {
 		// Set the Button Position and Draw the Button
-		sf::Vector2f buttonPosition = MAIN_WINDOW.mapPixelToCoords(sf::Vector2i(xSplit * (i + 1), yPosition), UI_VIEW);
+		sf::Vector2f buttonPosition = _window.mapPixelToCoords(sf::Vector2i(xSplit * (i + 1), yPosition), UI_VIEW);
 		this->m_buttons[i]->setButtonPosition(buttonPosition);
 		this->m_buttons[i]->drawButton(_window);
 	}

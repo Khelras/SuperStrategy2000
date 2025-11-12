@@ -38,11 +38,16 @@ protected:
 	std::vector<Ability*> m_unitAbilities;
 
 public:
+	// Turn Attributes
+	bool m_hasMoved;
+	bool m_hasAttacked;
+
 	// Constructor and Destructor
 	Unit();
 	virtual ~Unit();
 
 	// Getters
+	std::string getUnitName() const { return this->m_unitName; };
 	float getUnitStrength() const { return this->m_unitStrength; };
 	float getUnitRange() const { return this->m_unitRange; };
 	float getUnitDefense() const { return this->m_unitDefense; };

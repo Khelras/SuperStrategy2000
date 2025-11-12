@@ -25,12 +25,14 @@ Archer::Archer(bool _isEnemy) {
 	// Set the Actor Sprite and the Actor Type
 	if (_isEnemy == false) {
 		// Player
+		this->m_unitName = "Player Archer";
 		this->setActorSprite(3);
 		this->setActorType(Actor::Type::UNIT_PLAYER_ARCHER);
 	}
 	else if (_isEnemy == true) {
 		// Enemy
 		this->setActorSprite(6);
+		this->m_unitName = "Enemy Archer";
 		this->setActorType(Actor::Type::UNIT_ENEMY_ARCHER);
 	}
 

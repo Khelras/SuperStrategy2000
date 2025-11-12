@@ -30,7 +30,7 @@ public:
 	virtual ~Button(); // Destructor
 
 	// Button Functions
-	virtual void execute() const = 0; // Abstract Function
+	virtual void execute() = 0; // Abstract Function
 	void setButtonPosition(sf::Vector2f _position); // Set the Button Position
 	void drawButton(sf::RenderWindow& _window); // Draw the Button
 };

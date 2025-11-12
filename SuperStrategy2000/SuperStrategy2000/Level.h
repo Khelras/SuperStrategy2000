@@ -17,8 +17,10 @@ class Level {
 public:
 	// Level Attributes
 	unsigned int m_levelNumber;
-	Grid* m_levelGameBoard;
-	std::queue<Unit*> m_turnOrder;
+	Grid* m_levelGameBoard; // The Game Board Grid
+	std::queue<Unit*> m_levelTurnOrder; // The Turn Order of the Level
+	Unit* m_levelCurrentUnit; // The Current Unit
+	bool m_levelWon; // If Level has Won or not
 
 	// Actor Attributes
 	std::vector<Actor*> m_levelActors; // All Actors in the Level

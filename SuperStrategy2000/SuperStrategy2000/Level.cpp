@@ -11,10 +11,13 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "Level.h"
+#include "TurnController.h"
 
 Level::Level(unsigned int _levelNumber, std::ifstream& _gridFile) {
 	this->m_levelNumber = _levelNumber;
 	this->m_levelGameBoard = new Grid(_gridFile);
+	this->m_levelCurrentUnit = nullptr;
+	this->m_levelWon = false;
 
 	// After constructing the Game Board Grid
 	if (this->m_levelGameBoard != nullptr) {
@@ -65,40 +68,42 @@ Level::Level(unsigned int _levelNumber, std::ifstream& _gridFile) {
 			playerMages.empty() == false || enemyMages.empty() == false) {
 			// Player Knights
 			if (playerKnights.empty() == false) {
-				this->m_turnOrder.push(playerKnights.front());
+				this->m_levelTurnOrder.push(playerKnights.front());
 				playerKnights.pop();
 			}
 			
 			// Enemy Knights
 			if (enemyKnights.empty() == false) {
-				this->m_turnOrder.push(enemyKnights.front());
+				this->m_levelTurnOrder.push(enemyKnights.front());
 				enemyKnights.pop();
 			}
 			
 			// Player Archers
 			if (playerArchers.empty() == false) {
-				this->m_turnOrder.push(playerArchers.front());
+				this->m_levelTurnOrder.push(playerArchers.front());
 				playerArchers.pop();
 			}
 			
 			// Enemy Archers
 			if (enemyArchers.empty() == false) {
-				this->m_turnOrder.push(enemyArchers.front());
+				this->m_levelTurnOrder.push(enemyArchers.front());
 				enemyArchers.pop();
 			}
 			
 			// Player Mages
 			if (playerMages.empty() == false) {
-				this->m_turnOrder.push(playerMages.front());
+				this->m_levelTurnOrder.push(playerMages.front());
 				playerMages.pop();
 			}
 			
 			// Enemy Mages
 			if (enemyMages.empty() == false) {
-				this->m_turnOrder.push(enemyMages.front());
+				this->m_levelTurnOrder.push(enemyMages.front());
 				enemyMages.pop();
 			}
 		}
+
+		this->m_levelCurrentUnit = this->m_levelTurnOrder.front();
 	}
 	else {
 		// Error Message
@@ -131,6 +136,36 @@ Level::~Level() {
 void Level::process() {
 	// Game Board Grid Process Loop
 	this->m_levelGameBoard->process();
+
+	// Until Turn is Done
+	if (TurnController::getInstance()->m_turnState != TurnController::TurnStates::DONE && 
+		this->m_levelCurrentUnit->getActorType() != Actor::Type::UNIT_ENEMY_KNIGHT &&
+		this->m_levelCurrentUnit->getActorType() != Actor::Type::UNIT_ENEMY_ARCHER &&
+		this->m_levelCurrentUnit->getActorType() != Actor::Type::UNIT_ENEMY_MAGE) {
+		// Ensure that the Current Unit is the First in the Turn Order
+		this->m_levelCurrentUnit = this->m_levelTurnOrder.front();
+
+		// Moving Turn State
+		if (TurnController::getInstance()->m_turnState == TurnController::TurnStates::MOVING) {
+			// Select the Square
+			this->m_levelGameBoard->selectSquare(this->m_levelCurrentUnit);
+
+			// Show this Units Movement Range
+			this->m_levelGameBoard->breadthFirstSearch(
+				this->m_levelGameBoard->m_selectedSquare,
+				static_cast<int>(this->m_levelCurrentUnit->getUnitSpeed()),
+				true
+			);
+		}
+	}
+	// Turn is Done
+	else {
+		// Put the Front Unit to the Back of the Queue
+		this->m_levelTurnOrder.push(this->m_levelTurnOrder.front()); // Push Front Unit to the Back
+		this->m_levelTurnOrder.pop(); // Remove the Front Unit
+		this->m_levelCurrentUnit = this->m_levelTurnOrder.front(); // New Current Unit
+		TurnController::getInstance()->reset(); // Reset the Turn Controller
+	}
 
 	// Check if there is a Selected Square
 	if (this->m_levelGameBoard->m_selectedSquare != nullptr) {

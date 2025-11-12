@@ -47,6 +47,9 @@
     <Filter Include="Source Files\UserInterface\Buttons">
       <UniqueIdentifier>{b8a868bc-2128-4e44-8ccc-dd5ece204558}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Controllers">
+      <UniqueIdentifier>{92ba13d2-a8b0-4058-8d61-241e6651042a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -109,8 +112,20 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="BasicButton.hpp">
+    <ClCompile Include="BasicButton.h">
       <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicButton.cpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="SpecialButton.cpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveButton.cpp">
+      <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="TurnController.cpp">
+      <Filter>Source Files\Controllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,14 +198,17 @@
     <ClInclude Include="Button.h">
       <Filter>Source Files\UserInterface\Buttons</Filter>
     </ClInclude>
-    <ClInclude Include="MoveButton.hpp">
+    <ClInclude Include="MoveButton.h">
       <Filter>Source Files\UserInterface\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">
       <Filter>Source Files\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="SpecialButton.hpp">
+    <ClInclude Include="SpecialButton.h">
       <Filter>Source Files\UserInterface\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnController.h">
+      <Filter>Source Files\Controllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

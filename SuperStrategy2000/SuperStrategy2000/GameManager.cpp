@@ -11,7 +11,7 @@ Mail        : angelo.bohol@mds.ac.nz
 **************************************************************************/
 
 #include "GameManager.h"
-#include "Actor.h"
+#include "GameSettings.h"
 
 // Define the Static GameManager Instance
 GameManager* GameManager::m_instance = nullptr;

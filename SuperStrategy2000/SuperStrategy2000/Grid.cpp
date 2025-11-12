@@ -217,6 +217,25 @@ void Grid::clear() {
 	}
 }
 
+void Grid::selectSquare(Actor* _actor) {
+	// Override the Select Square
+	this->clear();
+	this->m_selectedSquare = nullptr;
+
+	// Loop through each Square on the Grid
+	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
+		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
+			// If this Square is not Selected or Hovered
+			if (this->m_grid[y][x]->m_actorOnSquare == _actor) {
+				this->m_selectedSquare = this->m_grid[y][x];
+				break;
+			}
+		}
+
+		if (this->m_selectedSquare != nullptr) break;
+	}
+}
+
 void Grid::breadthFirstSearch(Square* _start, int _depth, bool _checkActors) {
 	std::vector<Square*> visited; // List of Visited Squares
 	std::queue<Square*> toVisit; // Queue of Squares to Visit

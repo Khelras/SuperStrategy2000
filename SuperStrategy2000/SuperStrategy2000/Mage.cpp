@@ -25,11 +25,13 @@ Mage::Mage(bool _isEnemy) {
 	// Set the Actor Sprite and the Actor Type
 	if (_isEnemy == false) {
 		// Player
+		this->m_unitName = "Player Mage";
 		this->setActorSprite(4);
 		this->setActorType(Actor::Type::UNIT_PLAYER_MAGE);
 	}
 	else if (_isEnemy == true) {
 		// Enemy
+		this->m_unitName = "Enemy Mage";
 		this->setActorSprite(7);
 		this->setActorType(Actor::Type::UNIT_ENEMY_MAGE);
 	}

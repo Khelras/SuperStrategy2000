@@ -30,6 +30,10 @@ Unit::Unit() {
 
 	// Add the Basic Attack Ability
 	this->m_unitAbilities.push_back(new BasicAttack());
+
+	// Turn Attributes
+	this->m_hasMoved = false;
+	this->m_hasAttacked = false;
 }
 
 Unit::~Unit() {
