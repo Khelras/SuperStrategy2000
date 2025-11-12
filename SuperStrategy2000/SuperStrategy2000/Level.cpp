@@ -345,9 +345,23 @@ void Level::drawLevel(sf::RenderWindow& _window) {
 			if (square->m_actorOnSquare != nullptr) {
 				// Ensure that the Actor Sprite exists
 				if (square->m_actorOnSquare->getActorSprite() != nullptr) {
+					// If Actor is a Unit
+					if (square->m_actorOnSquare->getActorType() != Actor::Type::OBSTACLE) {
+						Unit* unit = dynamic_cast<Unit*>(square->m_actorOnSquare);
 
-					// Draw the Actor Sprite
-					_window.draw(*(square->m_actorOnSquare->getActorSprite()));
+						// Draw Unit if it has more than 0 HP
+						if (unit->getUnitCurrentHealth() > 0) {
+							_window.draw(*(unit->getActorSprite()));
+						}
+						// Otherwise, remove it from the Square
+						else {
+							square->m_actorOnSquare = nullptr;
+						}
+					}
+					else {
+						// Draw the Actor Sprite
+						_window.draw(*(square->m_actorOnSquare->getActorSprite()));
+					}
 				}
 			}
 		}
