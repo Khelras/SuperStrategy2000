@@ -27,6 +27,13 @@ Grid::Grid(std::ifstream& _gridFile) {
 	_gridFile >> this->m_gridSize.x >> this->m_gridSize.y; // Reading Size of the Grid
 	_gridFile >> this->m_squareSize.x >> this->m_squareSize.y; // Reading Size of each Square
 
+	// The World Space the Grid takes
+	float gridWorldSpaceX = static_cast<float>(this->m_squareSize.x * this->m_gridSize.x); // Static Cast to Float
+	float gridWorldSpaceY = static_cast<float>(this->m_squareSize.y * this->m_gridSize.y); // Static Cast to Float
+	this->m_gridBackground.setSize(sf::Vector2f(gridWorldSpaceX, gridWorldSpaceY));
+	this->m_gridBackground.setFillColor(sf::Color(220, 220, 220)); // Faded-White
+	this->m_gridBackground.setPosition(sf::Vector2f(0.0f, 0.0f)); // Set at Origin
+
 	// Resize the 2D Grid Array
 	this->m_grid.clear(); // Clear the 2D Grid Array
 	this->m_grid.resize(this->m_gridSize.y); // Resize the Columns (Down the y-axis) BEFORE the Rows
@@ -39,8 +46,15 @@ Grid::Grid(std::ifstream& _gridFile) {
 	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
 			// Creating the Square
-			sf::Vector2i squarePosition(x, y); // Position of Square relative to the Grid
-			this->m_grid[y][x] = new Square(this->m_squareSize, squarePosition);
+			this->m_grid[y][x] = new Square(this->m_squareSize, sf::Vector2i(x, y));
+
+			// Setting the World Position of the Square
+			this->m_grid[y][x]->m_squareShape.setPosition( 
+				sf::Vector2f(
+					static_cast<float>(x * this->m_squareSize.x),
+					static_cast<float>(y * this->m_squareSize.y)
+				)
+			);
 
 			// Checking the Number for the Actor Type
 			int actorType;
@@ -69,7 +83,7 @@ Grid::Grid(std::ifstream& _gridFile) {
 			}
 
 			// Update the Actor's Grid Position
-			actor->setActorPositionOnGrid(sf::Vector2i(x, y));
+			actor->setActorSpritePosition(this->m_grid[y][x]->m_squareShape.getGlobalBounds().getCenter());
 		}
 	}
 
@@ -95,7 +109,7 @@ Grid::Grid(std::ifstream& _gridFile) {
 					// Ensure the Position of this Neighboring Square is within the Grid
 					if (validNeighborPos) {
 						// Neighboring Square
-						Square* const& neighboringSquare = this->m_grid[neighborPos.y][neighborPos.x];
+						Square* neighboringSquare = this->m_grid[neighborPos.y][neighborPos.x];
 
 						// If there is an Actor on this Neighboring Square
 						if (neighboringSquare->m_actorOnSquare != nullptr) {
@@ -114,12 +128,7 @@ Grid::Grid(std::ifstream& _gridFile) {
 		}
 	}
 
-	// The World Space the Grid takes
-	float gridWorldSpaceX = static_cast<float>(this->m_squareSize.x * this->m_gridSize.x); // Static Cast to Float
-	float gridWorldSpaceY = static_cast<float>(this->m_squareSize.y * this->m_gridSize.y); // Static Cast to Float
-	this->m_gridBackground.setSize(sf::Vector2f(gridWorldSpaceX, gridWorldSpaceY));
-	this->m_gridBackground.setFillColor(sf::Color(240, 240, 240)); // Off-White
-	this->m_gridBackground.setPosition(sf::Vector2f(0.0f, 0.0f)); // Set at Origin
+	
 
 	// Default
 	this->m_selectedSquare = nullptr;
@@ -200,31 +209,6 @@ void Grid::clear() {
 		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
 			// Reset the Square
 			this->m_grid[y][x]->reset();
-		}
-	}
-}
-
-void Grid::updateActorGridPositions() {
-	// Loop through every Square with an Actor
-	for (int y = 0; y < this->m_gridSize.y; y++) { // Down the y-axis
-		for (int x = 0; x < this->m_gridSize.x; x++) { // Down the x-axis
-			// Skip Squares with no Actors
-			if (this->m_grid[y][x]->m_actorOnSquare == nullptr) continue; 
-
-			// Check if the Actor on this Square and the Actors Grid Position do NOT match
-			sf::Vector2i squarePosition = this->m_grid[y][x]->m_squarePosition; // Square Grid Position
-			sf::Vector2i actorPosition = this->m_grid[y][x]->m_actorOnSquare->getActorPositionOnGrid(); // Actor Grid Position
-			if (squarePosition != actorPosition) {
-				// Ensure that the Actor Grid Position is Valid
-				if (this->m_grid[actorPosition.y][actorPosition.x]->m_actorOnSquare == nullptr) {
-					// Move the Actor to this new Square
-					this->m_grid[actorPosition.y][actorPosition.x]->m_actorOnSquare = this->m_grid[y][x]->m_actorOnSquare;
-
-					// Remove the Actor from the old Square
-					this->m_grid[y][x]->m_actorOnSquare = nullptr;
-				}
-			}
-			
 		}
 	}
 }

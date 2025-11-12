@@ -54,9 +54,29 @@ Level::~Level() {
 }
 
 void Level::process() {
-	// Update all Actor Positions
-	this->m_levelGameBoard->updateActorGridPositions();
-
 	// Game Board Grid Process Loop
 	this->m_levelGameBoard->process();
+}
+
+void Level::drawLevel(sf::RenderWindow& _window) {
+	// First draw the Game Board Grid Background
+	_window.draw(this->m_levelGameBoard->m_gridBackground);
+
+	// Draw each Square on the Game Board Grid and any Actors sitting on it
+	for (int y = 0; y < this->m_levelGameBoard->m_gridSize.y; y++) { // Loop down the y-axis
+		for (int x = 0; x < this->m_levelGameBoard->m_gridSize.x; x++) { // Loop down the x-axis
+			// The Square
+			Square* square = this->m_levelGameBoard->m_grid[y][x];
+			_window.draw(square->m_squareShape); // Draw the Square Shape
+
+			// If an Actor is sitting on this Square
+			if (square->m_actorOnSquare != nullptr) {
+				// Ensure that the Actor Sprite exists
+				if (square->m_actorOnSquare->getActorSprite() != nullptr) {
+					// Draw the Actor Sprite
+					_window.draw(*(square->m_actorOnSquare->getActorSprite()));
+				}
+			}
+		}
+	}
 }

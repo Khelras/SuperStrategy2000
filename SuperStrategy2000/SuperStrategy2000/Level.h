@@ -29,5 +29,6 @@ public:
 
 	// Level Functions
 	void process(); // Level Logic Loop
+	void drawLevel(sf::RenderWindow& _window);
 };
 

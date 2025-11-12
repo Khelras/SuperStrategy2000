@@ -8,10 +8,6 @@ GameManager::GameManager() {
     // Instantiate the Game Settings Singleton Instance
     GameSettings::getInstance();
 
-    // --- REMOVE LATER ---
-    this->m_levelManager.loadLevel(0, "assets/levels/level1.txt");
-    // --- REMOVE LATER ---
-
     // Delta Time
     this->m_deltaTime = 0.0f;
 
@@ -37,6 +33,9 @@ GameManager* GameManager::getInstance() {
 void GameManager::process() {
     // Clock to Measure Delta Time
     sf::Clock deltaClock;
+
+    // Load Levels
+    this->m_levelManager.loadLevel(1, "assets/levels/level1.txt");
 
     // Centers the Camera View relative to Game Board
     this->m_cameraManager.centerCameraView();

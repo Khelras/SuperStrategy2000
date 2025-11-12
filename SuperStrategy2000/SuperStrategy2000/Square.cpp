@@ -37,7 +37,4 @@ void Square::reset() {
 	// Reset the Square Shape Colors
 	this->m_squareShape.setFillColor(Square::SQUARE_FILLCOLOR_DEFAULT); // Fill Color
 	this->m_squareShape.setOutlineColor(Square::SQUARE_OUTLINECOLOR_DEFAULT); // Outline Color
-
-	// Reset the Actor Related Attributes
-	this->m_actorOnSquare = nullptr;
 }
